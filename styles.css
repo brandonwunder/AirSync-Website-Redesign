@@ -371,48 +371,9 @@ h1,h2,h3,h4{font-family:var(--font-display);color:var(--text-primary);line-heigh
 /* Phone animation state */
 .call-phone.phone-call-active{transform:none;width:260px;height:500px}
 
-/* Transcript animations */
-.call-transcript.transcript-visible,
-.call-transcript-title.transcript-visible{opacity:1;transform:translateX(0)}
-
-/* Transcript line animations */
-.transcript-line.transcript-line-visible{opacity:1;transform:translateY(0)}
-
 /* Waveform bar animation trigger */
 .call-waveform-bar.waveform-animated{animation:waveform 1.2s ease-in-out infinite}
 
-/* Call Transcript Panel */
-.call-transcript{width:280px;padding:1.25rem;opacity:0;transform:translateX(20px);transition:all 0.6s var(--ease-out);max-height:420px;overflow:hidden;mask-image:linear-gradient(to bottom,black 0%,black 20%,transparent 20%,black 35%,black 100%);-webkit-mask-image:linear-gradient(to bottom,black 0%,black 20%,transparent 20%,black 35%,black 100%)}
-.call-transcript::-webkit-scrollbar{display:none}
-.voice-bot-demo.stage-transcript .call-transcript,
-.voice-bot-demo.stage-ended .call-transcript,
-.voice-bot-demo.stage-confirm .call-transcript{opacity:1;transform:translateX(0)}
-.call-transcript-title{font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);margin-bottom:1rem;display:flex;align-items:center;gap:0.5rem}
-.call-transcript-title::before{content:'';width:6px;height:6px;border-radius:50%;background:#EF4444;animation:rec-blink 1.5s infinite}
-@keyframes rec-blink{0%,100%{opacity:1}50%{opacity:0.3}}
-.transcript-line{padding:0.6rem 0;border-bottom:1px solid var(--dark-border);opacity:0;transform:translateY(5px);transition:all 0.4s var(--ease-out)}
-.transcript-line.visible{opacity:1;transform:translateY(0)}
-.transcript-line:last-child{border-bottom:none}
-.transcript-speaker{font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.25rem;display:flex;align-items:center;gap:0.4rem}
-.transcript-speaker.speaker-customer{color:var(--text-muted)}
-.transcript-speaker.speaker-ai{color:var(--accent)}
-.transcript-speaker svg{width:12px;height:12px}
-.transcript-text{font-size:0.8rem;color:var(--text-body);line-height:1.5;font-style:italic}
-
-/* Call Confirmation */
-.call-confirm-bar{margin-top:1rem;padding:0.75rem;background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.2);border-radius:var(--radius-sm);opacity:0;transition:opacity 0.5s ease}
-.voice-bot-demo.stage-confirm .call-confirm-bar{opacity:1}
-.call-confirm-text{font-size:0.75rem;color:#22C55E;font-weight:500;display:flex;align-items:center;gap:0.4rem}
-.call-confirm-text svg{width:14px;height:14px;flex-shrink:0}
-
-/* Transcript ended state */
-.call-transcript.transcript-ended{
-  mask-image:linear-gradient(to bottom,black 0%,black 20%,black 100%);
-  -webkit-mask-image:linear-gradient(to bottom,black 0%,black 20%,black 100%)
-}
-.call-transcript-title.transcript-ended::before{
-  display:none
-}
 
 /* ============================================================
    6B. TEXT BOT DEMO (Phone + 3D Envelope)
@@ -449,27 +410,7 @@ h1,h2,h3,h4{font-family:var(--font-display);color:var(--text-primary);line-heigh
 /* Phone shrink for envelope reveal */
 .phone-mock.phone-shrunk{transform:scale(0.82) translateX(10px);transition:transform 0.6s var(--ease-out)}
 
-/* 3D Envelope */
-.envelope-wrapper{opacity:0;transform:translateX(-20px) scale(0.9);transition:all 0.6s var(--ease-out);pointer-events:none;perspective:800px}
-.envelope-wrapper.envelope-visible{opacity:1;transform:translateX(0) scale(1);pointer-events:auto}
-.envelope{width:260px;height:180px;position:relative;transform-style:preserve-3d}
-.envelope-back{position:absolute;inset:0;background:linear-gradient(135deg,#1a3566,#132B52);border-radius:var(--radius-md);border:1px solid var(--dark-border)}
-.envelope-front{position:absolute;bottom:0;left:0;right:0;height:60%;background:var(--bg-card);border:1px solid var(--dark-border);border-radius:0 0 var(--radius-md) var(--radius-md);z-index:3;clip-path:polygon(0 35%,50% 0,100% 35%,100% 100%,0 100%)}
-.envelope-flap{position:absolute;top:0;left:0;right:0;height:55%;background:linear-gradient(180deg,#1a3566,#132B52);border:1px solid var(--dark-border);border-radius:var(--radius-md) var(--radius-md) 0 0;clip-path:polygon(0 0,100% 0,50% 100%);transform-origin:top center;z-index:4;transition:transform 0.8s var(--ease-out)}
-.envelope-wrapper.envelope-open .envelope-flap{transform:rotateX(-180deg)}
-.envelope-card{position:absolute;left:10%;right:10%;bottom:25%;background:var(--bg-card);border:1px solid rgba(0,212,255,0.2);border-radius:var(--radius-sm);padding:1rem;z-index:2;transform:translateY(0);transition:transform 0.8s var(--ease-out) 0.3s;box-shadow:var(--shadow-md)}
-.envelope-wrapper.envelope-open .envelope-card{transform:translateY(-120%)}
-.envelope-card-icon{display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem}
-.envelope-card-icon svg{width:20px;height:20px;color:#22C55E}
-.envelope-card-title{font-family:var(--font-display);font-size:0.9rem;font-weight:700;color:var(--white)}
-.envelope-card-details{display:flex;flex-direction:column;gap:0.35rem;margin-top:0.5rem}
-.envelope-card-row{display:flex;justify-content:space-between;font-size:0.7rem}
-.envelope-card-row span{color:var(--text-muted)}
-.envelope-card-row strong{color:var(--white);font-weight:600}
-.envelope-card-checks{display:flex;flex-direction:column;gap:0.2rem;margin-top:0.5rem;padding-top:0.5rem;border-top:1px solid var(--dark-border)}
-.envelope-card-check{font-size:0.65rem;color:#22C55E;font-weight:500}
-
-/* Side Panel (envelope + calendar stacked vertically) */
+/* Side Panel (calendar) */
 .text-bot-side-panel{display:flex;flex-direction:column;gap:0.75rem;order:-1;align-items:center}
 
 /* Calendar Widget */
@@ -899,14 +840,10 @@ body{background-image:linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px
   .text-bot-demo{flex-direction:column}
   .phone-mock.phone-shrunk{transform:none}
   .text-bot-side-panel{order:1;width:100%;max-width:280px;margin:0 auto;align-items:stretch}
-  .envelope-wrapper{transform:translateY(10px)}
-  .envelope-wrapper.envelope-visible{transform:translateY(0)}
-  .envelope{width:100%;max-width:260px;margin:0 auto}
   .calendar-widget{width:100%}
   .calendar-widget.calendar-visible{transform:translateY(0)}
   /* Voice Bot Demo — stack vertically */
   .voice-bot-demo{flex-direction:column;align-items:center}
-  .call-transcript{width:100%;max-width:320px}
   /* Browser mock */
   .browser-mock{max-width:100%}
   .chat-widget{width:180px}
@@ -943,14 +880,11 @@ body{background-image:linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px
   .marquee-track,.quote-track,.testimonial-track{animation:none}
   .dashboard-mock{animation:none}
   html{scroll-behavior:auto}
-  .envelope-wrapper{opacity:1;transform:none}
   .calendar-widget{opacity:1;transform:none}
   .calendar-confirm{opacity:1;transform:none}
   .phone-mock.phone-shrunk{transform:none}
-  .call-transcript{opacity:1;transform:none}
   .call-screen-incoming{opacity:0}
   .call-screen-ended{opacity:1}
-  .transcript-line{opacity:1;transform:none}
   .demo-cursor{opacity:0}
   .chat-prompt{opacity:1;transform:scale(1)}
   .chat-widget{opacity:1;transform:scale(1)}

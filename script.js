@@ -296,12 +296,9 @@
     var callIncoming = demoEl.querySelector('.call-screen-incoming');
     var callConnected = demoEl.querySelector('.call-screen-connected');
     var callEnded = demoEl.querySelector('.call-screen-ended');
-    var callTranscript = demoEl.querySelector('.call-transcript');
-    var transcriptLines = demoEl.querySelectorAll('.transcript-line');
     var waveformBars = demoEl.querySelectorAll('.call-waveform-bar');
     var callTimer = demoEl.querySelector('.call-timer');
     var callEndedDuration = demoEl.querySelector('.call-ended-duration');
-    var transcriptTitle = demoEl.querySelector('.call-transcript-title');
     var timerInterval = null;
     var timerSeconds = 0;
 
@@ -327,14 +324,6 @@
       }
     }
 
-    // Word-count-based delay: 1500ms base pause + 320ms per word (~42s total)
-    function getLineDelay(line) {
-      var text = line.querySelector('.transcript-text');
-      if (!text) return 3000;
-      var words = text.textContent.trim().split(/\s+/).length;
-      return 1500 + words * 320;
-    }
-
     var stageDelay = 0;
 
     // Stage 1: Show incoming call screen (2s)
@@ -343,53 +332,21 @@
     }, stageDelay);
     stageDelay += 2000;
 
-    // Stage 2: Answer — connected screen + waveform + timer + transcript (all at once)
+    // Stage 2: Answer — connected screen + waveform + timer
     setTimeout(function () {
       callIncoming.classList.remove('call-screen-visible');
       callConnected.classList.add('call-screen-visible');
       startTimer();
       callPhone.classList.add('phone-call-active');
-      callTranscript.classList.add('transcript-visible');
-      transcriptTitle.classList.add('transcript-visible');
       waveformBars.forEach(function (bar, idx) {
         setTimeout(function () {
           bar.classList.add('waveform-animated');
         }, idx * 100);
       });
     }, stageDelay);
-    stageDelay += 500;
 
-    // Stage 4: Transcript lines appear with natural word-count pacing
-    var cumulativeDelay = stageDelay;
-    transcriptLines.forEach(function (line) {
-      (function (lineEl, delay) {
-        setTimeout(function () {
-          lineEl.classList.add('transcript-line-visible');
-          setTimeout(function () {
-            callTranscript.scrollTo({
-              top: callTranscript.scrollHeight,
-              behavior: 'smooth'
-            });
-          }, 150);
-        }, delay);
-      })(line, cumulativeDelay);
-      cumulativeDelay += getLineDelay(line);
-    });
-
-    // Stage 5: Show confirmation bar after last line settles
-    var confirmDelay = cumulativeDelay + 800;
-    setTimeout(function () {
-      demoEl.classList.add('stage-confirm');
-      setTimeout(function () {
-        callTranscript.scrollTo({
-          top: callTranscript.scrollHeight,
-          behavior: 'smooth'
-        });
-      }, 150);
-    }, confirmDelay);
-
-    // Stage 6: Call ended — stop timer, stop waveform, cleanup transcript
-    var endDelay = confirmDelay + 1500;
+    // Stage 3: Call ended after 8s connected
+    var endDelay = stageDelay + 8000;
     setTimeout(function () {
       stopTimer();
       callConnected.classList.remove('call-screen-visible');
@@ -397,23 +354,7 @@
       waveformBars.forEach(function (bar) {
         bar.classList.remove('waveform-animated');
       });
-      callTranscript.classList.add('transcript-ended');
-      transcriptTitle.classList.add('transcript-ended');
     }, endDelay);
-
-    // Stage 7: Trigger email envelope animation after call ends
-    setTimeout(function () {
-      var textBotSection = document.querySelector('#text-bot');
-      if (textBotSection) {
-        var envelopeWrapper = textBotSection.querySelector('.envelope-wrapper');
-        if (envelopeWrapper) {
-          envelopeWrapper.classList.add('envelope-visible');
-          setTimeout(function () {
-            envelopeWrapper.classList.add('envelope-open');
-          }, 300);
-        }
-      }
-    }, endDelay + 500);
   }
 
   /* ----------------------------------------------------------
