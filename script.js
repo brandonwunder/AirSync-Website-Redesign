@@ -340,7 +340,7 @@
 
   // SVG icons for transcript avatars
   var TRANSCRIPT_BOT_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="14" height="10" rx="2"/><line x1="12" y1="4" x2="12" y2="9"/><circle cx="12" cy="3" r="1.5"/><circle cx="9" cy="13" r="1" fill="currentColor" stroke="none"/><circle cx="15" cy="13" r="1" fill="currentColor" stroke="none"/><line x1="9.5" y1="16.5" x2="14.5" y2="16.5"/><line x1="3" y1="13" x2="5" y2="13"/><line x1="19" y1="13" x2="21" y2="13"/></svg>';
-  var TRANSCRIPT_CUSTOMER_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7" r="4"/><path d="M7.5 7c.5-3 2-4.5 4.5-4.5s4 1.5 4.5 4.5"/><path d="M6.5 8.5c-.3 1.5-.5 3-.5 4"/><path d="M17.5 8.5c.3 1.5.5 3 .5 4"/><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/></svg>';
+  var TRANSCRIPT_CUSTOMER_IMG = '<img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Homeowner" width="32" height="32">';
 
   // Transcript messages: { time (seconds into call), speaker, text }
   var TRANSCRIPT_SCRIPT = [
@@ -366,7 +366,7 @@
 
     var avatar = document.createElement('div');
     avatar.className = 'transcript-avatar transcript-avatar-' + speaker;
-    avatar.innerHTML = speaker === 'bot' ? TRANSCRIPT_BOT_SVG : TRANSCRIPT_CUSTOMER_SVG;
+    avatar.innerHTML = speaker === 'bot' ? TRANSCRIPT_BOT_SVG : TRANSCRIPT_CUSTOMER_IMG;
 
     var bubble = document.createElement('div');
     bubble.className = 'transcript-bubble';
@@ -392,7 +392,7 @@
     el.className = 'transcript-typing';
     var avatar = document.createElement('div');
     avatar.className = 'transcript-avatar transcript-avatar-' + speaker;
-    avatar.innerHTML = speaker === 'bot' ? TRANSCRIPT_BOT_SVG : TRANSCRIPT_CUSTOMER_SVG;
+    avatar.innerHTML = speaker === 'bot' ? TRANSCRIPT_BOT_SVG : TRANSCRIPT_CUSTOMER_IMG;
     var dots = document.createElement('div');
     dots.className = 'transcript-typing-dots';
     dots.innerHTML = '<span class="transcript-typing-dot"></span><span class="transcript-typing-dot"></span><span class="transcript-typing-dot"></span>';
