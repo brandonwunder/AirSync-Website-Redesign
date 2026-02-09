@@ -238,7 +238,11 @@
       [1200, 1100],  // #3 INCOMING: customer reads pricing, decides (58 chars)
       [500, 1400],   // #4 OUTGOING: AI checks calendar (74 chars)
       [800, 600],    // #5 INCOMING: quick decision (24 chars)
-      [400, 1600]    // #6 OUTGOING: AI confirms booking (95 chars)
+      [400, 1000],   // #6 OUTGOING: AI asks for address (42 chars)
+      [600, 800],    // #7 INCOMING: customer gives address (35 chars)
+      [400, 1200],   // #8 OUTGOING: AI confirms address (52 chars)
+      [500, 500],    // #9 INCOMING: quick confirmation (16 chars)
+      [400, 1600]    // #10 OUTGOING: AI confirms booking (120 chars)
     ];
 
     var delay = 500;
