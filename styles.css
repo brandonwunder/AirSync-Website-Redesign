@@ -154,7 +154,7 @@ h1,h2,h3,h4{font-family:var(--font-display);color:var(--text-primary);line-heigh
 .hero-pill:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:var(--shadow-sm)}
 .hero-pill svg{width:18px;height:18px;color:var(--accent)}
 .hero-actions{display:flex;gap:1rem;flex-wrap:wrap}
-.hero-visual{position:relative;display:flex;align-items:center;justify-content:center}
+.hero-visual{position:relative;display:flex;align-items:center;justify-content:center;margin-top:-60px}
 
 /* Hero floating trade elements */
 .hero-bg-elements{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:0}
