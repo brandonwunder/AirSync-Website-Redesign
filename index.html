@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=29">
+  <link rel="stylesheet" href="styles.css?v=30">
 </head>
 <body>
 
@@ -387,38 +387,58 @@
     <div class="feature-visual">
       <div class="text-bot-demo" id="textBotDemo">
         <div class="text-bot-side-panel">
-          <div class="calendar-widget" id="calendarWidget">
-            <div class="calendar-header">
-              <svg class="calendar-icon" viewBox="0 0 24 24" fill="none">
-                <rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" stroke-width="1.5"/>
-                <path d="M16 2v4M8 2v4M3 10h18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-              </svg>
-              <span class="calendar-title">Business Calendar</span>
-            </div>
-            <div class="calendar-month">
-              <span class="calendar-month-label">Thursday, Jan 16</span>
-            </div>
-            <div class="calendar-slots">
-              <div class="calendar-slot">
-                <span class="calendar-slot-time">8:00 AM</span>
-                <div class="calendar-slot-event calendar-slot-existing"><span>Water Heater Install</span></div>
+          <div class="tablet-mock" id="tabletMock">
+            <div class="tablet-screen">
+              <div class="tablet-statusbar">
+                <span class="tablet-time">9:41</span>
+                <span class="tablet-status-icons">
+                  <svg width="14" height="10" viewBox="0 0 16 12"><path d="M8 2C5.5 2 3.3 3 1.7 4.7l1.4 1.4C4.5 4.7 6.2 4 8 4s3.5.7 4.9 2.1l1.4-1.4C12.7 3 10.5 2 8 2zm0 4c-1.5 0-2.8.6-3.8 1.5L5.6 9c.7-.7 1.5-1 2.4-1s1.7.3 2.4 1l1.4-1.5C10.8 6.6 9.5 6 8 6zm0 4c-.6 0-1.1.2-1.5.6L8 12l1.5-1.4c-.4-.4-.9-.6-1.5-.6z" fill="currentColor"/></svg>
+                  <svg width="20" height="10" viewBox="0 0 22 12"><rect x="0" y="1" width="18" height="10" rx="2" stroke="currentColor" stroke-width="1.2" fill="none"/><rect x="2" y="3" width="12" height="6" rx="1" fill="currentColor"/><path d="M19.5 4.5v3a1.5 1.5 0 000-3z" fill="currentColor"/></svg>
+                </span>
               </div>
-              <div class="calendar-slot" id="calendarTargetSlot">
-                <span class="calendar-slot-time">10:00 AM</span>
-                <div class="calendar-slot-event calendar-slot-empty"><span class="calendar-slot-placeholder">Available</span></div>
+              <div class="tablet-appbar">
+                <svg class="tablet-appbar-menu" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                <svg class="tablet-appbar-logo" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <rect x="3" y="4" width="18" height="18" rx="2" stroke="#4285F4" stroke-width="1.5"/>
+                  <path d="M16 2v4M8 2v4" stroke="#4285F4" stroke-width="1.5" stroke-linecap="round"/>
+                  <path d="M3 10h18" stroke="#4285F4" stroke-width="1.5"/>
+                  <rect x="6" y="13" width="4" height="3" rx="0.5" fill="#EA4335"/>
+                  <rect x="14" y="13" width="4" height="3" rx="0.5" fill="#34A853"/>
+                </svg>
+                <span class="tablet-appbar-title">Calendar</span>
               </div>
-              <div class="calendar-slot">
-                <span class="calendar-slot-time">12:00 PM</span>
-                <div class="calendar-slot-event calendar-slot-existing"><span>Lunch Break</span></div>
+              <div class="calendar-widget" id="calendarWidget">
+                <div class="calendar-header">
+                  <span class="calendar-nav">&lt;</span>
+                  <span class="calendar-title">January 2026</span>
+                  <span class="calendar-nav">&gt;</span>
+                </div>
+                <div class="calendar-month">
+                  <span class="calendar-month-label">Thursday, Jan 16</span>
+                </div>
+                <div class="calendar-slots">
+                  <div class="calendar-slot">
+                    <span class="calendar-slot-time">8:00 AM</span>
+                    <div class="calendar-slot-event calendar-slot-existing"><span>Water Heater Install</span></div>
+                  </div>
+                  <div class="calendar-slot" id="calendarTargetSlot">
+                    <span class="calendar-slot-time">10:00 AM</span>
+                    <div class="calendar-slot-event calendar-slot-empty"><span class="calendar-slot-placeholder">Available</span></div>
+                  </div>
+                  <div class="calendar-slot">
+                    <span class="calendar-slot-time">12:00 PM</span>
+                    <div class="calendar-slot-event calendar-slot-existing"><span>Lunch Break</span></div>
+                  </div>
+                  <div class="calendar-slot">
+                    <span class="calendar-slot-time">2:00 PM</span>
+                    <div class="calendar-slot-event calendar-slot-empty"><span class="calendar-slot-placeholder">Available</span></div>
+                  </div>
+                </div>
+                <div class="calendar-confirm" id="calendarConfirm">
+                  <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#22C55E" stroke-width="2"/><path d="M8 12l3 3 5-5" stroke="#22C55E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <span>Added to Calendar</span>
+                </div>
               </div>
-              <div class="calendar-slot">
-                <span class="calendar-slot-time">2:00 PM</span>
-                <div class="calendar-slot-event calendar-slot-empty"><span class="calendar-slot-placeholder">Available</span></div>
-              </div>
-            </div>
-            <div class="calendar-confirm" id="calendarConfirm">
-              <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#22C55E" stroke-width="2"/><path d="M8 12l3 3 5-5" stroke="#22C55E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <span>Added to Calendar</span>
             </div>
           </div>
         </div>
@@ -1012,6 +1032,6 @@
   </div>
 </footer>
 
-<script src="script.js?v=29"></script>
+<script src="script.js?v=30"></script>
 </body>
 </html>

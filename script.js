@@ -225,7 +225,7 @@
     var content = mockEl.querySelector('.phone-content');
 
     // Calendar elements
-    var calendarWidget = document.getElementById('calendarWidget');
+    var tabletMock = document.getElementById('tabletMock');
     var calendarTargetSlot = document.getElementById('calendarTargetSlot');
     var calendarConfirm = document.getElementById('calendarConfirm');
 
@@ -288,10 +288,10 @@
     // === CALENDAR BOOKING ANIMATION ===
     var calendarDelay = delay;
 
-    if (calendarWidget && calendarTargetSlot && calendarConfirm) {
-      // Step 1: Calendar slides in
+    if (tabletMock && calendarTargetSlot && calendarConfirm) {
+      // Step 1: Tablet slides in
       setTimeout(function () {
-        calendarWidget.classList.add('calendar-visible');
+        tabletMock.classList.add('calendar-visible');
       }, calendarDelay + 800);
 
       // Step 2: Book the 10 AM slot
@@ -721,9 +721,9 @@
         el.classList.remove('chat-hidden');
         el.classList.add('chat-visible');
       });
-      // Show calendar in booked state instantly
-      var calWidget = document.getElementById('calendarWidget');
-      if (calWidget) calWidget.classList.add('calendar-visible');
+      // Show tablet + calendar in booked state instantly
+      var calTablet = document.getElementById('tabletMock');
+      if (calTablet) calTablet.classList.add('calendar-visible');
       var calSlot = document.getElementById('calendarTargetSlot');
       if (calSlot) {
         var ev = calSlot.querySelector('.calendar-slot-event');
