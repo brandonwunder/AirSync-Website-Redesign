@@ -608,7 +608,9 @@
       chatBubbles.forEach(function (bubble, idx) {
         setTimeout(function () {
           bubble.classList.add('wb-visible');
-          if (chatBody && chatBody.scrollHeight > chatBody.clientHeight) {
+          // Only auto-scroll from second bubble onwards (idx > 0)
+          // Let first message stay visible at top
+          if (idx > 0 && chatBody && chatBody.scrollHeight > chatBody.clientHeight) {
             setTimeout(function () {
               chatBody.scrollTo({ top: chatBody.scrollHeight, behavior: 'smooth' });
             }, 100);
