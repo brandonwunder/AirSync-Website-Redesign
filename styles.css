@@ -216,7 +216,7 @@ h1,h2,h3,h4{font-family:var(--font-display);color:var(--text-primary);line-heigh
 /* ============================================================
    4. HVAC STATS PANEL (Hero Section)
    ============================================================ */
-.hvac-stats-panel{position:relative;width:100%;max-width:800px;margin:0 auto;aspect-ratio:4/3}
+.hvac-stats-panel{position:relative;width:100%;max-width:800px;margin:-40px auto 0;aspect-ratio:4/3}
 
 .hvac-frame{width:100%;height:100%;display:block}
 
