@@ -153,78 +153,7 @@
   }
 
   /* ----------------------------------------------------------
-     6. ROI CALCULATOR
-     ---------------------------------------------------------- */
-  var crewSlider = document.getElementById('roiCrew');
-  var crewLabel = document.getElementById('roiCrewLabel');
-  var crewDisplay = document.getElementById('roiCrewDisplay');
-  var ticketInput = document.getElementById('roiTicket');
-  var ticketDisplay = document.getElementById('roiTicketDisplay');
-  var totalInline = document.getElementById('roiTotalInline');
-  var totalEl = document.getElementById('roiTotal');
-  var jobsEl = document.getElementById('roiJobs');
-  var recoveredEl = document.getElementById('roiRecovered');
-  var savedEl = document.getElementById('roiSaved');
-
-  function formatCurrency(n) {
-    if (n >= 1000) {
-      return '$' + Math.round(n / 1000) + 'K';
-    }
-    return '$' + n.toLocaleString();
-  }
-
-  function formatCurrencyFull(n) {
-    return '$' + n.toLocaleString();
-  }
-
-  function calculateROI() {
-    var crew = parseInt(crewSlider.value, 10) || 5;
-    var ticket = parseInt(ticketInput.value.replace(/[^0-9]/g, ''), 10) || 800;
-
-    // Formulas (conservative, realistic estimates)
-    // ~4 extra booked jobs per technician per year
-    // Based on: 27% missed call rate, AI recovery, 40% booking rate
-    var extraJobs = Math.round(crew * 4);
-    var extraRevenue = extraJobs * ticket;
-
-    // Recovered from cold leads = crew * $4,000/year
-    var recovered = crew * 4000;
-
-    // Receptionist replacement: $17/hr × 8 hrs/day × 7 days/week × 52 weeks
-    var receptionistCost = 17 * 8 * 7 * 52; // = $49,504/year
-
-    // Total annual value
-    var total = extraRevenue + recovered + receptionistCost;
-
-    // Update displays
-    crewLabel.textContent = crew;
-    crewDisplay.textContent = crew;
-    ticketDisplay.textContent = '$' + ticket.toLocaleString();
-    totalInline.textContent = formatCurrencyFull(total);
-    totalEl.textContent = formatCurrencyFull(total);
-    jobsEl.textContent = extraJobs.toLocaleString();
-    recoveredEl.textContent = formatCurrency(recovered);
-    savedEl.textContent = formatCurrency(receptionistCost);
-  }
-
-  crewSlider.addEventListener('input', calculateROI);
-  ticketInput.addEventListener('input', calculateROI);
-  ticketInput.addEventListener('blur', function () {
-    // Clean up formatting on blur
-    var val = parseInt(ticketInput.value.replace(/[^0-9]/g, ''), 10);
-    if (val && val > 0) {
-      ticketInput.value = val;
-    } else {
-      ticketInput.value = '800';
-    }
-    calculateROI();
-  });
-
-  // Initial calculation
-  calculateROI();
-
-  /* ----------------------------------------------------------
-     7. FAQ ACCORDION
+     6. FAQ ACCORDION
      ---------------------------------------------------------- */
   var faqItems = document.querySelectorAll('.faq-question');
 
@@ -345,7 +274,357 @@
   }
 
   /* ----------------------------------------------------------
-     10. REDUCED MOTION CHECK
+     10. VOICE BOT ANIMATION
+     ---------------------------------------------------------- */
+  var voiceBotDemo = document.getElementById('voiceBotDemo');
+
+  if (voiceBotDemo && 'IntersectionObserver' in window) {
+    var voiceBotObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          animateVoiceBot(entry.target);
+          voiceBotObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+
+    voiceBotObserver.observe(voiceBotDemo);
+  }
+
+  function animateVoiceBot(demoEl) {
+    var callPhone = demoEl.querySelector('.call-phone');
+    var callIncoming = demoEl.querySelector('.call-screen-incoming');
+    var callConnected = demoEl.querySelector('.call-screen-connected');
+    var callEnded = demoEl.querySelector('.call-screen-ended');
+    var callTranscript = demoEl.querySelector('.call-transcript');
+    var transcriptLines = demoEl.querySelectorAll('.transcript-line');
+    var waveformBars = demoEl.querySelectorAll('.call-waveform-bar');
+    var callTimer = demoEl.querySelector('.call-timer');
+    var transcriptTitle = demoEl.querySelector('.call-transcript-title');
+
+    var stageDelay = 0;
+
+    // Stage 1: Show incoming call screen (2s)
+    setTimeout(function () {
+      callIncoming.classList.add('call-screen-visible');
+    }, stageDelay);
+    stageDelay += 2000;
+
+    // Stage 2: Transition to connected screen (1.5s)
+    setTimeout(function () {
+      callIncoming.classList.remove('call-screen-visible');
+      callConnected.classList.add('call-screen-visible');
+      // Animate waveform bars
+      waveformBars.forEach(function (bar, idx) {
+        setTimeout(function () {
+          bar.classList.add('waveform-animated');
+        }, idx * 100);
+      });
+    }, stageDelay);
+    stageDelay += 1500;
+
+    // Stage 3: Show transcript and animate lines (6s)
+    setTimeout(function () {
+      callPhone.classList.add('phone-call-active');
+      callTranscript.classList.add('transcript-visible');
+      transcriptTitle.classList.add('transcript-visible');
+
+      // Animate transcript lines with delay
+      transcriptLines.forEach(function (line) {
+        var delay = parseInt(line.dataset.delay, 10) * 800;
+        setTimeout(function () {
+          line.classList.add('transcript-line-visible');
+        }, delay);
+      });
+    }, stageDelay);
+    stageDelay += 6000;
+
+    // Stage 4: Show call ended (1.5s)
+    setTimeout(function () {
+      callConnected.classList.remove('call-screen-visible');
+      callEnded.classList.add('call-screen-visible');
+    }, stageDelay);
+    stageDelay += 1500;
+
+    // Stage 5: Trigger email envelope animation after call ends
+    setTimeout(function () {
+      var textBotSection = document.querySelector('#text-bot');
+      if (textBotSection) {
+        var envelopeWrapper = textBotSection.querySelector('.envelope-wrapper');
+        if (envelopeWrapper) {
+          envelopeWrapper.classList.add('envelope-visible');
+          setTimeout(function () {
+            envelopeWrapper.classList.add('envelope-open');
+          }, 300);
+        }
+      }
+    }, stageDelay + 500);
+  }
+
+  /* ----------------------------------------------------------
+     11. WEBSITE BOT CURSOR DEMO ANIMATION
+     ---------------------------------------------------------- */
+  var websiteBotDemo = document.getElementById('websiteBotDemo');
+
+  if (websiteBotDemo && 'IntersectionObserver' in window) {
+    var websiteBotObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          animateWebsiteBot(entry.target);
+          websiteBotObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+
+    websiteBotObserver.observe(websiteBotDemo);
+  }
+
+  function animateWebsiteBot(demoEl) {
+    var demoCursor = demoEl.querySelector('#demoCursor');
+    var chatPrompt = demoEl.querySelector('#chatPrompt');
+    var chatWidget = demoEl.querySelector('#chatWidget');
+    var chatBubbles = demoEl.querySelectorAll('.chat-widget-bubble');
+    var browserBody = demoEl.querySelector('.browser-body');
+
+    var stageDelay = 0;
+
+    // Stage 1: Cursor appears (0.5s)
+    setTimeout(function () {
+      demoEl.classList.add('cursor-active');
+      demoCursor.style.top = '80px';
+      demoCursor.style.left = '20px';
+    }, stageDelay);
+    stageDelay += 500;
+
+    // Stage 2: Cursor browses (2s) - animate movement
+    setTimeout(function () {
+      demoCursor.style.transition = 'all 0.6s ease-out';
+      demoCursor.style.top = '140px';
+      demoCursor.style.left = '80px';
+
+      setTimeout(function () {
+        demoCursor.style.top = '200px';
+        demoCursor.style.left = '40px';
+      }, 600);
+    }, stageDelay);
+    stageDelay += 2000;
+
+    // Stage 3: Chat prompt appears (1s)
+    setTimeout(function () {
+      chatPrompt.classList.add('visible');
+    }, stageDelay);
+    stageDelay += 1000;
+
+    // Stage 4: Cursor moves to prompt (1s)
+    setTimeout(function () {
+      demoCursor.style.top = 'calc(100% - 60px)';
+      demoCursor.style.left = 'calc(100% - 60px)';
+    }, stageDelay);
+    stageDelay += 1000;
+
+    // Stage 5: Click animation (0.5s)
+    setTimeout(function () {
+      demoCursor.style.transform = 'scale(0.85)';
+      setTimeout(function () {
+        demoCursor.style.transform = 'scale(1)';
+      }, 200);
+    }, stageDelay);
+    stageDelay += 500;
+
+    // Stage 6: Chat widget opens (0.5s)
+    setTimeout(function () {
+      chatWidget.classList.add('widget-open');
+    }, stageDelay);
+    stageDelay += 500;
+
+    // Stage 7: Chat bubbles appear one by one (3.5s)
+    setTimeout(function () {
+      chatBubbles.forEach(function (bubble, idx) {
+        setTimeout(function () {
+          bubble.classList.add('wb-visible');
+          if (browserBody) {
+            browserBody.scrollTop = browserBody.scrollHeight;
+          }
+        }, idx * 600);
+      });
+    }, stageDelay);
+  }
+
+  /* ----------------------------------------------------------
+     12. INVOICE AUTO-FILL ANIMATION
+     ---------------------------------------------------------- */
+  var invoiceDemo = document.getElementById('invoiceDemo');
+
+  if (invoiceDemo && 'IntersectionObserver' in window) {
+    var invoiceObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          animateInvoice(entry.target);
+          invoiceObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+
+    invoiceObserver.observe(invoiceDemo);
+  }
+
+  function animateInvoice(demoEl) {
+    var metaRows = demoEl.querySelectorAll('.invoice-meta-row');
+    var items = demoEl.querySelectorAll('.invoice-item');
+    var totalAmount = demoEl.querySelector('#invoiceTotalAmount');
+    var badge = demoEl.querySelector('#invoiceBadge');
+    var statusBar = demoEl.querySelector('#invoiceStatusBar');
+    var deposited = demoEl.querySelector('#invoiceDeposited');
+
+    var stageDelay = 0;
+
+    // Stage 1: Show meta rows (1s)
+    metaRows.forEach(function (row, idx) {
+      setTimeout(function () {
+        row.classList.add('inv-visible');
+      }, stageDelay + idx * 250);
+    });
+    stageDelay += 1000;
+
+    // Stage 2: Show invoice items one by one (2s)
+    items.forEach(function (item, idx) {
+      setTimeout(function () {
+        item.classList.add('inv-visible');
+      }, stageDelay + idx * 400);
+    });
+    stageDelay += 2000;
+
+    // Stage 3: Animate total counter (1.5s)
+    setTimeout(function () {
+      if (totalAmount && totalAmount.getAttribute('data-count') === null) {
+        totalAmount.setAttribute('data-count', '1350');
+        totalAmount.setAttribute('data-prefix', '$');
+        animateCounter(totalAmount);
+        totalAmount.classList.add('inv-visible');
+      }
+    }, stageDelay);
+    stageDelay += 1500;
+
+    // Stage 4: Show status bar / Mark as Paid (1s)
+    setTimeout(function () {
+      statusBar.classList.add('inv-visible');
+      if (badge) {
+        badge.classList.add('badge-visible');
+        badge.textContent = 'PAID';
+        badge.className = 'invoice-badge badge-visible invoice-badge-paid';
+      }
+    }, stageDelay);
+    stageDelay += 1000;
+
+    // Stage 5: Show deposited confirmation (1.5s)
+    setTimeout(function () {
+      deposited.classList.add('inv-visible');
+    }, stageDelay);
+  }
+
+  /* ----------------------------------------------------------
+     13. REVIEWS BEFORE/AFTER TRANSFORMATION ANIMATION
+     ---------------------------------------------------------- */
+  var reviewsDemo = document.getElementById('reviewsDemo');
+
+  if (reviewsDemo && 'IntersectionObserver' in window) {
+    var reviewsObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          animateReviews(entry.target);
+          reviewsObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+
+    reviewsObserver.observe(reviewsDemo);
+  }
+
+  function animateReviews(demoEl) {
+    var reviewsLabel = demoEl.querySelector('#reviewsLabel');
+    var reviewsStars = demoEl.querySelector('#reviewsStars');
+    var reviewsRating = demoEl.querySelector('#reviewsRating');
+    var reviewsCount = demoEl.querySelector('#reviewsCount');
+    var reviewsSampleStars = demoEl.querySelector('#reviewsSampleStars');
+    var reviewsSampleText = demoEl.querySelector('#reviewsSampleText');
+    var reviewsSampleAuthor = demoEl.querySelector('#reviewsSampleAuthor');
+    var reviewsSampleMeta = demoEl.querySelector('#reviewsSampleMeta');
+
+    var stageDelay = 0;
+
+    // Hold on before state for 2s
+    stageDelay += 2000;
+
+    // Stage 1: Start transition to "after" state (3s)
+    setTimeout(function () {
+      // Change CSS class to trigger color transitions
+      demoEl.classList.remove('state-before');
+      demoEl.classList.add('state-after');
+
+      // Update label
+      if (reviewsLabel) {
+        reviewsLabel.textContent = 'After';
+      }
+
+      // Update stars: 3 → 5
+      if (reviewsStars) {
+        reviewsStars.textContent = '★★★★★';
+      }
+
+      // Update rating counter (3.2 → 4.9)
+      if (reviewsRating) {
+        var ratingEl = reviewsRating;
+        var ratingStart = 3.2;
+        var ratingTarget = 4.9;
+        var ratingDuration = 1500;
+        var ratingStartTime = null;
+
+        function stepRating(timestamp) {
+          if (!ratingStartTime) ratingStartTime = timestamp;
+          var progress = Math.min((timestamp - ratingStartTime) / ratingDuration, 1);
+          var easedProgress = 1 - Math.pow(1 - progress, 3);
+          var current = ratingStart + (ratingTarget - ratingStart) * easedProgress;
+          ratingEl.textContent = current.toFixed(1);
+
+          if (progress < 1) {
+            requestAnimationFrame(stepRating);
+          }
+        }
+
+        requestAnimationFrame(stepRating);
+      }
+
+      // Update review count counter (14 → 127)
+      if (reviewsCount) {
+        reviewsCount.setAttribute('data-count', '127');
+        reviewsCount.textContent = '14';
+        animateCounter(reviewsCount);
+      }
+
+      // Update sample review stars
+      if (reviewsSampleStars) {
+        reviewsSampleStars.textContent = '★★★★★';
+      }
+
+      // Update sample review text
+      if (reviewsSampleText) {
+        reviewsSampleText.textContent = '"Best plumber in town. Fast response, fair price, cleaned up after themselves. 10/10."';
+      }
+
+      // Update sample review author
+      if (reviewsSampleAuthor) {
+        reviewsSampleAuthor.textContent = 'Sarah M.';
+      }
+
+      // Update sample review meta
+      if (reviewsSampleMeta) {
+        reviewsSampleMeta.textContent = 'Google • 2 days ago';
+      }
+    }, stageDelay);
+  }
+
+  /* ----------------------------------------------------------
+     14. REDUCED MOTION CHECK
      ---------------------------------------------------------- */
   var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
