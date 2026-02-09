@@ -338,6 +338,55 @@
     voiceBotObserver.observe(voiceBotDemo);
   }
 
+  // SVG icons for transcript avatars
+  var TRANSCRIPT_BOT_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>';
+  var TRANSCRIPT_CUSTOMER_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>';
+
+  // Transcript messages: { time (seconds into call), speaker, text }
+  var TRANSCRIPT_SCRIPT = [
+    { time: 1, speaker: 'customer', text: "Oh my God, I need help! A pipe just burst under my kitchen sink and water is going everywhere!" },
+    { time: 5, speaker: 'bot', text: "I understand this is an emergency. Let\u2019s get this handled right now. Do you know where your main water shutoff valve is?" },
+    { time: 10, speaker: 'customer', text: "I think it\u2019s somewhere in the basement? I don\u2019t know, there\u2019s so much water!" },
+    { time: 14, speaker: 'bot', text: "That\u2019s okay, stay calm. Head to your basement and look for a round valve on the main water line \u2014 it\u2019s usually near where the pipe enters your house." },
+    { time: 20, speaker: 'customer', text: "Okay I\u2019m heading down there\u2026 I see some pipes along the wall\u2026" },
+    { time: 24, speaker: 'bot', text: "Look for a valve with a round handle or a lever. Turn it clockwise until it stops to shut off the water completely." },
+    { time: 29, speaker: 'customer', text: "I found it! Turning it now\u2026 okay, I think the water stopped!" },
+    { time: 32, speaker: 'bot', text: "Perfect. Let me get an emergency plumber out to you right away. What\u2019s your address?" },
+    { time: 36, speaker: 'customer', text: "It\u2019s 847 Oakwood Drive in Riverside." },
+    { time: 38, speaker: 'bot', text: "Got it \u2014 847 Oakwood Drive, Riverside. Checking emergency availability\u2026" },
+    { time: 42, speaker: 'bot', text: "I have a licensed plumber available now. Booking them for an emergency visit." },
+    { time: 46, speaker: 'customer', text: "Oh thank God. How soon can they get here?" },
+    { time: 48, speaker: 'bot', text: "They\u2019ll be at your door within 45 minutes. Sending you a text confirmation with their name and ETA now." },
+    { time: 51, speaker: 'customer', text: "Thank you so much. You literally saved me." }
+  ];
+
+  function createTranscriptMessage(speaker, text) {
+    var msg = document.createElement('div');
+    msg.className = 'transcript-msg';
+
+    var avatar = document.createElement('div');
+    avatar.className = 'transcript-avatar transcript-avatar-' + speaker;
+    avatar.innerHTML = speaker === 'bot' ? TRANSCRIPT_BOT_SVG : TRANSCRIPT_CUSTOMER_SVG;
+
+    var bubble = document.createElement('div');
+    bubble.className = 'transcript-bubble';
+
+    var speakerEl = document.createElement('span');
+    speakerEl.className = 'transcript-speaker transcript-speaker-' + speaker;
+    speakerEl.textContent = speaker === 'bot' ? 'AirSync AI' : 'Homeowner';
+
+    var textEl = document.createElement('p');
+    textEl.className = 'transcript-text';
+    textEl.textContent = text;
+
+    bubble.appendChild(speakerEl);
+    bubble.appendChild(textEl);
+    msg.appendChild(avatar);
+    msg.appendChild(bubble);
+
+    return msg;
+  }
+
   function animateVoiceBot(demoEl) {
     var callPhone = demoEl.querySelector('.call-phone');
     var callIncoming = demoEl.querySelector('.call-screen-incoming');
@@ -346,6 +395,12 @@
     var waveformBars = demoEl.querySelectorAll('.call-waveform-bar');
     var callTimer = demoEl.querySelector('.call-timer');
     var callEndedDuration = demoEl.querySelector('.call-ended-duration');
+
+    // Transcript elements
+    var voiceTranscript = document.getElementById('voiceTranscript');
+    var transcriptHeader = document.getElementById('transcriptHeader');
+    var transcriptMessages = document.getElementById('transcriptMessages');
+
     var timerInterval = null;
     var timerSeconds = 0;
 
@@ -379,7 +434,7 @@
     }, stageDelay);
     stageDelay += 2000;
 
-    // Stage 2: Answer — connected screen + waveform + timer
+    // Stage 2: Answer — connected screen + waveform + timer + transcript
     setTimeout(function () {
       callIncoming.classList.remove('call-screen-visible');
       callConnected.classList.add('call-screen-visible');
@@ -390,10 +445,28 @@
           bar.classList.add('waveform-animated');
         }, idx * 100);
       });
+
+      // Show transcript panel and activate header
+      if (voiceTranscript) voiceTranscript.classList.add('transcript-visible');
+      if (transcriptHeader) transcriptHeader.classList.add('transcript-active');
+
+      // Schedule transcript messages
+      if (transcriptMessages) {
+        TRANSCRIPT_SCRIPT.forEach(function (entry) {
+          setTimeout(function () {
+            var msgEl = createTranscriptMessage(entry.speaker, entry.text);
+            transcriptMessages.appendChild(msgEl);
+            requestAnimationFrame(function () {
+              msgEl.classList.add('msg-visible');
+            });
+            transcriptMessages.scrollTop = transcriptMessages.scrollHeight;
+          }, entry.time * 1000);
+        });
+      }
     }, stageDelay);
 
-    // Stage 3: Call ended after 8s connected
-    var endDelay = stageDelay + 8000;
+    // Stage 3: Call ended after 52s connected
+    var endDelay = stageDelay + 52000;
     setTimeout(function () {
       stopTimer();
       callConnected.classList.remove('call-screen-visible');
@@ -401,6 +474,8 @@
       waveformBars.forEach(function (bar) {
         bar.classList.remove('waveform-animated');
       });
+      // Stop transcript live indicator
+      if (transcriptHeader) transcriptHeader.classList.remove('transcript-active');
     }, endDelay);
   }
 
@@ -736,6 +811,19 @@
       }
       var calConf = document.getElementById('calendarConfirm');
       if (calConf) calConf.classList.add('confirm-visible');
+      // Show voice transcript with all messages instantly
+      var vt = document.getElementById('voiceTranscript');
+      if (vt) vt.classList.add('transcript-visible');
+      var th = document.getElementById('transcriptHeader');
+      if (th) th.classList.add('transcript-active');
+      var tm = document.getElementById('transcriptMessages');
+      if (tm) {
+        TRANSCRIPT_SCRIPT.forEach(function (entry) {
+          var msgEl = createTranscriptMessage(entry.speaker, entry.text);
+          msgEl.classList.add('msg-visible');
+          tm.appendChild(msgEl);
+        });
+      }
     }
   }
 
