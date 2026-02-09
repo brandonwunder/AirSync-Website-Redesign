@@ -633,7 +633,33 @@
   }
 
   /* ----------------------------------------------------------
-     14. REDUCED MOTION CHECK
+     14. HVAC STATS PANEL ANIMATION
+     ---------------------------------------------------------- */
+  var hvacStatsPanel = document.querySelector('.hvac-stats-panel');
+
+  if (hvacStatsPanel && 'IntersectionObserver' in window) {
+    var hvacObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          // Animate counter numbers
+          var hvacStatNumbers = hvacStatsPanel.querySelectorAll('.hvac-stat-number');
+          hvacStatNumbers.forEach(function (el) {
+            animateCounter(el);
+          });
+          hvacObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+
+    hvacObserver.observe(hvacStatsPanel);
+  } else if (hvacStatsPanel) {
+    // Fallback for browsers without IntersectionObserver
+    var hvacStatNumbers = hvacStatsPanel.querySelectorAll('.hvac-stat-number');
+    hvacStatNumbers.forEach(animateCounter);
+  }
+
+  /* ----------------------------------------------------------
+     15. REDUCED MOTION CHECK
      ---------------------------------------------------------- */
   var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 

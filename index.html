@@ -122,57 +122,99 @@
   </div>
 
   <div class="hero-visual reveal">
-    <div class="dashboard-mock">
-      <div class="dashboard-topbar">
-        <div class="dashboard-dot dashboard-dot-red"></div>
-        <div class="dashboard-dot dashboard-dot-yellow"></div>
-        <div class="dashboard-dot dashboard-dot-green"></div>
-        <div class="dashboard-title">AirSync Dashboard</div>
+    <div class="hvac-stats-panel">
+      <!-- HVAC Frame SVG -->
+      <svg class="hvac-frame" viewBox="0 0 800 600" aria-hidden="true">
+        <!-- Outer frame -->
+        <defs>
+          <linearGradient id="hvacGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color:#1a2a3a;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#0a1a2a;stop-opacity:1" />
+          </linearGradient>
+          <filter id="hvacShadow">
+            <feDropShadow dx="0" dy="4" stdDeviation="8" flood-opacity="0.3"/>
+          </filter>
+        </defs>
+
+        <!-- Main frame body -->
+        <rect x="50" y="30" width="700" height="540" rx="24" fill="url(#hvacGradient)" stroke="rgba(0,212,255,0.3)" stroke-width="2" filter="url(#hvacShadow)"/>
+
+        <!-- Top vents -->
+        <g opacity="0.6">
+          <rect x="80" y="50" width="20" height="8" rx="2" fill="rgba(0,212,255,0.4)"/>
+          <rect x="120" y="50" width="20" height="8" rx="2" fill="rgba(0,212,255,0.4)"/>
+          <rect x="160" y="50" width="20" height="8" rx="2" fill="rgba(0,212,255,0.4)"/>
+          <rect x="200" y="50" width="20" height="8" rx="2" fill="rgba(0,212,255,0.4)"/>
+          <rect x="240" y="50" width="20" height="8" rx="2" fill="rgba(0,212,255,0.4)"/>
+          <rect x="280" y="50" width="20" height="8" rx="2" fill="rgba(0,212,255,0.4)"/>
+          <rect x="320" y="50" width="20" height="8" rx="2" fill="rgba(0,212,255,0.4)"/>
+          <rect x="360" y="50" width="20" height="8" rx="2" fill="rgba(0,212,255,0.4)"/>
+          <rect x="400" y="50" width="20" height="8" rx="2" fill="rgba(0,212,255,0.4)"/>
+          <rect x="440" y="50" width="20" height="8" rx="2" fill="rgba(0,212,255,0.4)"/>
+          <rect x="480" y="50" width="20" height="8" rx="2" fill="rgba(0,212,255,0.4)"/>
+          <rect x="520" y="50" width="20" height="8" rx="2" fill="rgba(0,212,255,0.4)"/>
+          <rect x="560" y="50" width="20" height="8" rx="2" fill="rgba(0,212,255,0.4)"/>
+          <rect x="600" y="50" width="20" height="8" rx="2" fill="rgba(0,212,255,0.4)"/>
+          <rect x="640" y="50" width="20" height="8" rx="2" fill="rgba(0,212,255,0.4)"/>
+          <rect x="680" y="50" width="20" height="8" rx="2" fill="rgba(0,212,255,0.4)"/>
+        </g>
+
+        <!-- Bottom vents -->
+        <g opacity="0.6">
+          <rect x="80" y="542" width="20" height="8" rx="2" fill="rgba(0,212,255,0.4)"/>
+          <rect x="680" y="542" width="20" height="8" rx="2" fill="rgba(0,212,255,0.4)"/>
+        </g>
+
+        <!-- Decorative corners -->
+        <circle cx="70" cy="50" r="6" fill="rgba(0,212,255,0.2)"/>
+        <circle cx="730" cy="50" r="6" fill="rgba(0,212,255,0.2)"/>
+        <circle cx="70" cy="550" r="6" fill="rgba(0,212,255,0.2)"/>
+        <circle cx="730" cy="550" r="6" fill="rgba(0,212,255,0.2)"/>
+      </svg>
+
+      <!-- AirSync Logo -->
+      <div class="hvac-logo">
+        <img src="airsync_logo_lighter_purple.png" alt="AirSync Systems" />
       </div>
-      <div class="dashboard-body">
-        <div class="dashboard-stats">
-          <div class="dash-stat">
-            <div class="dash-stat-number" data-count="847">0</div>
-            <div class="dash-stat-label">Calls Today</div>
+
+      <!-- Stats Display -->
+      <div class="hvac-display">
+        <div class="hvac-display-grid">
+          <!-- Stat 1: 391% -->
+          <div class="hvac-stat hvac-stat-primary">
+            <div class="hvac-stat-number" data-count="391" data-suffix="%">0</div>
+            <div class="hvac-stat-label">Faster Response</div>
+            <div class="hvac-stat-sublabel">Under 60 seconds</div>
           </div>
-          <div class="dash-stat">
-            <div class="dash-stat-number" data-count="100" data-suffix="%">0</div>
-            <div class="dash-stat-label">Answered</div>
+
+          <!-- Stat 2: 78% -->
+          <div class="hvac-stat">
+            <div class="hvac-stat-number" data-count="78" data-suffix="%">0</div>
+            <div class="hvac-stat-label">Hire First Responder</div>
+            <div class="hvac-stat-sublabel">Homeowner behavior</div>
           </div>
-          <div class="dash-stat">
-            <div class="dash-stat-number" data-prefix="$" data-count="42" data-suffix="K">0</div>
-            <div class="dash-stat-label">Revenue</div>
+
+          <!-- Stat 3: 27% -->
+          <div class="hvac-stat hvac-stat-warning">
+            <div class="hvac-stat-number" data-count="27" data-suffix="%">0</div>
+            <div class="hvac-stat-label">Calls Unanswered</div>
+            <div class="hvac-stat-sublabel">Industry average</div>
+          </div>
+
+          <!-- Stat 4: $1,200 -->
+          <div class="hvac-stat hvac-stat-danger">
+            <div class="hvac-stat-number" data-prefix="$" data-count="1200">0</div>
+            <div class="hvac-stat-label">Lost Per Missed</div>
+            <div class="hvac-stat-sublabel">Average revenue</div>
           </div>
         </div>
-        <div class="dashboard-activity">
-          <div class="dash-row">
-            <div class="dash-row-left">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
-              Burst Pipe Emergency &mdash; 9th St
-            </div>
-            <span class="dash-row-status status-booked">Booked</span>
-          </div>
-          <div class="dash-row">
-            <div class="dash-row-left">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00D4FF" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
-              Water Heater Quote &mdash; 742 Oak Ave
-            </div>
-            <span class="dash-row-status status-pending">Follow Up</span>
-          </div>
-          <div class="dash-row">
-            <div class="dash-row-left">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#007AFF" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-              Drain Camera &mdash; Martinez Residence
-            </div>
-            <span class="dash-row-status status-followup">Sent</span>
-          </div>
-          <div class="dash-row">
-            <div class="dash-row-left">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
-              Tankless Install &mdash; Johnson Home
-            </div>
-            <span class="dash-row-status status-booked">Booked</span>
-          </div>
+      </div>
+
+      <!-- Status Indicator -->
+      <div class="hvac-controls">
+        <div class="hvac-indicator hvac-indicator-active">
+          <div class="hvac-indicator-dot"></div>
+          <span>SYSTEM ACTIVE</span>
         </div>
       </div>
     </div>
@@ -209,34 +251,6 @@
   </div>
 </div>
 
-<!-- ============================================================
-     4. STATS
-     ============================================================ -->
-<section class="stats-section" id="results">
-  <div class="section-header container reveal">
-    <div class="section-label">The Automation Gap</div>
-    <h2 class="section-title">Your Competitors Are Already Automating.<br><span class="text-accent">Are You?</span></h2>
-  </div>
-
-  <div class="stats-grid container reveal-stagger">
-    <div class="stat-card stat-cyan">
-      <div class="stat-number" data-count="391" data-suffix="%">0</div>
-      <div class="stat-label">More conversions responding in under 60 seconds</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-number" data-count="78" data-suffix="%">0</div>
-      <div class="stat-label">Of homeowners hire whoever responds first</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-number" data-count="27" data-suffix="%">0</div>
-      <div class="stat-label">Of calls to plumbing businesses go unanswered</div>
-    </div>
-    <div class="stat-card stat-danger">
-      <div class="stat-number" data-prefix="$" data-count="1200">0</div>
-      <div class="stat-label">Average revenue lost per missed plumbing call</div>
-    </div>
-  </div>
-</section>
 
 <!-- ============================================================
      5. FEATURE DEEP-DIVES

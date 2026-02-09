@@ -214,21 +214,68 @@ h1,h2,h3,h4{font-family:var(--font-display);color:var(--text-primary);line-heigh
 }
 
 /* ============================================================
-   4. STATS SECTION
+   4. HVAC STATS PANEL (Hero Section)
    ============================================================ */
-.stats-section{background:var(--bg-primary);padding:6rem 0;color:var(--text-on-dark)}
-.stats-section .section-label::before{background:var(--accent)}
-.stats-section .section-label{color:var(--accent)}
-.stats-section .section-title{color:var(--text-on-dark)}
+.hvac-stats-panel{position:relative;width:100%;max-width:800px;margin:0 auto;aspect-ratio:4/3}
 
-.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem}
-.stat-card{background:var(--dark-surface);border:1px solid var(--dark-border);border-radius:var(--radius-md);padding:2rem;text-align:center;transition:all var(--dur-normal) var(--ease-out)}
-.stat-card:hover{transform:translateY(-4px);border-color:rgba(255,255,255,0.2)}
-.stat-number{font-family:var(--font-display);font-size:clamp(2.5rem,4vw,3.5rem);font-weight:700;color:var(--text-on-dark);line-height:1}
-.stat-label{font-size:0.875rem;color:var(--text-on-dark-muted);margin-top:0.75rem;line-height:1.5}
-.stat-cyan .stat-number{color:var(--accent)}
-.stat-accent .stat-number{color:var(--accent)}
-.stat-danger .stat-number{color:#EF4444}
+.hvac-frame{width:100%;height:100%;display:block}
+
+.hvac-logo{position:absolute;top:50px;left:50%;transform:translateX(-50%);z-index:10;opacity:0;animation:fadeInUp 0.6s ease-out 0.2s forwards}
+
+.hvac-logo img{width:120px;height:auto;display:block;filter:drop-shadow(0 0 20px rgba(0,212,255,0.3))}
+
+.hvac-display{position:absolute;top:140px;left:50%;transform:translateX(-50%);width:calc(100% - 120px);aspect-ratio:1;max-width:560px;z-index:5;backdrop-filter:blur(10px);background:rgba(26,26,46,0.5);border-radius:16px;border:1px solid rgba(0,212,255,0.2);padding:2rem;opacity:0;animation:fadeInScale 0.6s ease-out 0.3s forwards}
+
+.hvac-display-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem;width:100%;height:100%}
+
+.hvac-stat{background:rgba(26,26,46,0.6);border:1px solid rgba(0,212,255,0.3);border-radius:12px;padding:1.5rem;text-align:center;transition:all 0.3s ease-out;display:flex;flex-direction:column;justify-content:center;cursor:pointer;opacity:0;animation:slideUp 0.5s ease-out forwards}
+
+.hvac-stat:nth-child(1){animation-delay:0.4s}
+.hvac-stat:nth-child(2){animation-delay:0.5s}
+.hvac-stat:nth-child(3){animation-delay:0.6s}
+.hvac-stat:nth-child(4){animation-delay:0.7s}
+
+.hvac-stat:hover{transform:translateY(-4px);border-color:rgba(0,212,255,0.6);box-shadow:0 8px 32px rgba(0,212,255,0.1)}
+
+.hvac-stat-primary .hvac-stat-number{color:var(--accent);text-shadow:0 0 20px rgba(0,212,255,0.4)}
+
+.hvac-stat-warning .hvac-stat-number{color:#F59E0B;text-shadow:0 0 20px rgba(245,158,11,0.3)}
+
+.hvac-stat-danger .hvac-stat-number{color:#EF4444;text-shadow:0 0 20px rgba(239,68,68,0.3)}
+
+.hvac-stat-number{font-family:var(--font-display);font-size:clamp(2rem,6vw,3rem);font-weight:700;line-height:1;margin-bottom:0.5rem;letter-spacing:-0.02em}
+
+.hvac-stat-label{font-size:0.875rem;font-weight:600;color:var(--text-on-dark);margin-bottom:0.25rem}
+
+.hvac-stat-sublabel{font-size:0.75rem;color:var(--text-on-dark-muted)}
+
+.hvac-controls{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);display:flex;gap:1rem;z-index:5}
+
+.hvac-indicator{display:flex;align-items:center;gap:0.5rem;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:rgba(0,212,255,0.6);opacity:0;animation:fadeIn 1s ease-out 1.2s forwards}
+
+.hvac-indicator-dot{width:8px;height:8px;background:rgba(0,212,255,0.8);border-radius:50%;animation:pulse 2s ease-in-out infinite}
+
+@keyframes fadeInUp{from{opacity:0;transform:translateX(-50%) translateY(20px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+
+@keyframes fadeInScale{from{opacity:0;transform:translateX(-50%) scale(0.95)}to{opacity:1;transform:translateX(-50%) scale(1)}}
+
+@keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
+@keyframes pulse{0%,100%{transform:scale(1);opacity:0.8}50%{transform:scale(1.2);opacity:1}}
+
+/* Responsive Design */
+@media(max-width:768px){
+  .hvac-display{top:120px;width:calc(100% - 80px);padding:1.5rem}
+  .hvac-display-grid{gap:1rem;grid-template-columns:1fr}
+  .hvac-stat{padding:1rem}
+  .hvac-stat-number{font-size:clamp(1.5rem,5vw,2.5rem)}
+  .hvac-stat-label{font-size:0.8rem}
+  .hvac-stat-sublabel{font-size:0.7rem}
+  .hvac-logo{width:100px}
+  .hvac-logo img{width:100px}
+}
 
 /* ============================================================
    6. FEATURE DEEP-DIVE
