@@ -596,6 +596,8 @@
     // Stage 6: Chat widget opens (0.5s)
     setTimeout(function () {
       chatWidget.classList.add('widget-open');
+      var chatBody = chatWidget.querySelector('.chat-widget-body');
+      if (chatBody) chatBody.scrollTop = 0;
     }, stageDelay);
     stageDelay += 500;
 
