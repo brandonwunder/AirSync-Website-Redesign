@@ -339,12 +339,12 @@
   }
 
   // SVG icons for transcript avatars
-  var TRANSCRIPT_BOT_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>';
-  var TRANSCRIPT_CUSTOMER_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>';
+  var TRANSCRIPT_BOT_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="14" height="10" rx="2"/><line x1="12" y1="4" x2="12" y2="9"/><circle cx="12" cy="3" r="1.5"/><circle cx="9" cy="13" r="1" fill="currentColor" stroke="none"/><circle cx="15" cy="13" r="1" fill="currentColor" stroke="none"/><line x1="9.5" y1="16.5" x2="14.5" y2="16.5"/><line x1="3" y1="13" x2="5" y2="13"/><line x1="19" y1="13" x2="21" y2="13"/></svg>';
+  var TRANSCRIPT_CUSTOMER_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7" r="4"/><path d="M7.5 7c.5-3 2-4.5 4.5-4.5s4 1.5 4.5 4.5"/><path d="M6.5 8.5c-.3 1.5-.5 3-.5 4"/><path d="M17.5 8.5c.3 1.5.5 3 .5 4"/><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/></svg>';
 
   // Transcript messages: { time (seconds into call), speaker, text }
   var TRANSCRIPT_SCRIPT = [
-    { time: 1, speaker: 'customer', text: "Oh my God, I need help! A pipe just burst under my kitchen sink and water is going everywhere!" },
+    { time: 1, speaker: 'customer', text: "I need help! A pipe just burst under my kitchen sink and water is going everywhere!" },
     { time: 5, speaker: 'bot', text: "I understand this is an emergency. Let\u2019s get this handled right now. Do you know where your main water shutoff valve is?" },
     { time: 10, speaker: 'customer', text: "I think it\u2019s somewhere in the basement? I don\u2019t know, there\u2019s so much water!" },
     { time: 14, speaker: 'bot', text: "That\u2019s okay, stay calm. Head to your basement and look for a round valve on the main water line \u2014 it\u2019s usually near where the pipe enters your house." },
@@ -385,6 +385,20 @@
     msg.appendChild(bubble);
 
     return msg;
+  }
+
+  function createTranscriptTyping(speaker) {
+    var el = document.createElement('div');
+    el.className = 'transcript-typing';
+    var avatar = document.createElement('div');
+    avatar.className = 'transcript-avatar transcript-avatar-' + speaker;
+    avatar.innerHTML = speaker === 'bot' ? TRANSCRIPT_BOT_SVG : TRANSCRIPT_CUSTOMER_SVG;
+    var dots = document.createElement('div');
+    dots.className = 'transcript-typing-dots';
+    dots.innerHTML = '<span class="transcript-typing-dot"></span><span class="transcript-typing-dot"></span><span class="transcript-typing-dot"></span>';
+    el.appendChild(avatar);
+    el.appendChild(dots);
+    return el;
   }
 
   function animateVoiceBot(demoEl) {
@@ -446,21 +460,37 @@
         }, idx * 100);
       });
 
-      // Show transcript panel and activate header
-      if (voiceTranscript) voiceTranscript.classList.add('transcript-visible');
-      if (transcriptHeader) transcriptHeader.classList.add('transcript-active');
+      // Show transcript panel at 1 second into the call
+      var PANEL_DELAY = 1000;
+      var TYPING_LEAD = 1500;
+      setTimeout(function () {
+        if (voiceTranscript) voiceTranscript.classList.add('transcript-visible');
+        if (transcriptHeader) transcriptHeader.classList.add('transcript-active');
+      }, PANEL_DELAY);
 
-      // Schedule transcript messages
+      // Schedule transcript messages with typing indicators
       if (transcriptMessages) {
         TRANSCRIPT_SCRIPT.forEach(function (entry) {
+          var msgTime = entry.time * 1000;
+          // Typing dots appear TYPING_LEAD ms before the message, but never before the panel is visible
+          var typingTime = Math.max(PANEL_DELAY, msgTime - TYPING_LEAD);
+          var typingDuration = msgTime - typingTime;
+
+          // Show typing dots
           setTimeout(function () {
-            var msgEl = createTranscriptMessage(entry.speaker, entry.text);
-            transcriptMessages.appendChild(msgEl);
-            requestAnimationFrame(function () {
-              msgEl.classList.add('msg-visible');
-            });
+            var typingEl = createTranscriptTyping(entry.speaker);
+            transcriptMessages.appendChild(typingEl);
+            requestAnimationFrame(function () { typingEl.classList.add('msg-visible'); });
             transcriptMessages.scrollTop = transcriptMessages.scrollHeight;
-          }, entry.time * 1000);
+
+            // Replace with actual message
+            setTimeout(function () {
+              var msgEl = createTranscriptMessage(entry.speaker, entry.text);
+              transcriptMessages.replaceChild(msgEl, typingEl);
+              requestAnimationFrame(function () { msgEl.classList.add('msg-visible'); });
+              transcriptMessages.scrollTop = transcriptMessages.scrollHeight;
+            }, Math.max(typingDuration, 300));
+          }, typingTime);
         });
       }
     }, stageDelay);
