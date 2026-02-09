@@ -498,7 +498,7 @@
       chatBubbles.forEach(function (bubble, idx) {
         setTimeout(function () {
           bubble.classList.add('wb-visible');
-          if (chatBody) {
+          if (chatBody && chatBody.scrollHeight > chatBody.clientHeight) {
             setTimeout(function () {
               chatBody.scrollTo({ top: chatBody.scrollHeight, behavior: 'smooth' });
             }, 100);

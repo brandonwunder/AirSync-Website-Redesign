@@ -539,7 +539,8 @@ h1,h2,h3,h4{font-family:var(--font-display);color:var(--text-primary);line-heigh
 .chat-widget.widget-open{opacity:1;transform:scale(1) translateY(0)}
 .chat-widget-header{display:flex;align-items:center;gap:12px;padding:16px 24px;background:var(--accent);color:var(--dark);font-size:1.5rem;font-weight:700}
 .chat-widget-header svg{display:inline-block;flex-shrink:0}
-.chat-widget-body{padding:12px;display:flex;flex-direction:column;gap:8px;max-height:187px;overflow-y:auto;scroll-behavior:smooth}
+.chat-widget-body{padding:12px;display:flex;flex-direction:column;gap:8px;max-height:187px;overflow-y:auto;scroll-behavior:smooth;scrollbar-width:none;-ms-overflow-style:none}
+.chat-widget-body::-webkit-scrollbar{display:none}
 .chat-widget-bubble{padding:8px 14px;border-radius:14px;font-size:0.95rem;line-height:1.4;opacity:0;transform:translateY(5px);transition:all 0.3s ease}
 .chat-widget-bubble.wb-visible{opacity:1;transform:translateY(0)}
 .chat-widget-bot{background:#F0F0F0;color:#1a1a1a;align-self:flex-start;max-width:90%}
