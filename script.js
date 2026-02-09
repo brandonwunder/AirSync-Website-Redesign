@@ -329,11 +329,20 @@
       callTranscript.classList.add('transcript-visible');
       transcriptTitle.classList.add('transcript-visible');
 
-      // Animate transcript lines with delay
-      transcriptLines.forEach(function (line) {
+      // Animate transcript lines with delay and auto-scroll
+      transcriptLines.forEach(function (line, index) {
         var delay = parseInt(line.dataset.delay, 10) * 800;
         setTimeout(function () {
           line.classList.add('transcript-line-visible');
+
+          // Auto-scroll to bottom with slower, smooth animation
+          // Wait 200ms after line appears to let it render
+          setTimeout(function () {
+            callTranscript.scrollTo({
+              top: callTranscript.scrollHeight,
+              behavior: 'smooth'
+            });
+          }, 200);
         }, delay);
       });
     }, stageDelay);

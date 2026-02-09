@@ -228,6 +228,7 @@ h1,h2,h3,h4{font-family:var(--font-display);color:var(--text-primary);line-heigh
 .stat-label{font-size:0.875rem;color:var(--text-on-dark-muted);margin-top:0.75rem;line-height:1.5}
 .stat-cyan .stat-number{color:var(--accent)}
 .stat-accent .stat-number{color:var(--accent)}
+.stat-danger .stat-number{color:#EF4444}
 
 /* ============================================================
    6. FEATURE DEEP-DIVE
@@ -332,7 +333,8 @@ h1,h2,h3,h4{font-family:var(--font-display);color:var(--text-primary);line-heigh
 .call-waveform-bar.waveform-animated{animation:waveform 1.2s ease-in-out infinite}
 
 /* Call Transcript Panel */
-.call-transcript{width:280px;background:var(--bg-card);border:1px solid var(--dark-border);border-radius:var(--radius-lg);padding:1.25rem;box-shadow:var(--shadow-md);opacity:0;transform:translateX(20px);transition:all 0.6s var(--ease-out);max-height:440px;overflow-y:auto}
+.call-transcript{width:280px;background:var(--bg-card);border:1px solid var(--dark-border);border-radius:var(--radius-lg);padding:1.25rem;box-shadow:var(--shadow-md);opacity:0;transform:translateX(20px);transition:all 0.6s var(--ease-out);max-height:440px;overflow-y:auto;scrollbar-width:none;-ms-overflow-style:none}
+.call-transcript::-webkit-scrollbar{display:none}
 .voice-bot-demo.stage-transcript .call-transcript,
 .voice-bot-demo.stage-ended .call-transcript,
 .voice-bot-demo.stage-confirm .call-transcript{opacity:1;transform:translateX(0)}
