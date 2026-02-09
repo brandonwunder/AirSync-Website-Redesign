@@ -321,6 +321,15 @@
       setTimeout(function () {
         calendarConfirm.classList.add('confirm-visible');
       }, calendarDelay + 3400);
+
+      // Step 5: Shift calendar up + show booking banner
+      setTimeout(function () {
+        tabletMock.classList.add('calendar-booked');
+        var bookingBanner = document.getElementById('bookingBanner');
+        if (bookingBanner) {
+          bookingBanner.classList.add('banner-visible');
+        }
+      }, calendarDelay + 4000);
     }
   }
 
@@ -847,6 +856,9 @@
       }
       var calConf = document.getElementById('calendarConfirm');
       if (calConf) calConf.classList.add('confirm-visible');
+      if (calTablet) calTablet.classList.add('calendar-booked');
+      var rmBanner = document.getElementById('bookingBanner');
+      if (rmBanner) rmBanner.classList.add('banner-visible');
       // Show voice transcript with all messages instantly
       var vt = document.getElementById('voiceTranscript');
       if (vt) vt.classList.add('transcript-visible');
