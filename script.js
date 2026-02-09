@@ -439,7 +439,6 @@
     var chatPrompt = demoEl.querySelector('#chatPrompt');
     var chatWidget = demoEl.querySelector('#chatWidget');
     var chatBubbles = demoEl.querySelectorAll('.chat-widget-bubble');
-    var browserBody = demoEl.querySelector('.browser-body');
 
     var stageDelay = 0;
 
@@ -492,15 +491,17 @@
     }, stageDelay);
     stageDelay += 500;
 
-    // Stage 7: Chat bubbles appear one by one (3.5s)
+    // Stage 7: Chat bubbles appear with natural pacing
+    var chatBody = chatWidget.querySelector('.chat-widget-body');
+    var bubbleDelays = [0, 1200, 3200, 4200, 6000];
     setTimeout(function () {
       chatBubbles.forEach(function (bubble, idx) {
         setTimeout(function () {
           bubble.classList.add('wb-visible');
-          if (browserBody) {
-            browserBody.scrollTop = browserBody.scrollHeight;
+          if (chatBody) {
+            chatBody.scrollTo({ top: chatBody.scrollHeight, behavior: 'smooth' });
           }
-        }, idx * 600);
+        }, bubbleDelays[idx] || idx * 1200);
       });
     }, stageDelay);
   }
