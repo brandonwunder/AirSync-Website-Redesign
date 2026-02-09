@@ -202,10 +202,9 @@
   });
 
   /* ----------------------------------------------------------
-     9. ANIMATED PHONE CHAT + EMAIL CONFIRMATION
+     9. ANIMATED PHONE CHAT + CALENDAR BOOKING
      ---------------------------------------------------------- */
   var textPhoneMock = document.getElementById('textPhoneMock');
-  var emailConfirm = document.getElementById('emailConfirm');
 
   if (textPhoneMock && 'IntersectionObserver' in window) {
     var chatObserver = new IntersectionObserver(function (entries) {
@@ -224,52 +223,100 @@
     var bubbles = mockEl.querySelectorAll('.chat-bubble');
     var typingEl = mockEl.querySelector('.typing-indicator');
     var content = mockEl.querySelector('.phone-content');
+
+    // Calendar elements
+    var calendarWidget = document.getElementById('calendarWidget');
+    var calendarTargetSlot = document.getElementById('calendarTargetSlot');
+    var calendarConfirm = document.getElementById('calendarConfirm');
+
+    // Per-bubble timing: [readPause, typingDuration]
+    // readPause = processing time before typing starts
+    // typingDuration = how long the dots bounce
+    var timings = [
+      [800, 900],    // #1 INCOMING: customer initiates (38 chars)
+      [600, 1800],   // #2 OUTGOING: AI composes long pricing answer (113 chars)
+      [1200, 1100],  // #3 INCOMING: customer reads pricing, decides (58 chars)
+      [500, 1400],   // #4 OUTGOING: AI checks calendar (74 chars)
+      [800, 600],    // #5 INCOMING: quick decision (24 chars)
+      [400, 1600]    // #6 OUTGOING: AI confirms booking (95 chars)
+    ];
+
     var delay = 500;
 
-    bubbles.forEach(function (bubble) {
+    bubbles.forEach(function (bubble, idx) {
       var isOutgoing = bubble.classList.contains('chat-outgoing');
-      var typingDuration = isOutgoing ? 1200 : 800;
+      var timing = timings[idx] || [600, 1000];
+      var readPause = timing[0];
+      var typingDuration = timing[1];
+
+      delay += readPause;
 
       // Show typing indicator
-      setTimeout(function () {
-        typingEl.classList.remove('chat-hidden');
-        typingEl.classList.add('chat-visible');
-        if (isOutgoing) {
-          typingEl.classList.add('typing-outgoing');
-        } else {
-          typingEl.classList.remove('typing-outgoing');
-        }
-        content.scrollTop = content.scrollHeight;
-      }, delay);
+      (function (d, outgoing) {
+        setTimeout(function () {
+          typingEl.style.display = 'flex';
+          typingEl.classList.remove('chat-hidden');
+          typingEl.classList.add('chat-visible');
+          if (outgoing) {
+            typingEl.classList.add('typing-outgoing');
+          } else {
+            typingEl.classList.remove('typing-outgoing');
+          }
+          content.scrollTop = content.scrollHeight;
+        }, d);
+      })(delay, isOutgoing);
 
       delay += typingDuration;
 
       // Hide typing, show message
-      setTimeout(function () {
-        typingEl.classList.remove('chat-visible');
-        typingEl.classList.add('chat-hidden');
-        bubble.classList.remove('chat-hidden');
-        bubble.classList.add('chat-visible');
-        content.scrollTop = content.scrollHeight;
-      }, delay);
-
-      delay += 600;
+      (function (d) {
+        setTimeout(function () {
+          typingEl.classList.remove('chat-visible');
+          typingEl.classList.add('chat-hidden');
+          bubble.classList.remove('chat-hidden');
+          bubble.classList.add('chat-visible');
+          content.scrollTop = content.scrollHeight;
+        }, d);
+      })(delay);
     });
 
-    // Hide typing indicator permanently after sequence
+    // Hide typing indicator permanently
     setTimeout(function () {
       typingEl.style.display = 'none';
-    }, delay);
+    }, delay + 200);
 
-    // Email confirmation animation: phone shrinks, email card fades in
-    if (emailConfirm) {
-      setTimeout(function () {
-        mockEl.classList.add('phone-shrunk');
-      }, delay + 1000);
+    // === CALENDAR BOOKING ANIMATION ===
+    var calendarDelay = delay;
 
+    if (calendarWidget && calendarTargetSlot && calendarConfirm) {
+      // Step 1: Calendar slides in
       setTimeout(function () {
-        emailConfirm.classList.add('email-visible');
-      }, delay + 1500);
+        calendarWidget.classList.add('calendar-visible');
+      }, calendarDelay + 800);
+
+      // Step 2: Book the 10 AM slot
+      setTimeout(function () {
+        var slotEvent = calendarTargetSlot.querySelector('.calendar-slot-event');
+        var slotText = calendarTargetSlot.querySelector('.calendar-slot-placeholder');
+        if (slotEvent && slotText) {
+          slotText.textContent = 'Kitchen Drain - Clear';
+          slotEvent.classList.remove('calendar-slot-empty');
+          slotEvent.classList.add('calendar-slot-booked');
+        }
+      }, calendarDelay + 2000);
+
+      // Step 3: Pulse glow on booked slot
+      setTimeout(function () {
+        var slotEvent = calendarTargetSlot.querySelector('.calendar-slot-event');
+        if (slotEvent) {
+          slotEvent.classList.add('slot-pulse');
+        }
+      }, calendarDelay + 2800);
+
+      // Step 4: "Added to Calendar" confirmation
+      setTimeout(function () {
+        calendarConfirm.classList.add('confirm-visible');
+      }, calendarDelay + 3400);
     }
   }
 
@@ -674,10 +721,21 @@
         el.classList.remove('chat-hidden');
         el.classList.add('chat-visible');
       });
-      // Show email confirmation instantly
-      if (emailConfirm) {
-        emailConfirm.classList.add('email-visible');
+      // Show calendar in booked state instantly
+      var calWidget = document.getElementById('calendarWidget');
+      if (calWidget) calWidget.classList.add('calendar-visible');
+      var calSlot = document.getElementById('calendarTargetSlot');
+      if (calSlot) {
+        var ev = calSlot.querySelector('.calendar-slot-event');
+        var tx = calSlot.querySelector('.calendar-slot-placeholder');
+        if (ev && tx) {
+          tx.textContent = 'Kitchen Drain - Clear';
+          ev.classList.remove('calendar-slot-empty');
+          ev.classList.add('calendar-slot-booked');
+        }
       }
+      var calConf = document.getElementById('calendarConfirm');
+      if (calConf) calConf.classList.add('confirm-visible');
     }
   }
 
