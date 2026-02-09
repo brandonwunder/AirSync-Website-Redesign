@@ -353,10 +353,12 @@
     { time: 29, speaker: 'customer', text: "I found it! Turning it now\u2026 okay, I think the water stopped!" },
     { time: 32, speaker: 'bot', text: "Perfect. Let me get an emergency plumber out to you right away. What\u2019s your address?" },
     { time: 36, speaker: 'customer', text: "It\u2019s 847 Oakwood Drive in Riverside." },
-    { time: 38, speaker: 'bot', text: "Got it \u2014 847 Oakwood Drive, Riverside. Checking emergency availability\u2026" },
-    { time: 42, speaker: 'bot', text: "I have a licensed plumber available now. Booking them for an emergency visit." },
-    { time: 46, speaker: 'customer', text: "Oh thank God. How soon can they get here?" },
-    { time: 48, speaker: 'bot', text: "They\u2019ll be at your door within 45 minutes. Sending you a text confirmation with their name and ETA now." },
+    { time: 38, speaker: 'bot', text: "Just to confirm \u2014 847 Oakwood Drive, Riverside. Is that correct?" },
+    { time: 40, speaker: 'customer', text: "Yes, that\u2019s right." },
+    { time: 42, speaker: 'bot', text: "Perfect. Checking emergency availability now\u2026" },
+    { time: 44, speaker: 'bot', text: "I have a licensed plumber available. Booking them for an emergency visit." },
+    { time: 47, speaker: 'customer', text: "How soon can they get here?" },
+    { time: 49, speaker: 'bot', text: "They\u2019ll be at your door within 45 minutes. Sending you a text confirmation with their name and ETA now." },
     { time: 51, speaker: 'customer', text: "Thank you so much. You literally saved me." }
   ];
 
