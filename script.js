@@ -499,7 +499,9 @@
         setTimeout(function () {
           bubble.classList.add('wb-visible');
           if (chatBody) {
-            chatBody.scrollTo({ top: chatBody.scrollHeight, behavior: 'smooth' });
+            setTimeout(function () {
+              chatBody.scrollTo({ top: chatBody.scrollHeight, behavior: 'smooth' });
+            }, 100);
           }
         }, bubbleDelays[idx] || idx * 1200);
       });
