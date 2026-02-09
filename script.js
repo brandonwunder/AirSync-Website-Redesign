@@ -327,12 +327,12 @@
       }
     }
 
-    // Word-count-based delay: 400ms base pause + 80ms per word
+    // Word-count-based delay: 1500ms base pause + 320ms per word (~42s total)
     function getLineDelay(line) {
       var text = line.querySelector('.transcript-text');
-      if (!text) return 800;
+      if (!text) return 3000;
       var words = text.textContent.trim().split(/\s+/).length;
-      return 400 + words * 80;
+      return 1500 + words * 320;
     }
 
     var stageDelay = 0;
@@ -343,24 +343,19 @@
     }, stageDelay);
     stageDelay += 2000;
 
-    // Stage 2: Answer — connected screen + waveform + timer starts
+    // Stage 2: Answer — connected screen + waveform + timer + transcript (all at once)
     setTimeout(function () {
       callIncoming.classList.remove('call-screen-visible');
       callConnected.classList.add('call-screen-visible');
       startTimer();
+      callPhone.classList.add('phone-call-active');
+      callTranscript.classList.add('transcript-visible');
+      transcriptTitle.classList.add('transcript-visible');
       waveformBars.forEach(function (bar, idx) {
         setTimeout(function () {
           bar.classList.add('waveform-animated');
         }, idx * 100);
       });
-    }, stageDelay);
-    stageDelay += 1500;
-
-    // Stage 3: Transcript panel slides in
-    setTimeout(function () {
-      callPhone.classList.add('phone-call-active');
-      callTranscript.classList.add('transcript-visible');
-      transcriptTitle.classList.add('transcript-visible');
     }, stageDelay);
     stageDelay += 500;
 
