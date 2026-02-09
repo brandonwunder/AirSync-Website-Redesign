@@ -256,7 +256,7 @@ h1,h2,h3,h4{font-family:var(--font-display);color:var(--text-primary);line-heigh
 /* ============================================================
    6A. VOICE BOT DEMO — Incoming Call + Transcript
    ============================================================ */
-.voice-bot-demo{display:flex;align-items:flex-start;gap:1.5rem;justify-content:center;position:relative}
+.voice-bot-demo{display:flex;align-items:center;gap:3.5rem;justify-content:center;position:relative}
 
 /* Call Phone */
 .call-phone{width:260px;height:500px;background:#1a1a1a;border-radius:40px;padding:10px;box-shadow:var(--shadow-lg),inset 0 0 0 2px rgba(255,255,255,0.1);position:relative;flex-shrink:0;transition:all 0.8s var(--ease-out)}
@@ -333,7 +333,7 @@ h1,h2,h3,h4{font-family:var(--font-display);color:var(--text-primary);line-heigh
 .call-waveform-bar.waveform-animated{animation:waveform 1.2s ease-in-out infinite}
 
 /* Call Transcript Panel */
-.call-transcript{width:280px;background:var(--bg-card);border:1px solid var(--dark-border);border-radius:var(--radius-lg);padding:1.25rem;box-shadow:var(--shadow-md);opacity:0;transform:translateX(20px);transition:all 0.6s var(--ease-out);max-height:440px;overflow-y:auto;scrollbar-width:none;-ms-overflow-style:none}
+.call-transcript{width:280px;padding:1.25rem;opacity:0;transform:translateX(20px);transition:all 0.6s var(--ease-out);max-height:420px;overflow:hidden;mask-image:linear-gradient(to bottom,black 0%,black 20%,transparent 20%,black 35%,black 100%);-webkit-mask-image:linear-gradient(to bottom,black 0%,black 20%,transparent 20%,black 35%,black 100%)}
 .call-transcript::-webkit-scrollbar{display:none}
 .voice-bot-demo.stage-transcript .call-transcript,
 .voice-bot-demo.stage-ended .call-transcript,
@@ -356,10 +356,19 @@ h1,h2,h3,h4{font-family:var(--font-display);color:var(--text-primary);line-heigh
 .call-confirm-text{font-size:0.75rem;color:#22C55E;font-weight:500;display:flex;align-items:center;gap:0.4rem}
 .call-confirm-text svg{width:14px;height:14px;flex-shrink:0}
 
+/* Transcript ended state */
+.call-transcript.transcript-ended{
+  mask-image:linear-gradient(to bottom,black 0%,black 20%,black 100%);
+  -webkit-mask-image:linear-gradient(to bottom,black 0%,black 20%,black 100%)
+}
+.call-transcript-title.transcript-ended::before{
+  display:none
+}
+
 /* ============================================================
    6B. TEXT BOT DEMO (Phone + 3D Envelope)
    ============================================================ */
-.text-bot-demo{display:flex;align-items:center;gap:1.5rem;justify-content:center;position:relative}
+.text-bot-demo{display:flex;align-items:center;gap:1rem;justify-content:center;position:relative}
 
 /* Phone mock shared */
 .phone-mock{width:280px;height:520px;background:#1a1a1a;border-radius:40px;padding:10px;box-shadow:var(--shadow-lg),inset 0 0 0 2px rgba(255,255,255,0.1);margin:0 auto;position:relative}
@@ -389,10 +398,10 @@ h1,h2,h3,h4{font-family:var(--font-display);color:var(--text-primary);line-heigh
 @keyframes typing-bounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-4px)}}
 
 /* Phone shrink for envelope reveal */
-.phone-mock.phone-shrunk{transform:scale(0.78) translateX(20px);transition:transform 0.6s var(--ease-out)}
+.phone-mock.phone-shrunk{transform:scale(0.82) translateX(10px);transition:transform 0.6s var(--ease-out)}
 
 /* 3D Envelope */
-.envelope-wrapper{opacity:0;transform:translateX(-20px) scale(0.9);transition:all 0.6s var(--ease-out);pointer-events:none;order:-1;perspective:800px}
+.envelope-wrapper{opacity:0;transform:translateX(-20px) scale(0.9);transition:all 0.6s var(--ease-out);pointer-events:none;perspective:800px}
 .envelope-wrapper.envelope-visible{opacity:1;transform:translateX(0) scale(1);pointer-events:auto}
 .envelope{width:260px;height:180px;position:relative;transform-style:preserve-3d}
 .envelope-back{position:absolute;inset:0;background:linear-gradient(135deg,#1a3566,#132B52);border-radius:var(--radius-md);border:1px solid var(--dark-border)}
@@ -411,136 +420,273 @@ h1,h2,h3,h4{font-family:var(--font-display);color:var(--text-primary);line-heigh
 .envelope-card-checks{display:flex;flex-direction:column;gap:0.2rem;margin-top:0.5rem;padding-top:0.5rem;border-top:1px solid var(--dark-border)}
 .envelope-card-check{font-size:0.65rem;color:#22C55E;font-weight:500}
 
+/* Side Panel (envelope + calendar stacked vertically) */
+.text-bot-side-panel{display:flex;flex-direction:column;gap:0.75rem;order:-1;align-items:center}
+
+/* Calendar Widget */
+.calendar-widget{opacity:0;transform:translateY(20px) scale(0.95);transition:all 0.6s var(--ease-out);pointer-events:none;width:230px;background:var(--bg-card);border:1px solid var(--dark-border);border-radius:var(--radius-md);overflow:hidden;box-shadow:var(--shadow-md);flex-shrink:0}
+.calendar-widget.calendar-visible{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
+.calendar-header{display:flex;align-items:center;gap:0.5rem;padding:0.6rem 0.75rem;border-bottom:1px solid var(--dark-border);background:linear-gradient(135deg,#1a3566,#132B52)}
+.calendar-icon{width:14px;height:14px;color:var(--accent);flex-shrink:0}
+.calendar-title{font-family:var(--font-display);font-size:0.65rem;font-weight:600;color:var(--white);text-transform:uppercase;letter-spacing:0.04em}
+.calendar-month{padding:0.4rem 0.75rem;border-bottom:1px solid var(--dark-border)}
+.calendar-month-label{font-size:0.6rem;font-weight:600;color:var(--text-muted)}
+.calendar-slots{display:flex;flex-direction:column}
+.calendar-slot{display:flex;align-items:stretch;border-bottom:1px solid rgba(255,255,255,0.04);min-height:32px}
+.calendar-slot:last-child{border-bottom:none}
+.calendar-slot-time{width:54px;flex-shrink:0;padding:0.35rem 0.4rem;font-size:0.55rem;font-weight:600;color:var(--text-muted);display:flex;align-items:center;border-right:1px solid rgba(255,255,255,0.04)}
+.calendar-slot-event{flex:1;padding:0.35rem 0.5rem;display:flex;align-items:center;font-size:0.55rem;transition:all 0.5s var(--ease-out)}
+.calendar-slot-existing{background:rgba(0,212,255,0.08)}
+.calendar-slot-existing span{color:var(--accent);font-weight:500}
+.calendar-slot-empty span{color:var(--text-muted);font-style:italic}
+.calendar-slot-event.calendar-slot-booked{background:rgba(34,197,94,0.15);border-left:2px solid #22C55E}
+.calendar-slot-event.calendar-slot-booked span{color:#22C55E;font-weight:600;font-style:normal}
+.calendar-confirm{display:flex;align-items:center;gap:0.35rem;padding:0.4rem 0.75rem;border-top:1px solid var(--dark-border);opacity:0;transform:translateY(5px);transition:all 0.4s var(--ease-out)}
+.calendar-confirm.confirm-visible{opacity:1;transform:translateY(0)}
+.calendar-confirm svg{width:12px;height:12px;flex-shrink:0}
+.calendar-confirm span{font-size:0.55rem;font-weight:600;color:#22C55E}
+
 /* ============================================================
    6C. WEBSITE BOT — Realistic Plumbing Site + Cursor Demo
    ============================================================ */
 .website-bot-demo{position:relative}
-.browser-mock{width:100%;max-width:480px;background:var(--white);border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);overflow:hidden;margin:0 auto;border:1px solid rgba(255,255,255,0.1)}
-.browser-topbar{display:flex;align-items:center;gap:0.75rem;padding:10px 14px;background:#F8F9FB;border-bottom:1px solid #E5E8ED}
-.browser-dots{display:flex;gap:6px}
-.browser-dot-r{width:10px;height:10px;border-radius:50%;background:#FF5F57}
-.browser-dot-y{width:10px;height:10px;border-radius:50%;background:#FFBD2E}
-.browser-dot-g{width:10px;height:10px;border-radius:50%;background:#28CA41}
-.browser-url{display:flex;align-items:center;gap:6px;background:#EBEDF0;border-radius:6px;padding:4px 12px;font-size:0.75rem;color:#6B7A90;flex:1;margin-left:0.5rem}
-.browser-body{position:relative;min-height:320px;background:#fff;overflow:hidden}
+.browser-mock{width:100%;max-width:720px;background:var(--white);border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);overflow:hidden;margin:0 auto;border:1px solid rgba(255,255,255,0.1)}
+.browser-topbar{display:flex;align-items:center;gap:1.5rem;padding:20px 28px;background:#F8F9FB;border-bottom:1px solid #E5E8ED}
+.browser-dots{display:flex;gap:12px}
+.browser-dot-r{width:20px;height:20px;border-radius:50%;background:#FF5F57}
+.browser-dot-y{width:20px;height:20px;border-radius:50%;background:#FFBD2E}
+.browser-dot-g{width:20px;height:20px;border-radius:50%;background:#28CA41}
+.browser-url{display:flex;align-items:center;gap:12px;background:#EBEDF0;border-radius:12px;padding:8px 24px;font-size:1.5rem;color:#6B7A90;flex:1;margin-left:1rem}
+.browser-body{position:relative;min-height:640px;background:#fff;overflow:hidden}
 
 /* Realistic plumbing website inside browser */
-.plumbing-site-nav{display:flex;align-items:center;justify-content:space-between;padding:8px 16px;background:#0B1C3D;border-bottom:2px solid var(--accent)}
-.plumbing-site-logo{font-family:var(--font-display);font-size:0.75rem;font-weight:700;color:var(--white);display:flex;align-items:center;gap:4px}
-.plumbing-site-logo svg{width:14px;height:14px;color:var(--accent)}
-.plumbing-site-links{display:flex;gap:10px}
-.plumbing-site-links span{font-size:0.55rem;color:rgba(255,255,255,0.6)}
-.plumbing-site-hero{background:linear-gradient(135deg,#0B1C3D 0%,#0F2347 50%,#132B52 100%);padding:20px 16px;text-align:center;position:relative;overflow:hidden}
+.plumbing-site-nav{display:flex;align-items:center;justify-content:space-between;padding:16px 32px;background:#0B1C3D;border-bottom:2px solid var(--accent)}
+.plumbing-site-logo{font-family:var(--font-display);font-size:1.5rem;font-weight:700;color:var(--white);display:flex;align-items:center;gap:8px}
+.plumbing-site-logo svg{width:28px;height:28px;color:var(--accent)}
+.plumbing-site-links{display:flex;gap:20px}
+.plumbing-site-links span{font-size:1.1rem;color:rgba(255,255,255,0.6)}
+.plumbing-site-hero{background:linear-gradient(135deg,#0B1C3D 0%,#0F2347 50%,#132B52 100%);padding:40px 32px;text-align:center;position:relative;overflow:hidden}
 .plumbing-site-hero::before{content:'';position:absolute;top:-20px;right:-20px;width:80px;height:80px;border-radius:50%;background:rgba(0,212,255,0.08)}
-.plumbing-site-hero h3{font-family:var(--font-display);font-size:0.95rem;font-weight:700;color:var(--white);margin-bottom:4px}
-.plumbing-site-hero p{font-size:0.6rem;color:rgba(255,255,255,0.6)}
-.plumbing-site-hero .site-btn{display:inline-block;margin-top:8px;padding:4px 12px;background:var(--accent);color:var(--dark);font-size:0.55rem;font-weight:700;border-radius:4px}
-.plumbing-services{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:12px 16px}
-.plumbing-service-card{background:#F8F9FB;border-radius:6px;padding:10px 8px;text-align:center}
-.plumbing-service-card svg{width:20px;height:20px;color:var(--accent);margin:0 auto 4px}
-.plumbing-service-card span{font-size:0.55rem;font-weight:600;color:#384860;display:block}
+.plumbing-site-hero h3{font-family:var(--font-display);font-size:1.9rem;font-weight:700;color:var(--white);margin-bottom:8px}
+.plumbing-site-hero p{font-size:1.2rem;color:rgba(255,255,255,0.6)}
+.plumbing-site-hero .site-btn{display:inline-block;margin-top:16px;padding:8px 24px;background:var(--accent);color:var(--dark);font-size:1.1rem;font-weight:700;border-radius:8px}
+.plumbing-services{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding:24px 32px}
+.plumbing-service-card{background:#F8F9FB;border-radius:12px;padding:20px 16px;text-align:center}
+.plumbing-service-card svg{width:40px;height:40px;color:var(--accent);margin:0 auto 8px}
+.plumbing-service-card span{font-size:1.1rem;font-weight:600;color:#384860;display:block}
 
 /* Animated Cursor */
-.demo-cursor{position:absolute;width:20px;height:20px;z-index:20;pointer-events:none;opacity:0;transition:opacity 0.3s ease}
-.demo-cursor svg{width:20px;height:20px;filter:drop-shadow(0 2px 4px rgba(0,0,0,0.3))}
+.demo-cursor{position:absolute;width:40px;height:40px;z-index:20;pointer-events:none;opacity:0;transition:opacity 0.3s ease}
+.demo-cursor svg{width:40px;height:40px;filter:drop-shadow(0 2px 4px rgba(0,0,0,0.3))}
 .website-bot-demo.cursor-active .demo-cursor{opacity:1}
 
 /* Chat Prompt Bubble */
-.chat-prompt{position:absolute;bottom:16px;right:16px;width:44px;height:44px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,212,255,0.3);opacity:0;transform:scale(0);transition:all 0.4s var(--ease-bounce);z-index:10;cursor:pointer}
+.chat-prompt{position:absolute;bottom:32px;right:32px;width:88px;height:88px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,212,255,0.3);opacity:0;transform:scale(0);transition:all 0.4s var(--ease-bounce);z-index:10;cursor:pointer}
 .chat-prompt.visible{opacity:1;transform:scale(1)}
-.chat-prompt svg{width:20px;height:20px;color:var(--dark)}
+.chat-prompt svg{width:40px;height:40px;color:var(--dark)}
 
 /* Chat Widget Expanded */
-.chat-widget{position:absolute;bottom:12px;right:12px;width:220px;background:var(--white);border-radius:var(--radius-md);box-shadow:0 4px 24px rgba(0,0,0,0.15);overflow:hidden;border:1px solid #E5E8ED;opacity:0;transform:scale(0.8) translateY(10px);transform-origin:bottom right;transition:all 0.4s var(--ease-out);z-index:15}
+.chat-widget{position:absolute;bottom:24px;right:24px;width:440px;background:var(--white);border-radius:var(--radius-md);box-shadow:0 4px 24px rgba(0,0,0,0.15);overflow:hidden;border:1px solid #E5E8ED;opacity:0;transform:scale(0.8) translateY(10px);transform-origin:bottom right;transition:all 0.4s var(--ease-out);z-index:15}
 .chat-widget.widget-open{opacity:1;transform:scale(1) translateY(0)}
-.chat-widget-header{display:flex;align-items:center;gap:6px;padding:8px 12px;background:var(--accent);color:var(--dark);font-size:0.75rem;font-weight:700}
+.chat-widget-header{display:flex;align-items:center;gap:12px;padding:16px 24px;background:var(--accent);color:var(--dark);font-size:1.5rem;font-weight:700}
 .chat-widget-header svg{display:inline-block;flex-shrink:0}
-.chat-widget-body{padding:8px;display:flex;flex-direction:column;gap:6px;max-height:140px;overflow:hidden}
-.chat-widget-bubble{padding:6px 10px;border-radius:10px;font-size:0.65rem;line-height:1.4;opacity:0;transform:translateY(5px);transition:all 0.3s ease}
+.chat-widget-body{padding:16px;display:flex;flex-direction:column;gap:12px;max-height:280px;overflow:hidden}
+.chat-widget-bubble{padding:12px 20px;border-radius:20px;font-size:1.3rem;line-height:1.4;opacity:0;transform:translateY(5px);transition:all 0.3s ease}
 .chat-widget-bubble.wb-visible{opacity:1;transform:translateY(0)}
 .chat-widget-bot{background:#F0F0F0;color:#1a1a1a;align-self:flex-start;max-width:90%}
 .chat-widget-user{background:var(--accent);color:var(--dark);align-self:flex-end;max-width:80%}
-.chat-widget-input{display:flex;align-items:center;padding:6px 10px;border-top:1px solid #E5E8ED;font-size:0.65rem;color:#94A3B8}
+.chat-widget-input{display:flex;align-items:center;padding:12px 20px;border-top:1px solid #E5E8ED;font-size:1.3rem;color:#94A3B8}
 
 /* ============================================================
    6D. INVOICE MOCK — Animated Sequence
    ============================================================ */
-.invoice-demo{position:relative;width:100%;max-width:360px;margin:0 auto}
-.invoice-mock{width:100%;background:var(--bg-card);border:1px solid var(--dark-border);border-radius:var(--radius-lg);padding:1.5rem;box-shadow:var(--shadow-md);transition:all 0.4s ease}
-.invoice-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.25rem;padding-bottom:1rem;border-bottom:1px solid var(--dark-border)}
+.invoice-demo{position:relative;width:100%;max-width:380px;margin:0 auto}
+.invoice-mock{width:100%;background:#FFFFFF;border:1px solid #E0E0E0;border-radius:8px;padding:2rem;box-shadow:0 8px 24px rgba(0,0,0,0.15),0 2px 8px rgba(0,0,0,0.1);transition:all 0.4s ease;position:relative}
+.invoice-mock::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,0) 0%,rgba(0,0,0,0.02) 100%);pointer-events:none;border-radius:8px}
+.invoice-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.5rem;padding-bottom:1.25rem;border-bottom:2px solid #E8E8E8}
+.invoice-company{display:flex;flex-direction:column;gap:0.5rem}
+.invoice-company-logo{display:flex;align-items:center;gap:0.5rem;font-family:var(--font-display);font-size:1.25rem;font-weight:700;color:#0B1C3D}
+.invoice-company-logo svg{width:28px;height:28px;color:#00D4FF;stroke-width:2.5}
+.invoice-company-details{font-size:0.7rem;color:#666;line-height:1.4;margin-top:0.25rem}
 .invoice-logo-img{height:24px;width:auto}
-.invoice-logo{font-family:var(--font-display);font-size:1.125rem;font-weight:700;color:var(--white)}
-.invoice-badge{font-size:0.75rem;font-weight:700;padding:4px 12px;border-radius:var(--radius-full);letter-spacing:0.05em;opacity:0;transform:scale(0.8);transition:all 0.4s var(--ease-bounce)}
+.invoice-logo{font-family:var(--font-display);font-size:1.125rem;font-weight:700;color:#0B1C3D}
+.invoice-badge{font-size:0.7rem;font-weight:700;padding:5px 14px;border-radius:4px;letter-spacing:0.05em;opacity:0;transform:scale(0.8);transition:all 0.4s var(--ease-bounce)}
 .invoice-badge.badge-visible{opacity:1;transform:scale(1)}
-.invoice-badge-sent{background:rgba(0,212,255,0.15);color:var(--accent);border:1px solid rgba(0,212,255,0.3)}
-.invoice-badge-paid{background:rgba(34,197,94,0.15);color:#22C55E;border:1px solid rgba(34,197,94,0.3)}
-.invoice-meta{display:flex;flex-direction:column;gap:0.5rem;margin-bottom:1.25rem;padding-bottom:1rem;border-bottom:1px solid var(--dark-border)}
-.invoice-meta-row{display:flex;justify-content:space-between;font-size:0.8rem;opacity:0;transform:translateX(-10px);transition:all 0.4s ease}
+.invoice-badge-sent{background:#E3F2FD;color:#1976D2;border:1px solid #BBDEFB}
+.invoice-badge-paid{background:#E8F5E9;color:#2E7D32;border:1px solid #C8E6C9}
+.invoice-meta{display:flex;flex-direction:column;gap:0.6rem;margin-bottom:1.5rem;padding-bottom:1.25rem;border-bottom:2px solid #E8E8E8}
+.invoice-meta-row{display:flex;justify-content:space-between;font-size:0.85rem;opacity:0;transform:translateX(-10px);transition:all 0.4s ease}
 .invoice-meta-row.inv-visible{opacity:1;transform:translateX(0)}
-.invoice-meta-row span{color:var(--text-muted)}
-.invoice-meta-row strong{color:var(--white);font-weight:600}
-.invoice-items{display:flex;flex-direction:column;gap:0.5rem;margin-bottom:1rem;padding-bottom:1rem;border-bottom:1px solid var(--dark-border)}
-.invoice-item{display:flex;justify-content:space-between;font-size:0.8rem;opacity:0;transform:translateX(-10px);transition:all 0.4s ease}
+.invoice-meta-row span{color:#666;font-weight:500}
+.invoice-meta-row strong{color:#0B1C3D;font-weight:700}
+.invoice-items{display:flex;flex-direction:column;gap:0.75rem;margin-bottom:1.25rem;padding-bottom:1.25rem;border-bottom:2px solid #E8E8E8}
+.invoice-item{display:flex;justify-content:space-between;font-size:0.85rem;opacity:0;transform:translateX(-10px);transition:all 0.4s ease;align-items:flex-start;gap:1rem}
 .invoice-item.inv-visible{opacity:1;transform:translateX(0)}
-.invoice-item span{color:var(--text-body)}
-.invoice-item strong{color:var(--white);font-weight:600}
-.invoice-total{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}
-.invoice-total span{font-size:0.9rem;font-weight:600;color:var(--text-muted)}
-.invoice-total strong{font-family:var(--font-display);font-size:1.5rem;font-weight:700;color:var(--accent);opacity:0;transition:opacity 0.5s ease}
+.invoice-item span{color:#333;line-height:1.4;flex:1}
+.invoice-item strong{color:#0B1C3D;font-weight:700;white-space:nowrap}
+.invoice-total{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.25rem;padding:0.75rem;background:#F5F5F5;border-radius:6px}
+.invoice-total span{font-size:0.95rem;font-weight:700;color:#0B1C3D}
+.invoice-total strong{font-family:var(--font-display);font-size:1.75rem;font-weight:700;color:#00D4FF;opacity:0;transition:opacity 0.5s ease}
 .invoice-total strong.inv-visible{opacity:1}
-.invoice-status-bar{display:flex;align-items:center;gap:0.5rem;font-size:0.75rem;font-weight:500;opacity:0;transform:translateY(5px);transition:all 0.4s ease}
+.invoice-status-bar{display:flex;align-items:center;gap:0.5rem;font-size:0.8rem;font-weight:500;opacity:0;transform:translateY(5px);transition:all 0.4s ease;padding:0.5rem 0}
 .invoice-status-bar.inv-visible{opacity:1;transform:translateY(0)}
 .invoice-status-bar svg{display:inline-block;flex-shrink:0}
-.invoice-status-sent{color:var(--accent)}
-.invoice-status-paid{color:#22C55E}
+.invoice-status-sent{color:#1976D2}
+.invoice-status-paid{color:#2E7D32}
 
 /* Deposited confirmation below invoice */
-.invoice-deposited{margin-top:1rem;padding:0.75rem 1rem;background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.2);border-radius:var(--radius-sm);display:flex;align-items:center;gap:0.5rem;font-size:0.8rem;color:#22C55E;font-weight:600;opacity:0;transform:translateY(10px);transition:all 0.5s ease}
+.invoice-deposited{margin-top:1rem;padding:0.85rem 1.25rem;background:#E8F5E9;border:1px solid #C8E6C9;border-radius:6px;display:flex;align-items:center;gap:0.6rem;font-size:0.85rem;color:#2E7D32;font-weight:600;opacity:0;transform:translateY(10px);transition:all 0.5s ease;box-shadow:0 2px 4px rgba(0,0,0,0.05)}
 .invoice-deposited.inv-visible{opacity:1;transform:translateY(0)}
-.invoice-deposited svg{width:18px;height:18px;flex-shrink:0}
+.invoice-deposited svg{width:20px;height:20px;flex-shrink:0}
 
 /* ============================================================
-   6E. REVIEWS — Before/After Transformation
+   6E. REVIEWS — iPhone 15 Pro with Google Business Profile
    ============================================================ */
-.reviews-demo{width:100%;max-width:360px;margin:0 auto;position:relative}
-.reviews-card{background:var(--bg-card);border:1px solid var(--dark-border);border-radius:var(--radius-lg);padding:1.5rem;text-align:center;margin-bottom:1rem;box-shadow:var(--shadow-md);transition:all 0.8s ease}
+.reviews-phone-container{width:100%;max-width:340px;margin:0 auto;position:relative}
 
-/* Before state (muted) */
-.reviews-demo .reviews-stars{font-size:1.75rem;letter-spacing:0.1em;margin-bottom:0.5rem;transition:color 0.8s ease}
-.reviews-demo.state-before .reviews-stars{color:#6B7A90}
-.reviews-demo.state-after .reviews-stars{color:#F59E0B}
-.reviews-rating{font-family:var(--font-display);font-size:3rem;font-weight:700;line-height:1;transition:color 0.8s ease}
-.reviews-demo.state-before .reviews-rating{color:var(--text-muted)}
-.reviews-demo.state-after .reviews-rating{color:var(--white)}
-.reviews-count{font-size:0.8rem;color:var(--text-muted);margin-top:0.25rem}
+/* iPhone 15 Pro Frame */
+.iphone-frame{background:#3A3A3C;border-radius:48px;padding:10px;width:100%;aspect-ratio:9/16;max-height:680px;position:relative;box-shadow:0 12px 32px rgba(0,0,0,0.35),0 4px 12px rgba(0,0,0,0.2),inset 0 0 0 1px rgba(255,255,255,0.05)}
 
-/* Review sample */
-.reviews-sample{background:var(--bg-card);border:1px solid var(--dark-border);border-radius:var(--radius-md);padding:1.25rem;margin-bottom:1rem;transition:all 0.8s ease}
-.reviews-demo.state-before .reviews-sample{border-left:3px solid #6B7A90;opacity:0.6}
-.reviews-demo.state-after .reviews-sample{border-left:3px solid #F59E0B;opacity:1}
-.reviews-sample-stars{font-size:0.85rem;letter-spacing:0.1em;margin-bottom:0.5rem;transition:color 0.8s ease}
-.reviews-demo.state-before .reviews-sample-stars{color:#6B7A90}
-.reviews-demo.state-after .reviews-sample-stars{color:#F59E0B}
-.reviews-sample p{font-size:0.875rem;color:var(--text-body);line-height:1.6;font-style:italic;margin-bottom:0.75rem}
-.reviews-sample-author{display:flex;justify-content:space-between;align-items:center}
-.reviews-sample-author strong{font-size:0.8rem;color:var(--white)}
-.reviews-sample-author span{font-size:0.7rem;color:var(--text-muted)}
+.iphone-bezel{width:100%;height:100%;border-radius:40px;overflow:hidden;background:#1a1a1a;position:relative}
 
-/* Before/After labels */
-.reviews-label{position:absolute;top:12px;right:12px;padding:4px 10px;border-radius:var(--radius-full);font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;transition:all 0.5s ease;z-index:2}
-.reviews-demo.state-before .reviews-label{background:rgba(107,122,144,0.2);color:#6B7A90;border:1px solid rgba(107,122,144,0.3)}
-.reviews-demo.state-after .reviews-label{background:rgba(34,197,94,0.15);color:#22C55E;border:1px solid rgba(34,197,94,0.3)}
+.iphone-island{position:absolute;top:8px;left:50%;transform:translateX(-50%);width:160px;height:28px;background:#000;border-radius:20px;z-index:10}
 
-/* Review platforms */
-.reviews-platforms{display:flex;gap:0.75rem;justify-content:center}
-.review-platform{display:flex;align-items:center;gap:0.4rem;padding:6px 14px;background:var(--bg-card);border:1px solid var(--dark-border);border-radius:var(--radius-full);font-size:0.75rem;font-weight:500;transition:all 0.8s ease}
-.reviews-demo.state-before .review-platform{color:#6B7A90;opacity:0.5}
-.reviews-demo.state-after .review-platform{color:var(--text-muted);opacity:1}
-.review-platform svg{display:inline-block;flex-shrink:0}
+.iphone-screen{width:100%;height:100%;background:#FFFFFF;overflow:hidden;display:flex;flex-direction:column;position:relative}
+
+/* Messages App */
+.messages-app{width:100%;height:100%;display:flex;flex-direction:column;background:#FFFFFF;opacity:1;z-index:2;transition:opacity 0.8s ease}
+
+.messages-header{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:#FFFFFF;border-bottom:1px solid #E8E8E8;font-size:12px;color:#666}
+
+.messages-back{font-weight:500;color:#007AFF}
+
+.messages-contact{display:flex;align-items:center;gap:8px;flex:1;text-align:center}
+
+.contact-avatar{width:28px;height:28px;border-radius:50%;background:#E8E8E8;display:flex;align-items:center;justify-content:center;font-weight:700;color:#5F6368;font-size:12px}
+
+.messages-info{color:#666;font-size:16px}
+
+.messages-conversation{flex:1;overflow-y:auto;padding:12px 12px;display:flex;flex-direction:column;gap:8px;-webkit-overflow-scrolling:touch}
+
+.message-bubble{display:flex;flex-direction:column;gap:2px;max-width:78%;padding:8px 12px;border-radius:16px;font-size:13px;line-height:1.4}
+
+.message-bubble.business-message{align-self:flex-start;background:#E8E8E8;color:#000}
+
+.message-bubble.customer-message{align-self:flex-end;background:#007AFF;color:#FFFFFF;border-bottom-right-radius:4px}
+
+.bubble-content{word-wrap:break-word}
+
+.message-time{font-size:11px;color:#999;align-self:flex-end;margin-top:2px;opacity:0.7}
+
+.message-bubble.customer-message .message-time{color:rgba(255,255,255,0.6)}
+
+.typing-indicator{display:none;align-self:flex-start;align-items:center;gap:3px;padding:8px 12px;background:#E8E8E8;border-radius:16px;height:28px}
+
+.typing-indicator span{width:4px;height:4px;border-radius:50%;background:#999;animation:typing-bounce 1.2s infinite}
+
+.typing-indicator span:nth-child(2){animation-delay:0.15s}
+
+.typing-indicator span:nth-child(3){animation-delay:0.3s}
+
+@keyframes typing-bounce{0%,60%{transform:translateY(0)}30%{transform:translateY(-6px)}}
+
+.messages-input-bar{display:flex;align-items:center;justify-content:center;padding:8px;background:#F8F9FA;border-top:1px solid #E8E8E8;font-size:12px;color:#999;height:40px}
+
+/* Phase transitions */
+.reviews-phone-container.phase-messages .messages-app{opacity:1;z-index:2}
+
+.reviews-phone-container.phase-messages .google-profile{opacity:0;z-index:1}
+
+.reviews-phone-container.phase-google .messages-app{opacity:0;z-index:1;pointer-events:none}
+
+.reviews-phone-container.phase-google .google-profile{opacity:1;z-index:2}
+
+/* Google Business Profile */
+.google-profile{height:100%;display:flex;flex-direction:column;padding:48px 16px 24px;background:#FFFFFF;color:#202124;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;font-size:14px;overflow-y:auto;-webkit-overflow-scrolling:touch}
+
+.google-header{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid #DADCE0}
+
+.google-header svg{color:#4285F4;flex-shrink:0}
+
+.google-business-info h3{font-size:18px;font-weight:600;color:#202124;margin:0;line-height:1.2}
+
+.google-category{font-size:12px;color:#5F6368;margin:4px 0 0}
+
+/* Rating Section */
+.google-rating-section{display:flex;align-items:center;gap:16px;margin-bottom:20px;padding:12px;background:#F8F9FA;border-radius:8px;transition:all 0.8s ease}
+
+.google-rating-main{display:flex;align-items:center;gap:8px}
+
+.google-stars{font-size:24px;letter-spacing:0.1em;transition:color 0.8s ease;color:#9CA3AF}
+
+.google-rating-number{font-family:var(--font-display);font-size:28px;font-weight:700;color:#5F6368;transition:color 0.8s ease}
+
+.google-review-count{font-size:12px;color:#5F6368;margin-left:auto}
+
+/* Before state */
+.reviews-phone-container.state-before .google-rating-section{background:#F3F3F3}
+.reviews-phone-container.state-before .google-stars{color:#9CA3AF}
+.reviews-phone-container.state-before .google-rating-number{color:#5F6368}
+
+/* After state */
+.reviews-phone-container.state-after .google-rating-section{background:#FFF8E1}
+.reviews-phone-container.state-after .google-stars{color:#F59E0B}
+.reviews-phone-container.state-after .google-rating-number{color:#F59E0B}
+
+/* Review Card */
+.google-review-card{background:#F8F9FA;border-radius:8px;padding:12px;margin-bottom:16px;border-left:3px solid #9CA3AF;transition:all 0.8s ease}
+
+.reviews-phone-container.state-before .google-review-card{border-left-color:#9CA3AF;opacity:0.9}
+.reviews-phone-container.state-after .google-review-card{border-left-color:#F59E0B;opacity:1}
+
+.review-card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+
+.review-author-info{display:flex;align-items:center;gap:8px}
+
+.review-avatar{width:32px;height:32px;border-radius:50%;background:#E8E8E8;display:flex;align-items:center;justify-content:center;font-weight:600;color:#5F6368;font-size:14px;transition:all 0.8s ease}
+
+.reviews-phone-container.state-before .review-avatar{background:#D3D3D3;color:#5F6368}
+.reviews-phone-container.state-after .review-avatar{background:#FFE5B4;color:#F59E0B}
+
+.review-author-meta{display:flex;flex-direction:column}
+
+.review-author-meta strong{font-size:13px;font-weight:600;color:#202124}
+
+.review-author-meta span{font-size:11px;color:#5F6368}
+
+.review-stars{font-size:12px;letter-spacing:0.05em;transition:color 0.8s ease}
+
+.reviews-phone-container.state-before .review-stars{color:#9CA3AF}
+.reviews-phone-container.state-after .review-stars{color:#F59E0B}
+
+.review-text{font-size:13px;line-height:1.5;color:#3C4043;margin:0;transition:all 0.8s ease}
+
+.reviews-phone-container.state-before .review-text{color:#5F6368}
+.reviews-phone-container.state-after .review-text{color:#202124}
+
+/* Write Review Button */
+.google-write-review{background:#FFFFFF;border:1px solid #DADCE0;border-radius:8px;padding:10px 16px;font-size:13px;font-weight:500;color:#4285F4;cursor:pointer;transition:all 0.3s ease;margin-bottom:16px;width:100%}
+
+.google-write-review:hover{background:#F8F9FA;border-color:#4285F4}
+
+/* Platforms */
+.google-platforms{display:flex;gap:12px;justify-content:center}
+
+.platform-link{width:32px;height:32px;border-radius:50%;background:#F8F9FA;border:1px solid #DADCE0;display:flex;align-items:center;justify-content:center;color:#4285F4;text-decoration:none;transition:all 0.3s ease;opacity:0.6}
+
+.reviews-phone-container.state-after .platform-link{opacity:1}
+
+.platform-link:hover{background:#F0F0F0}
+
+/* State Label */
+.review-state-label{position:absolute;bottom:-40px;left:50%;transform:translateX(-50%);padding:6px 14px;background:rgba(107,122,144,0.2);color:#6B7A90;border:1px solid rgba(107,122,144,0.3);border-radius:20px;font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;transition:all 0.5s ease;white-space:nowrap}
+
+.reviews-phone-container.state-after .review-state-label{background:rgba(34,197,94,0.15);color:#22C55E;border:1px solid rgba(34,197,94,0.3)}
 
 /* New review notification */
-.review-notification{position:absolute;top:-8px;right:-8px;background:#22C55E;color:var(--white);font-size:0.6rem;font-weight:700;padding:3px 8px;border-radius:var(--radius-full);opacity:0;transform:scale(0);transition:all 0.4s var(--ease-bounce);z-index:3}
-.reviews-demo.state-after .review-notification{opacity:1;transform:scale(1)}
+.review-notification{position:absolute;top:20px;right:0;background:#22C55E;color:var(--white);font-size:0.65rem;font-weight:700;padding:4px 10px;border-radius:12px;opacity:0;transform:scale(0);transition:all 0.4s var(--ease-bounce);z-index:20}
+
+.reviews-phone-container.state-after .review-notification{opacity:1;transform:scale(1)}
 
 /* ============================================================
    7. ROI SECTION — Static $51K Breakdown
@@ -550,14 +696,20 @@ h1,h2,h3,h4{font-family:var(--font-display);color:var(--text-primary);line-heigh
 .roi-header{text-align:center;margin-bottom:3rem}
 .roi-header h2{font-size:clamp(2rem,4vw,3rem);font-weight:600;text-transform:uppercase;letter-spacing:-0.02em;margin-bottom:1rem;color:var(--white)}
 .roi-total-display{text-align:center;margin-bottom:3rem}
-.roi-total-number{font-family:var(--font-display);font-size:clamp(3.5rem,7vw,5.5rem);font-weight:700;color:var(--accent);line-height:1}
+.roi-total-number{font-family:var(--font-display);font-size:clamp(3.5rem,7vw,5.5rem);font-weight:700;background:linear-gradient(135deg,#00D4FF,#8B5CF6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}
 .roi-total-label{font-size:1rem;color:var(--text-muted);margin-top:0.5rem;font-weight:500}
 
 .roi-breakdown{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-bottom:3rem}
-.roi-card{background:var(--bg-card);border:1px solid var(--dark-border);border-radius:var(--radius-md);padding:1.5rem;text-align:center}
-.roi-card-annual{font-family:var(--font-display);font-size:1.75rem;font-weight:700;color:var(--accent);margin-bottom:0.25rem}
+.roi-card{background:#1A3566;border:1px solid rgba(0,212,255,0.15);border-radius:var(--radius-md);padding:2rem;text-align:center;box-shadow:0 8px 24px rgba(0,0,0,0.4);transition:all 0.3s var(--ease-out)}
+.roi-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,212,255,0.3);border-color:var(--accent)}
+.roi-card-annual{font-family:var(--font-display);font-size:1.75rem;font-weight:700;background:linear-gradient(135deg,#00D4FF,#8B5CF6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:0.25rem}
 .roi-card-monthly{font-size:0.8rem;color:var(--text-muted);margin-bottom:0.75rem}
 .roi-card-desc{font-size:0.8rem;color:var(--text-body);line-height:1.5}
+
+/* Featured card styling for employee cost */
+.roi-card-featured{border:2px solid var(--accent);box-shadow:0 8px 24px rgba(0,212,255,0.2);position:relative}
+.roi-card-featured::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(135deg,rgba(0,212,255,0.05),transparent);border-radius:var(--radius-md);pointer-events:none}
+.roi-card-featured:hover{box-shadow:0 12px 40px rgba(0,212,255,0.4)}
 
 /* 72 Hours Launch Button */
 .launch-banner{display:flex;align-items:center;justify-content:center;gap:1rem;padding:1.25rem 2rem;background:var(--bg-card);border:1px solid var(--dark-border);border-left:4px solid var(--accent);border-radius:var(--radius-md);margin-bottom:3rem;transition:all var(--dur-normal) var(--ease-out);cursor:pointer;text-decoration:none}
@@ -696,9 +848,12 @@ body{background-image:linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px
   /* Text Bot Demo — stack vertically on mobile */
   .text-bot-demo{flex-direction:column}
   .phone-mock.phone-shrunk{transform:none}
-  .envelope-wrapper{order:1;transform:translateY(10px)}
+  .text-bot-side-panel{order:1;width:100%;max-width:280px;margin:0 auto;align-items:stretch}
+  .envelope-wrapper{transform:translateY(10px)}
   .envelope-wrapper.envelope-visible{transform:translateY(0)}
   .envelope{width:100%;max-width:260px;margin:0 auto}
+  .calendar-widget{width:100%}
+  .calendar-widget.calendar-visible{transform:translateY(0)}
   /* Voice Bot Demo — stack vertically */
   .voice-bot-demo{flex-direction:column;align-items:center}
   .voice-bot-demo.stage-transcript .call-phone{transform:none;width:260px;height:500px}
@@ -727,6 +882,7 @@ body{background-image:linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px
   .invoice-mock{max-width:100%}
   .reviews-demo{max-width:100%}
   .plumbing-services{grid-template-columns:1fr}
+  .text-bot-side-panel{max-width:240px}
 }
 
 /* ============================================================
@@ -740,6 +896,8 @@ body{background-image:linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px
   .dashboard-mock{animation:none}
   html{scroll-behavior:auto}
   .envelope-wrapper{opacity:1;transform:none}
+  .calendar-widget{opacity:1;transform:none}
+  .calendar-confirm{opacity:1;transform:none}
   .phone-mock.phone-shrunk{transform:none}
   .call-transcript{opacity:1;transform:none}
   .call-screen-incoming{opacity:0}

@@ -324,7 +324,7 @@
                 <svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#22C55E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </div>
               <div class="call-ended-text">Call Ended</div>
-              <div class="call-ended-duration">1:47</div>
+              <div class="call-ended-duration" id="callEndedDuration">0:47</div>
             </div>
           </div>
         </div>
@@ -336,42 +336,56 @@
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/></svg>
               Homeowner
             </div>
-            <div class="transcript-text">"My pipe burst and water is everywhere &mdash; I need someone NOW"</div>
+            <div class="transcript-text">"My pipe burst and water is everywhere I need someone NOW"</div>
           </div>
           <div class="transcript-line" data-delay="1">
             <div class="transcript-speaker speaker-ai">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
               AirSync
             </div>
-            <div class="transcript-text">"I understand &mdash; that's an emergency. I'm dispatching a plumber to your address. Can you turn off your main water valve?"</div>
+            <div class="transcript-text">"I understand I have you at 1423 Oak Street, is that correct?"</div>
           </div>
           <div class="transcript-line" data-delay="2">
             <div class="transcript-speaker speaker-customer">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/></svg>
               Homeowner
             </div>
-            <div class="transcript-text">"Yes, where is it?"</div>
+            <div class="transcript-text">"Yes, that's right"</div>
           </div>
           <div class="transcript-line" data-delay="3">
             <div class="transcript-speaker speaker-ai">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
               AirSync
             </div>
-            <div class="transcript-text">"Usually in your basement near the front wall, or by your water meter. Turn it clockwise. I've got Mike R. available &mdash; he can be there by 3 AM."</div>
+            <div class="transcript-text">"Perfect. I'm dispatching a plumber now. Can you turn off your main water valve?"</div>
           </div>
           <div class="transcript-line" data-delay="4">
             <div class="transcript-speaker speaker-customer">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/></svg>
               Homeowner
             </div>
-            <div class="transcript-text">"Yes, please send him"</div>
+            <div class="transcript-text">"Yes, where is it?"</div>
           </div>
           <div class="transcript-line" data-delay="5">
             <div class="transcript-speaker speaker-ai">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
               AirSync
             </div>
-            <div class="transcript-text">"Done &mdash; Mike is on his way. You'll get a text confirmation right now."</div>
+            <div class="transcript-text">"Usually in your basement near the front wall, or by your water meter. Turn it clockwise. I've got Mike R. available he can be there by 3 AM."</div>
+          </div>
+          <div class="transcript-line" data-delay="6">
+            <div class="transcript-speaker speaker-customer">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/></svg>
+              Homeowner
+            </div>
+            <div class="transcript-text">"Yes, please send him"</div>
+          </div>
+          <div class="transcript-line" data-delay="7">
+            <div class="transcript-speaker speaker-ai">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+              AirSync
+            </div>
+            <div class="transcript-text">"Done Mike is on his way. You'll get a text confirmation right now."</div>
           </div>
           <!-- Confirmation bar -->
           <div class="call-confirm-bar">
@@ -426,28 +440,64 @@
     </div>
     <div class="feature-visual">
       <div class="text-bot-demo" id="textBotDemo">
-        <div class="envelope-wrapper" id="envelopeWrapper">
-          <div class="envelope">
-            <div class="envelope-back"></div>
-            <div class="envelope-card">
-              <div class="envelope-card-icon">
-                <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#22C55E" stroke-width="2"/><path d="M8 12l3 3 5-5" stroke="#22C55E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                <span class="envelope-card-title">Booking Confirmed</span>
+        <div class="text-bot-side-panel">
+          <div class="envelope-wrapper" id="envelopeWrapper">
+            <div class="envelope">
+              <div class="envelope-back"></div>
+              <div class="envelope-card">
+                <div class="envelope-card-icon">
+                  <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#22C55E" stroke-width="2"/><path d="M8 12l3 3 5-5" stroke="#22C55E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <span class="envelope-card-title">Booking Confirmed</span>
+                </div>
+                <div class="envelope-card-details">
+                  <div class="envelope-card-row"><span>Customer</span><strong>Sarah M.</strong></div>
+                  <div class="envelope-card-row"><span>Service</span><strong>Kitchen Drain Clearing</strong></div>
+                  <div class="envelope-card-row"><span>Date</span><strong>Thursday, 10:00 AM</strong></div>
+                  <div class="envelope-card-row"><span>Technician</span><strong>Mike R.</strong></div>
+                </div>
+                <div class="envelope-card-checks">
+                  <div class="envelope-card-check">&#10003; Confirmation sent to customer</div>
+                  <div class="envelope-card-check">&#10003; Added to your calendar</div>
+                  <div class="envelope-card-check">&#10003; Technician notified</div>
+                </div>
               </div>
-              <div class="envelope-card-details">
-                <div class="envelope-card-row"><span>Customer</span><strong>Sarah M.</strong></div>
-                <div class="envelope-card-row"><span>Service</span><strong>Water Heater Estimate</strong></div>
-                <div class="envelope-card-row"><span>Date</span><strong>Thursday, 10:00 AM</strong></div>
-                <div class="envelope-card-row"><span>Technician</span><strong>Mike R.</strong></div>
+              <div class="envelope-flap"></div>
+              <div class="envelope-front"></div>
+            </div>
+          </div>
+          <div class="calendar-widget" id="calendarWidget">
+            <div class="calendar-header">
+              <svg class="calendar-icon" viewBox="0 0 24 24" fill="none">
+                <rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M16 2v4M8 2v4M3 10h18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+              <span class="calendar-title">Business Calendar</span>
+            </div>
+            <div class="calendar-month">
+              <span class="calendar-month-label">Thursday, Jan 16</span>
+            </div>
+            <div class="calendar-slots">
+              <div class="calendar-slot">
+                <span class="calendar-slot-time">8:00 AM</span>
+                <div class="calendar-slot-event calendar-slot-existing"><span>Water Heater Install</span></div>
               </div>
-              <div class="envelope-card-checks">
-                <div class="envelope-card-check">&#10003; Confirmation sent to customer</div>
-                <div class="envelope-card-check">&#10003; Added to your calendar</div>
-                <div class="envelope-card-check">&#10003; Technician notified</div>
+              <div class="calendar-slot" id="calendarTargetSlot">
+                <span class="calendar-slot-time">10:00 AM</span>
+                <div class="calendar-slot-event calendar-slot-empty"><span class="calendar-slot-placeholder">Available</span></div>
+              </div>
+              <div class="calendar-slot">
+                <span class="calendar-slot-time">12:00 PM</span>
+                <div class="calendar-slot-event calendar-slot-existing"><span>Lunch Break</span></div>
+              </div>
+              <div class="calendar-slot">
+                <span class="calendar-slot-time">2:00 PM</span>
+                <div class="calendar-slot-event calendar-slot-empty"><span class="calendar-slot-placeholder">Available</span></div>
               </div>
             </div>
-            <div class="envelope-flap"></div>
-            <div class="envelope-front"></div>
+            <div class="calendar-confirm" id="calendarConfirm">
+              <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#22C55E" stroke-width="2"/><path d="M8 12l3 3 5-5" stroke="#22C55E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span>Added to Calendar</span>
+            </div>
           </div>
         </div>
         <div class="phone-mock" id="textPhoneMock">
@@ -461,7 +511,7 @@
               </span>
             </div>
             <div class="phone-navbar">
-              <span class="phone-navbar-title">AirSync Text Bot</span>
+              <span class="phone-navbar-title">Ace Plumbing</span>
             </div>
             <div class="phone-content">
               <div class="chat-bubble chat-incoming chat-hidden">How much to unclog a kitchen drain?</div>
@@ -469,7 +519,7 @@
               <div class="chat-bubble chat-incoming chat-hidden">How about just the kitchen drain. What do you have open?</div>
               <div class="chat-bubble chat-outgoing chat-hidden">We have Thursday at 10 AM or Friday at 2 PM available. Which works better for you?</div>
               <div class="chat-bubble chat-incoming chat-hidden">Thursday morning works.</div>
-              <div class="chat-bubble chat-outgoing chat-hidden">You're booked! Thursday 10 AM &mdash; a tech will come out and clear the drain. You'll get a confirmation text shortly.</div>
+              <div class="chat-bubble chat-outgoing chat-hidden">You're booked! Thursday 10 AM. A tech will come out and clear the drain. You'll get a confirmation text shortly.</div>
               <div class="typing-indicator chat-hidden"><span></span><span></span><span></span></div>
             </div>
           </div>
@@ -625,7 +675,17 @@
       <div class="invoice-demo" id="invoiceDemo">
         <div class="invoice-mock">
           <div class="invoice-header">
-            <img src="airsync_logo_lighter_purple.png" class="invoice-logo-img" alt="AirSync">
+            <div class="invoice-company">
+              <div class="invoice-company-logo">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 14h6v6H4z"/><path d="M10 10h4v10h-4z"/><path d="M14 6h6v4h-6z"/></svg>
+                <span>Ace Plumbing</span>
+              </div>
+              <div class="invoice-company-details">
+                <div>1423 Oak Street</div>
+                <div>San Diego, CA 92101</div>
+                <div>(619) 555-0147</div>
+              </div>
+            </div>
             <div class="invoice-badge" id="invoiceBadge">SENT</div>
           </div>
           <div class="invoice-meta">
@@ -687,36 +747,97 @@
       </div>
     </div>
     <div class="feature-visual">
-      <div class="reviews-demo state-before" id="reviewsDemo">
-        <div class="reviews-label" id="reviewsLabel">Before</div>
+      <div class="reviews-phone-container" id="reviewsDemo">
+        <!-- iPhone 15 Pro Frame -->
+        <div class="iphone-frame">
+          <div class="iphone-bezel">
+            <div class="iphone-island"></div>
+            <div class="iphone-screen">
+              <!-- Phase 1: Messages App -->
+              <div class="messages-app" id="messagesApp">
+                <div class="messages-header">
+                  <div class="messages-back">&lt; Messages</div>
+                  <div class="messages-contact">
+                    <div class="contact-avatar">S</div>
+                    <span>Sarah M.</span>
+                  </div>
+                  <div class="messages-info">ⓘ</div>
+                </div>
+                <div class="messages-conversation">
+                  <div class="message-bubble business-message">
+                    <div class="bubble-content">Hey thanks for choosing us for kitchen pipe repair! We look forward to helping you again in the future! If you don't mind, we'd really appreciate if you could leave us a review on Google, here is our business review link 😊</div>
+                    <div class="message-time">2:34 PM</div>
+                  </div>
+                  <div class="typing-indicator">
+                    <span></span><span></span><span></span>
+                  </div>
+                  <div class="message-bubble customer-message">
+                    <div class="bubble-content">Absolutely! You guys were great</div>
+                    <div class="message-time">2:35 PM</div>
+                  </div>
+                </div>
+                <div class="messages-input-bar">
+                  <span>iMessage</span>
+                </div>
+              </div>
+
+              <!-- Phase 2: Google Business Profile -->
+              <div class="google-profile" id="googleProfile">
+                <div class="google-header">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                  <div class="google-business-info">
+                    <h3>Ace Plumbing</h3>
+                    <p class="google-category">Plumbing Service</p>
+                  </div>
+                </div>
+
+                <div class="google-rating-section">
+                  <div class="google-rating-main">
+                    <div class="google-stars" id="reviewsStars">★★★☆☆</div>
+                    <div class="google-rating-number" id="reviewsRating">3.2</div>
+                  </div>
+                  <div class="google-review-count">
+                    <span id="reviewsCount">14</span> reviews
+                  </div>
+                </div>
+
+                <div class="google-review-card">
+                  <div class="review-card-header">
+                    <div class="review-author-info">
+                      <div class="review-avatar" id="reviewsAvatar">J</div>
+                      <div class="review-author-meta">
+                        <strong id="reviewsSampleAuthor">John D.</strong>
+                        <span id="reviewsSampleMeta">3 weeks ago</span>
+                      </div>
+                    </div>
+                    <div class="review-stars" id="reviewsSampleStars">★★★☆☆</div>
+                  </div>
+                  <p class="review-text" id="reviewsSampleText">"Called twice, no one answered. Went with someone else."</p>
+                </div>
+
+                <button class="google-write-review">Write a review</button>
+
+                <div class="google-platforms">
+                  <a href="#" class="platform-link">
+                    <svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor"><path d="M10 0C4.5 0 0 4.5 0 10s4.5 10 10 10 10-4.5 10-10S15.5 0 10 0z"/></svg>
+                  </a>
+                  <a href="#" class="platform-link">
+                    <svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor"><path d="M10 0l2.5 5 5.5.8-4 3.9.9 5.3L10 14.5 5.1 17l.9-5.3-4-3.9 5.5-.8z"/></svg>
+                  </a>
+                  <a href="#" class="platform-link">
+                    <svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor"><path d="M10 0C4.5 0 0 4.5 0 10s4.5 10 10 10 10-4.5 10-10S15.5 0 10 0z"/></svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- State Label -->
+        <div class="review-state-label" id="reviewsLabel">Before</div>
+
+        <!-- New Review Notification -->
         <div class="review-notification">New review!</div>
-        <div class="reviews-card">
-          <div class="reviews-stars" id="reviewsStars">&#9733;&#9733;&#9733;&#9734;&#9734;</div>
-          <div class="reviews-rating" id="reviewsRating">3.2</div>
-          <div class="reviews-count"><span id="reviewsCount">14</span> reviews</div>
-        </div>
-        <div class="reviews-sample">
-          <div class="reviews-sample-stars" id="reviewsSampleStars">&#9733;&#9733;&#9734;&#9734;&#9734;</div>
-          <p id="reviewsSampleText">"Called twice, no one answered. Went with someone else."</p>
-          <div class="reviews-sample-author">
-            <strong id="reviewsSampleAuthor">John D.</strong>
-            <span id="reviewsSampleMeta">Google &bull; 3 weeks ago</span>
-          </div>
-        </div>
-        <div class="reviews-platforms">
-          <div class="review-platform">
-            <svg viewBox="0 0 20 20" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 2C6 2 3 5.5 3 10c0 6 7 8 7 8s7-2 7-8c0-4.5-3-8-7-8z"/><circle cx="10" cy="10" r="3"/></svg>
-            Google
-          </div>
-          <div class="review-platform">
-            <svg viewBox="0 0 20 20" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 2l2.5 5 5.5.8-4 3.9.9 5.3L10 14.5 5.1 17l.9-5.3-4-3.9 5.5-.8z"/></svg>
-            Yelp
-          </div>
-          <div class="review-platform">
-            <svg viewBox="0 0 20 20" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V4a2 2 0 00-2-2z"/><path d="M10 14v-4M10 8V7"/></svg>
-            Facebook
-          </div>
-        </div>
       </div>
     </div>
   </div>
@@ -729,7 +850,7 @@
   <div class="roi-container">
     <div class="roi-header reveal">
       <div class="section-label">See Your Savings</div>
-      <h2>How much more can AirSync add to your bottom line &mdash;<br><span class="text-accent">at a minimum?</span></h2>
+      <h2>Make More Revenue<br><span class="text-accent">with AirSync</span></h2>
     </div>
 
     <div class="roi-total-display reveal">
@@ -743,10 +864,10 @@
         <div class="roi-card-monthly">$1,000/mo</div>
         <div class="roi-card-desc">Recovered follow-up revenue &mdash; 2 recovered jobs/month at $500 from missed, cold, or forgotten leads</div>
       </div>
-      <div class="roi-card">
-        <div class="roi-card-annual" data-count="24" data-prefix="$" data-suffix=",000">0</div>
-        <div class="roi-card-monthly">$2,000/mo</div>
-        <div class="roi-card-desc">Front desk savings &mdash; replaces a full-time receptionist working 8 hours/day, 7 days/week at $15/hour. This doesn't include overtime, benefits, or after-hours answering service fees. Conservative estimate.</div>
+      <div class="roi-card roi-card-featured">
+        <div class="roi-card-annual" data-count="57" data-prefix="$" data-suffix=",000">0</div>
+        <div class="roi-card-monthly">$4,750/mo</div>
+        <div class="roi-card-desc">Full-time front desk employee &mdash; 8 hours/day, 7 days/week (2,912 hours/year) at $15/hr = $43,680 base + 30% overhead for taxes, benefits, and insurance = $56,784/year. This is what 24/7 phone coverage costs with a human receptionist.</div>
       </div>
       <div class="roi-card">
         <div class="roi-card-annual" data-count="15" data-prefix="$" data-suffix=",000">0</div>
