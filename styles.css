@@ -450,14 +450,14 @@ h1,h2,h3,h4{font-family:var(--font-display);color:var(--text-primary);line-heigh
    6C. WEBSITE BOT — Realistic Plumbing Site + Cursor Demo
    ============================================================ */
 .website-bot-demo{position:relative}
-.browser-mock{width:100%;max-width:720px;background:var(--white);border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);overflow:hidden;margin:0 auto;border:1px solid rgba(255,255,255,0.1)}
+.browser-mock{width:100%;max-width:480px;background:var(--white);border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);overflow:hidden;margin:0 auto;border:1px solid rgba(255,255,255,0.1)}
 .browser-topbar{display:flex;align-items:center;gap:1.5rem;padding:20px 28px;background:#F8F9FB;border-bottom:1px solid #E5E8ED}
 .browser-dots{display:flex;gap:12px}
 .browser-dot-r{width:20px;height:20px;border-radius:50%;background:#FF5F57}
 .browser-dot-y{width:20px;height:20px;border-radius:50%;background:#FFBD2E}
 .browser-dot-g{width:20px;height:20px;border-radius:50%;background:#28CA41}
 .browser-url{display:flex;align-items:center;gap:12px;background:#EBEDF0;border-radius:12px;padding:8px 24px;font-size:1.5rem;color:#6B7A90;flex:1;margin-left:1rem}
-.browser-body{position:relative;min-height:640px;background:#fff;overflow:hidden}
+.browser-body{position:relative;min-height:427px;background:#fff;overflow-y:auto}
 
 /* Realistic plumbing website inside browser */
 .plumbing-site-nav{display:flex;align-items:center;justify-content:space-between;padding:16px 32px;background:#0B1C3D;border-bottom:2px solid var(--accent)}
@@ -486,11 +486,11 @@ h1,h2,h3,h4{font-family:var(--font-display);color:var(--text-primary);line-heigh
 .chat-prompt svg{width:40px;height:40px;color:var(--dark)}
 
 /* Chat Widget Expanded */
-.chat-widget{position:absolute;bottom:24px;right:24px;width:440px;background:var(--white);border-radius:var(--radius-md);box-shadow:0 4px 24px rgba(0,0,0,0.15);overflow:hidden;border:1px solid #E5E8ED;opacity:0;transform:scale(0.8) translateY(10px);transform-origin:bottom right;transition:all 0.4s var(--ease-out);z-index:15}
+.chat-widget{position:absolute;bottom:24px;right:24px;width:293px;background:var(--white);border-radius:var(--radius-md);box-shadow:0 4px 24px rgba(0,0,0,0.15);overflow:hidden;border:1px solid #E5E8ED;opacity:0;transform:scale(0.8) translateY(10px);transform-origin:bottom right;transition:all 0.4s var(--ease-out);z-index:15}
 .chat-widget.widget-open{opacity:1;transform:scale(1) translateY(0)}
 .chat-widget-header{display:flex;align-items:center;gap:12px;padding:16px 24px;background:var(--accent);color:var(--dark);font-size:1.5rem;font-weight:700}
 .chat-widget-header svg{display:inline-block;flex-shrink:0}
-.chat-widget-body{padding:16px;display:flex;flex-direction:column;gap:12px;max-height:280px;overflow:hidden}
+.chat-widget-body{padding:16px;display:flex;flex-direction:column;gap:12px;max-height:187px;overflow:hidden}
 .chat-widget-bubble{padding:12px 20px;border-radius:20px;font-size:1.3rem;line-height:1.4;opacity:0;transform:translateY(5px);transition:all 0.3s ease}
 .chat-widget-bubble.wb-visible{opacity:1;transform:translateY(0)}
 .chat-widget-bot{background:#F0F0F0;color:#1a1a1a;align-self:flex-start;max-width:90%}
