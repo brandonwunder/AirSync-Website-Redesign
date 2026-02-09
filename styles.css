@@ -305,7 +305,7 @@ h1,h2,h3,h4{font-family:var(--font-display);color:var(--text-primary);line-heigh
 /* ============================================================
    6A. VOICE BOT DEMO — Incoming Call + Transcript
    ============================================================ */
-.voice-bot-demo{display:flex;align-items:center;gap:3.5rem;justify-content:center;position:relative}
+.voice-bot-demo{display:flex;align-items:center;gap:2rem;justify-content:center;position:relative}
 
 /* Call Phone */
 .call-phone{width:260px;height:500px;background:#1a1a1a;border-radius:40px;padding:10px;box-shadow:var(--shadow-lg),inset 0 0 0 2px rgba(255,255,255,0.1);position:relative;flex-shrink:0;transition:all 0.8s var(--ease-out)}
@@ -369,7 +369,7 @@ h1,h2,h3,h4{font-family:var(--font-display);color:var(--text-primary);line-heigh
 .call-screen-ended.call-screen-visible{opacity:1;z-index:2}
 
 /* Phone animation state */
-.call-phone.phone-call-active{transform:scale(0.8) translateX(-20px);width:200px;height:380px}
+.call-phone.phone-call-active{transform:none;width:260px;height:500px}
 
 /* Transcript animations */
 .call-transcript.transcript-visible,
@@ -905,8 +905,6 @@ body{background-image:linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px
   .calendar-widget.calendar-visible{transform:translateY(0)}
   /* Voice Bot Demo — stack vertically */
   .voice-bot-demo{flex-direction:column;align-items:center}
-  .voice-bot-demo.stage-transcript .call-phone{transform:none;width:260px;height:500px}
-  .voice-bot-demo.stage-ended .call-phone{transform:none;width:260px;height:500px}
   .call-transcript{width:100%;max-width:320px}
   /* Browser mock */
   .browser-mock{max-width:100%}
