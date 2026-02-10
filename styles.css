@@ -548,7 +548,7 @@ h1,h2,h3,h4{font-family:var(--font-display);color:var(--text-primary);line-heigh
 /* Chat Widget Expanded */
 .chat-widget{position:absolute;bottom:24px;right:24px;width:293px;background:var(--white);border-radius:var(--radius-md);box-shadow:0 4px 24px rgba(0,0,0,0.15);overflow:hidden;border:1px solid #E5E8ED;opacity:0;transform:scale(0.8) translateY(10px);transform-origin:bottom right;transition:all 0.4s var(--ease-out);z-index:15}
 .chat-widget.widget-open{opacity:1;transform:scale(1) translateY(0)}
-.chat-widget-header{display:flex;align-items:center;gap:12px;padding:16px 24px;background:var(--accent);color:var(--dark);font-size:1.5rem;font-weight:700}
+.chat-widget-header{display:flex;align-items:center;gap:12px;padding:12px 20px;background:var(--accent);color:var(--dark);font-size:1rem;font-weight:700}
 .chat-widget-header svg{display:inline-block;flex-shrink:0}
 .chat-widget-body{padding:12px;display:flex;flex-direction:column;gap:8px;max-height:187px;overflow-y:auto;scroll-behavior:smooth;scrollbar-width:none;-ms-overflow-style:none}
 .chat-widget-body::-webkit-scrollbar{display:none}
