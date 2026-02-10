@@ -558,6 +558,17 @@ h1,h2,h3,h4{font-family:var(--font-display);color:var(--text-primary);line-heigh
 .chat-widget-user{background:var(--accent);color:var(--dark);align-self:flex-end;max-width:80%}
 .chat-widget-input{display:flex;align-items:center;padding:8px 14px;border-top:1px solid #E5E8ED;font-size:0.95rem;color:#94A3B8}
 
+/* Payment Processor Logos */
+#payments .feature-visual{flex-direction:row;gap:1.5rem;align-items:center}
+.payment-logos-strip{display:flex;flex-direction:column;gap:1rem;align-items:center}
+.payment-logo{width:100px;opacity:0.7;transition:opacity 0.3s ease}
+.payment-logo:hover{opacity:1}
+@media(max-width:768px){
+  #payments .feature-visual{flex-direction:column}
+  .payment-logos-strip{flex-direction:row;flex-wrap:wrap;justify-content:center}
+  .payment-logo{width:80px}
+}
+
 /* ============================================================
    6D. INVOICE MOCK — Animated Sequence
    ============================================================ */
