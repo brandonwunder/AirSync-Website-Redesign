@@ -608,11 +608,19 @@
       chatBubbles.forEach(function (bubble, idx) {
         setTimeout(function () {
           bubble.classList.add('wb-visible');
-          // Only auto-scroll from second bubble onwards (idx > 0)
-          // Let first message stay visible at top
-          if (idx > 0 && chatBody && chatBody.scrollHeight > chatBody.clientHeight) {
+          // Skip scroll for first bubble, let it stay at top
+          if (idx > 0 && chatBody) {
             setTimeout(function () {
-              chatBody.scrollTo({ top: chatBody.scrollHeight, behavior: 'smooth' });
+              // Calculate where this bubble ends
+              var bubbleBottom = bubble.offsetTop + bubble.offsetHeight;
+              // Only scroll if bubble extends below visible area
+              if (bubbleBottom > chatBody.scrollTop + chatBody.clientHeight) {
+                // Scroll to show this bubble's bottom at viewport bottom
+                chatBody.scrollTo({
+                  top: bubbleBottom - chatBody.clientHeight,
+                  behavior: 'smooth'
+                });
+              }
             }, 100);
           }
         }, bubbleDelays[idx] || idx * 1200);
