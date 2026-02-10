@@ -640,51 +640,54 @@
       </div>
     </div>
     <div class="feature-visual">
-      <div class="payment-logos-strip">
-        <img src="assets/logos/clover.svg" alt="Clover" class="payment-logo">
-        <img src="assets/logos/square.svg" alt="Square" class="payment-logo">
-        <img src="assets/logos/stripe.svg" alt="Stripe" class="payment-logo">
-        <img src="assets/logos/paypal.svg" alt="PayPal" class="payment-logo">
-        <img src="assets/logos/authorize.svg" alt="Authorize.net" class="payment-logo">
-      </div>
-      <div class="invoice-demo" id="invoiceDemo">
-        <div class="invoice-mock">
-          <div class="invoice-header">
-            <div class="invoice-company">
-              <div class="invoice-company-logo">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 14h6v6H4z"/><path d="M10 10h4v10h-4z"/><path d="M14 6h6v4h-6z"/></svg>
-                <span>Ace Plumbing</span>
-              </div>
-              <div class="invoice-company-details">
-                <div>1423 Oak Street</div>
-                <div>San Diego, CA 92101</div>
-                <div>(619) 555-0147</div>
-              </div>
-            </div>
-            <div class="invoice-badge" id="invoiceBadge">SENT</div>
-          </div>
-          <div class="invoice-meta">
-            <div class="invoice-meta-row"><span>Invoice #</span><strong>INV-2847</strong></div>
-            <div class="invoice-meta-row"><span>Customer</span><strong>Martinez Residence</strong></div>
-            <div class="invoice-meta-row"><span>Date</span><strong>Feb 8, 2026</strong></div>
-          </div>
-          <div class="invoice-items">
-            <div class="invoice-item"><span>Emergency Pipe Repair &mdash; Kitchen</span><strong>$850</strong></div>
-            <div class="invoice-item"><span>3/4" Copper Pipe + Fittings</span><strong>$125</strong></div>
-            <div class="invoice-item"><span>Labor (2.5 hrs emergency rate)</span><strong>$375</strong></div>
-          </div>
-          <div class="invoice-total">
-            <span>Total</span>
-            <strong id="invoiceTotalAmount">$1,350</strong>
-          </div>
-          <div class="invoice-status-bar" id="invoiceStatusBar">
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span>Paid via credit card &bull; Feb 8, 2026</span>
-          </div>
+      <div class="invoice-with-logos">
+        <div class="payment-logos-stack">
+          <div class="payment-logos-label">Works With Your Processor</div>
+          <div class="payment-logo-card" style="animation-delay: 0s"><img src="payment-logos/free-stripe-credit-card-payment-method-icon-19699-thumb.png" alt="Stripe"></div>
+          <div class="payment-logo-card" style="animation-delay: 0.15s"><img src="payment-logos/Paypal_2014_logo.png" alt="PayPal"></div>
+          <div class="payment-logo-card" style="animation-delay: 0.3s"><img src="payment-logos/39003.png" alt="Square"></div>
+          <div class="payment-logo-card" style="animation-delay: 0.45s"><img src="payment-logos/free-authorize-net-credit-card-payment-method-icon-19695-thumb.png" alt="Authorize.net"></div>
+          <div class="payment-logo-card" style="animation-delay: 0.6s"><img src="payment-logos/clover-clearly-payments-logo-300x169.png" alt="Clover"></div>
         </div>
-        <div class="invoice-deposited" id="invoiceDeposited">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M2 10h20"/><path d="M6 15h4"/></svg>
-          $1,350 deposited to Chase ****4821
+        <div class="invoice-demo" id="invoiceDemo">
+          <div class="invoice-mock">
+            <div class="invoice-header">
+              <div class="invoice-company">
+                <div class="invoice-company-logo">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 14h6v6H4z"/><path d="M10 10h4v10h-4z"/><path d="M14 6h6v4h-6z"/></svg>
+                  <span>Ace Plumbing</span>
+                </div>
+                <div class="invoice-company-details">
+                  <div>1423 Oak Street</div>
+                  <div>San Diego, CA 92101</div>
+                  <div>(619) 555-0147</div>
+                </div>
+              </div>
+              <div class="invoice-badge" id="invoiceBadge">SENT</div>
+            </div>
+            <div class="invoice-meta">
+              <div class="invoice-meta-row"><span>Invoice #</span><strong>INV-2847</strong></div>
+              <div class="invoice-meta-row"><span>Customer</span><strong>Martinez Residence</strong></div>
+              <div class="invoice-meta-row"><span>Date</span><strong>Feb 8, 2026</strong></div>
+            </div>
+            <div class="invoice-items">
+              <div class="invoice-item"><span>Emergency Pipe Repair &mdash; Kitchen</span><strong>$850</strong></div>
+              <div class="invoice-item"><span>3/4" Copper Pipe + Fittings</span><strong>$125</strong></div>
+              <div class="invoice-item"><span>Labor (2.5 hrs emergency rate)</span><strong>$375</strong></div>
+            </div>
+            <div class="invoice-total">
+              <span>Total</span>
+              <strong id="invoiceTotalAmount">$1,350</strong>
+            </div>
+            <div class="invoice-status-bar" id="invoiceStatusBar">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span>Paid via credit card &bull; Feb 8, 2026</span>
+            </div>
+          </div>
+          <div class="invoice-deposited" id="invoiceDeposited">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M2 10h20"/><path d="M6 15h4"/></svg>
+            $1,350 deposited to Chase ****4821
+          </div>
         </div>
       </div>
     </div>
