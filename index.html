@@ -725,7 +725,92 @@
       </div>
     </div>
     <div class="feature-visual">
-      <!-- Reviews visual removed -->
+      <div class="reviews-demo" id="reviewsDemo">
+        <!-- Rating Header -->
+        <div class="reviews-header">
+          <div class="reviews-rating-block">
+            <span class="reviews-rating-number" id="reviewsRatingNumber">0.0</span>
+            <div class="reviews-stars-row">
+              <svg class="reviews-star filled" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.37 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.54 1.118l-3.37-2.448a1 1 0 00-1.175 0l-3.37 2.448c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.063 9.384c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69l1.286-3.957z"/></svg>
+              <svg class="reviews-star filled" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.37 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.54 1.118l-3.37-2.448a1 1 0 00-1.175 0l-3.37 2.448c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.063 9.384c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69l1.286-3.957z"/></svg>
+              <svg class="reviews-star filled" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.37 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.54 1.118l-3.37-2.448a1 1 0 00-1.175 0l-3.37 2.448c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.063 9.384c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69l1.286-3.957z"/></svg>
+              <svg class="reviews-star filled" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.37 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.54 1.118l-3.37-2.448a1 1 0 00-1.175 0l-3.37 2.448c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.063 9.384c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69l1.286-3.957z"/></svg>
+              <svg class="reviews-star filled" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.37 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.54 1.118l-3.37-2.448a1 1 0 00-1.175 0l-3.37 2.448c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.063 9.384c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69l1.286-3.957z"/></svg>
+            </div>
+          </div>
+          <div class="reviews-improvement-badge" id="reviewsImprovementBadge">
+            <svg viewBox="0 0 20 20" fill="currentColor" width="14" height="14"><path fill-rule="evenodd" d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg>
+            <span>+0.7</span>
+          </div>
+        </div>
+
+        <!-- Notification Feed -->
+        <div class="reviews-feed" id="reviewsFeed">
+          <div class="review-card" data-index="0">
+            <div class="review-card-header">
+              <img src="assets/review-platforms/google.png" alt="Google" class="review-card-logo">
+              <span class="review-card-platform">Google</span>
+              <span class="review-card-time">2 min ago</span>
+            </div>
+            <div class="review-card-stars">
+              <span class="rc-star filled">&#9733;</span><span class="rc-star filled">&#9733;</span><span class="rc-star filled">&#9733;</span><span class="rc-star filled">&#9733;</span><span class="rc-star filled">&#9733;</span>
+            </div>
+            <p class="review-card-text">"Fast response, fixed our leak same day!"</p>
+          </div>
+          <div class="review-card" data-index="1">
+            <div class="review-card-header">
+              <img src="assets/review-platforms/yelp.png" alt="Yelp" class="review-card-logo">
+              <span class="review-card-platform">Yelp</span>
+              <span class="review-card-time">15 min ago</span>
+            </div>
+            <div class="review-card-stars">
+              <span class="rc-star filled">&#9733;</span><span class="rc-star filled">&#9733;</span><span class="rc-star filled">&#9733;</span><span class="rc-star filled">&#9733;</span><span class="rc-star filled">&#9733;</span>
+            </div>
+            <p class="review-card-text">"Very professional. Highly recommend!"</p>
+          </div>
+          <div class="review-card review-card-recovery" data-index="2" id="reviewRecoveryCard">
+            <div class="review-card-header">
+              <img src="assets/review-platforms/facebook.png" alt="Facebook" class="review-card-logo">
+              <span class="review-card-platform">Facebook</span>
+              <span class="review-card-time">1 hr ago</span>
+            </div>
+            <div class="review-card-stars" id="recoveryStars">
+              <span class="rc-star filled">&#9733;</span><span class="rc-star filled">&#9733;</span><span class="rc-star">&#9733;</span><span class="rc-star">&#9733;</span><span class="rc-star">&#9733;</span>
+            </div>
+            <p class="review-card-text" id="recoveryText">"Took too long to arrive."</p>
+            <div class="review-recovery-label" id="recoveryLabel">
+              <svg viewBox="0 0 20 20" fill="currentColor" width="14" height="14"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              <span>Review Updated!</span>
+            </div>
+          </div>
+          <div class="review-card" data-index="3">
+            <div class="review-card-header">
+              <img src="assets/review-platforms/nextdoor.png" alt="Nextdoor" class="review-card-logo">
+              <span class="review-card-platform">Nextdoor</span>
+              <span class="review-card-time">3 hrs ago</span>
+            </div>
+            <div class="review-card-stars">
+              <span class="rc-star filled">&#9733;</span><span class="rc-star filled">&#9733;</span><span class="rc-star filled">&#9733;</span><span class="rc-star filled">&#9733;</span><span class="rc-star filled">&#9733;</span>
+            </div>
+            <p class="review-card-text">"Best plumber in the neighborhood."</p>
+          </div>
+        </div>
+
+        <!-- Platform Logos Grid -->
+        <div class="reviews-platforms-label">Monitors All Your Platforms</div>
+        <div class="reviews-platforms-grid">
+          <div class="review-platform-card" style="animation-delay:0s"><img src="assets/review-platforms/google.png" alt="Google"></div>
+          <div class="review-platform-card" style="animation-delay:0.1s"><img src="assets/review-platforms/facebook.png" alt="Facebook"></div>
+          <div class="review-platform-card" style="animation-delay:0.15s"><img src="assets/review-platforms/yelp.png" alt="Yelp"></div>
+          <div class="review-platform-card" style="animation-delay:0.2s"><img src="assets/review-platforms/bbb.webp" alt="BBB"></div>
+          <div class="review-platform-card" style="animation-delay:0.3s"><img src="assets/review-platforms/homeadvisor.webp" alt="HomeAdvisor"></div>
+          <div class="review-platform-card" style="animation-delay:0.4s"><img src="assets/review-platforms/nextdoor.png" alt="Nextdoor"></div>
+          <div class="review-platform-card" style="animation-delay:0.5s"><img src="assets/review-platforms/thumbtack.webp" alt="Thumbtack"></div>
+          <div class="review-platform-card" style="animation-delay:0.6s"><img src="assets/review-platforms/trustpilot.jpg" alt="Trustpilot"></div>
+          <div class="review-platform-card" style="animation-delay:0.7s"><img src="assets/review-platforms/angies-list.png" alt="Angi"></div>
+          <div class="review-platform-card" style="animation-delay:0.8s"><img src="assets/review-platforms/other.webp" alt="Houzz"></div>
+        </div>
+      </div>
     </div>
   </div>
 </section>

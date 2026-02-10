@@ -701,8 +701,113 @@
   }
 
   /* ----------------------------------------------------------
-     13. REVIEWS — Animation removed
+     13. REVIEWS — Review Recovery Dashboard Animation
      ---------------------------------------------------------- */
+  var reviewsDemo = document.getElementById('reviewsDemo');
+
+  if (reviewsDemo && 'IntersectionObserver' in window) {
+    var reviewsObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          animateReviewsDashboard(entry.target);
+          reviewsObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+
+    reviewsObserver.observe(reviewsDemo);
+  }
+
+  function animateReviewsDashboard(demoEl) {
+    var ratingNumber = demoEl.querySelector('.reviews-rating-number');
+    var improvementBadge = demoEl.querySelector('#reviewsImprovementBadge');
+    var feedCards = demoEl.querySelectorAll('.review-card');
+    var recoveryCard = demoEl.querySelector('#reviewRecoveryCard');
+    var recoveryStars = demoEl.querySelector('#recoveryStars');
+    var recoveryText = demoEl.querySelector('#recoveryText');
+    var recoveryLabel = demoEl.querySelector('#recoveryLabel');
+
+    var stageDelay = 0;
+
+    // Stage 1: Animate rating number (0.0 -> 4.9)
+    setTimeout(function () {
+      animateDecimalCounter(ratingNumber, 4.9, 1500);
+      ratingNumber.classList.add('rv-visible');
+    }, stageDelay);
+    stageDelay += 800;
+
+    // Stage 2: Show improvement badge
+    setTimeout(function () {
+      improvementBadge.classList.add('rv-visible');
+    }, stageDelay);
+    stageDelay += 600;
+
+    // Stage 3: Start notification feed cycling
+    var currentCardIndex = 0;
+    var recoveryPlayed = false;
+
+    setTimeout(function () {
+      feedCards[0].classList.add('rc-active');
+
+      setInterval(function () {
+        var prevCard = feedCards[currentCardIndex];
+        prevCard.classList.remove('rc-active');
+        prevCard.classList.add('rc-exit-up');
+
+        setTimeout(function () {
+          prevCard.classList.remove('rc-exit-up');
+        }, 500);
+
+        currentCardIndex = (currentCardIndex + 1) % feedCards.length;
+        var nextCard = feedCards[currentCardIndex];
+        nextCard.classList.add('rc-active');
+
+        // Trigger recovery animation on card index 2
+        if (currentCardIndex === 2 && !recoveryPlayed) {
+          recoveryPlayed = true;
+          triggerRecoveryAnimation(recoveryCard, recoveryStars, recoveryText, recoveryLabel);
+        }
+      }, 3000);
+    }, stageDelay);
+  }
+
+  function animateDecimalCounter(el, target, duration) {
+    var start = null;
+    function step(timestamp) {
+      if (!start) start = timestamp;
+      var progress = Math.min((timestamp - start) / duration, 1);
+      var easedProgress = easeOutCubic(progress);
+      var current = (easedProgress * target).toFixed(1);
+      el.textContent = current;
+      if (progress < 1) {
+        requestAnimationFrame(step);
+      }
+    }
+    requestAnimationFrame(step);
+  }
+
+  function triggerRecoveryAnimation(card, starsContainer, textEl, labelEl) {
+    setTimeout(function () {
+      card.classList.add('rc-recovered');
+
+      var stars = starsContainer.querySelectorAll('.rc-star');
+      stars[2].classList.add('filled');
+      setTimeout(function () {
+        stars[3].classList.add('filled');
+      }, 200);
+      setTimeout(function () {
+        stars[4].classList.add('filled');
+      }, 400);
+
+      setTimeout(function () {
+        textEl.textContent = '"They came back and made it right. 5 stars!"';
+      }, 500);
+
+      setTimeout(function () {
+        labelEl.classList.add('rv-visible');
+      }, 800);
+    }, 1500);
+  }
 
   /* ----------------------------------------------------------
      14. HVAC STATS PANEL ANIMATION
@@ -786,6 +891,16 @@
           msgEl.classList.add('msg-visible');
           tm.appendChild(msgEl);
         });
+      }
+      // Show reviews dashboard in final state instantly
+      var reviewsEl = document.getElementById('reviewsDemo');
+      if (reviewsEl) {
+        var rn = reviewsEl.querySelector('.reviews-rating-number');
+        if (rn) { rn.textContent = '4.9'; rn.classList.add('rv-visible'); }
+        var ib = reviewsEl.querySelector('#reviewsImprovementBadge');
+        if (ib) ib.classList.add('rv-visible');
+        var firstCard = reviewsEl.querySelector('.review-card[data-index="0"]');
+        if (firstCard) firstCard.classList.add('rc-active');
       }
     }
   }
