@@ -613,153 +613,56 @@ h1,h2,h3,h4{font-family:var(--font-display);color:var(--text-primary);line-heigh
 @keyframes logoFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
 
 /* ============================================================
-   6E. REVIEWS — iPhone 15 Pro with Google Business Profile
+   6E. REVIEWS — Circular Progress Gauge with Orbital Icons
    ============================================================ */
-.reviews-phone-container{width:100%;max-width:340px;margin:0 auto;position:relative}
+.rating-gauge-container{width:100%;max-width:700px;margin:0 auto;position:relative;padding-bottom:50px;aspect-ratio:1;display:flex;align-items:center;justify-content:center}
 
-/* iPhone 15 Pro Frame */
-.iphone-frame{background:#3A3A3C;border-radius:48px;padding:10px;width:100%;aspect-ratio:9/16;max-height:680px;position:relative;box-shadow:0 12px 32px rgba(0,0,0,0.35),0 4px 12px rgba(0,0,0,0.2),inset 0 0 0 1px rgba(255,255,255,0.05)}
+/* Orbital Platform Icons */
+.platform-orbital{position:absolute;width:100%;height:100%;top:0;left:0;pointer-events:none}
 
-.iphone-bezel{width:100%;height:100%;border-radius:40px;overflow:hidden;background:#1a1a1a;position:relative}
+.platform-icon-card{position:absolute;top:50%;left:50%;width:60px;height:40px;display:flex;align-items:center;justify-content:center;transform:translate(-50%,-50%) rotate(var(--angle)) translateY(-280px) rotate(calc(-1 * var(--angle)));background:rgba(255,255,255,0.04);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-radius:12px;border:1px solid rgba(255,255,255,0.08);box-shadow:0 4px 16px rgba(0,212,255,0.08),0 2px 8px rgba(139,92,246,0.05),inset 0 0 12px rgba(0,212,255,0.02);transition:all 0.6s cubic-bezier(0.4,0,0.2,1);opacity:0.4;pointer-events:auto;animation:platformFloat 3s ease-in-out infinite}
 
-.iphone-island{position:absolute;top:8px;left:50%;transform:translateX(-50%);width:160px;height:28px;background:#000;border-radius:20px;z-index:10}
+.rating-gauge-container.state-before .platform-icon-card{opacity:0.3;filter:grayscale(70%) brightness(0.7)}
 
-.iphone-screen{width:100%;height:100%;background:#FFFFFF;overflow:hidden;display:flex;flex-direction:column;position:relative}
+.rating-gauge-container.state-after .platform-icon-card{opacity:1;filter:grayscale(0%) brightness(1);background:rgba(255,255,255,0.08);box-shadow:0 6px 24px rgba(0,212,255,0.15),0 3px 12px rgba(139,92,246,0.1),inset 0 0 16px rgba(0,212,255,0.05)}
 
-/* Messages App */
-.messages-app{width:100%;height:100%;display:flex;flex-direction:column;background:#FFFFFF;opacity:1;z-index:2;transition:opacity 0.8s ease}
+.platform-icon-card img{max-width:48px;max-height:28px;object-fit:contain;display:block;transition:filter 0.6s ease}
 
-.messages-header{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:#FFFFFF;border-bottom:1px solid #E8E8E8;font-size:12px;color:#666}
+@keyframes platformFloat{0%,100%{transform:translate(-50%,-50%) rotate(var(--angle)) translateY(-280px) rotate(calc(-1 * var(--angle)))}50%{transform:translate(-50%,-50%) rotate(var(--angle)) translateY(-285px) rotate(calc(-1 * var(--angle)))}}
 
-.messages-back{font-weight:500;color:#007AFF}
+/* Glassmorphism Card */
+.gauge-card{position:relative;width:100%;aspect-ratio:1;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.05);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-radius:28px;border:1px solid rgba(255,255,255,0.1);box-shadow:0 8px 32px rgba(0,212,255,0.1),0 4px 16px rgba(139,92,246,0.08),inset 0 0 20px rgba(0,212,255,0.03);transition:all 0.8s cubic-bezier(0.4,0,0.2,1)}
 
-.messages-contact{display:flex;align-items:center;gap:8px;flex:1;text-align:center}
+.rating-gauge-container.state-after .gauge-card{box-shadow:0 12px 48px rgba(0,212,255,0.25),0 6px 24px rgba(139,92,246,0.18),inset 0 0 30px rgba(0,212,255,0.08)}
 
-.contact-avatar{width:28px;height:28px;border-radius:50%;background:#E8E8E8;display:flex;align-items:center;justify-content:center;font-weight:700;color:#5F6368;font-size:12px}
+/* SVG Ring */
+.gauge-svg{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:340px;height:340px;max-width:85%;max-height:85%}
 
-.messages-info{color:#666;font-size:16px}
+.gauge-progress-ring{stroke:#F59E0B;stroke-dasharray:534;stroke-dashoffset:256;transition:stroke-dashoffset 2s cubic-bezier(0.4,0,0.2,1),stroke 2s ease;filter:drop-shadow(0 0 8px currentColor)}
 
-.messages-conversation{flex:1;overflow-y:auto;padding:12px 12px;display:flex;flex-direction:column;gap:8px;-webkit-overflow-scrolling:touch}
+.rating-gauge-container.state-after .gauge-progress-ring{stroke:#00D4FF;stroke-dashoffset:21;filter:drop-shadow(0 0 16px currentColor)}
 
-.message-bubble{display:flex;flex-direction:column;gap:2px;max-width:78%;padding:8px 12px;border-radius:16px;font-size:13px;line-height:1.4}
+/* Center Content */
+.gauge-content{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center}
 
-.message-bubble.business-message{align-self:flex-start;background:#E8E8E8;color:#000}
+.gauge-star-icon{font-size:80px;line-height:1;color:#F59E0B;transition:color 2s ease,text-shadow 2s ease;text-shadow:0 0 20px rgba(245,158,11,0.4)}
 
-.message-bubble.customer-message{align-self:flex-end;background:#007AFF;color:#FFFFFF;border-bottom-right-radius:4px}
+.rating-gauge-container.state-after .gauge-star-icon{color:#00D4FF;text-shadow:0 0 30px rgba(0,212,255,0.6)}
 
-.bubble-content{word-wrap:break-word}
+.gauge-rating{font-family:var(--font-display);font-size:72px;font-weight:700;line-height:1;color:#F59E0B;transition:color 2s ease;margin:4px 0}
 
-.message-time{font-size:11px;color:#999;align-self:flex-end;margin-top:2px;opacity:0.7}
+.rating-gauge-container.state-after .gauge-rating{color:#00D4FF}
 
-.message-bubble.customer-message .message-time{color:rgba(255,255,255,0.6)}
+.gauge-subtitle{font-size:14px;font-weight:500;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.08em;margin-top:4px}
 
-.typing-indicator{display:none;align-self:flex-start;align-items:center;gap:3px;padding:8px 12px;background:#E8E8E8;border-radius:16px;height:28px}
+.gauge-review-count{font-size:12px;font-weight:600;color:rgba(255,255,255,0.4);margin-top:8px;transition:color 1s ease}
 
-.typing-indicator span{width:4px;height:4px;border-radius:50%;background:#999;animation:typing-bounce 1.2s infinite}
-
-.typing-indicator span:nth-child(2){animation-delay:0.15s}
-
-.typing-indicator span:nth-child(3){animation-delay:0.3s}
-
-@keyframes typing-bounce{0%,60%{transform:translateY(0)}30%{transform:translateY(-6px)}}
-
-.messages-input-bar{display:flex;align-items:center;justify-content:center;padding:8px;background:#F8F9FA;border-top:1px solid #E8E8E8;font-size:12px;color:#999;height:40px}
-
-/* Phase transitions */
-.reviews-phone-container.phase-messages .messages-app{opacity:1;z-index:2}
-
-.reviews-phone-container.phase-messages .google-profile{opacity:0;z-index:1}
-
-.reviews-phone-container.phase-google .messages-app{opacity:0;z-index:1;pointer-events:none}
-
-.reviews-phone-container.phase-google .google-profile{opacity:1;z-index:2}
-
-/* Google Business Profile */
-.google-profile{height:100%;display:flex;flex-direction:column;padding:48px 16px 24px;background:#FFFFFF;color:#202124;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;font-size:14px;overflow-y:auto;-webkit-overflow-scrolling:touch}
-
-.google-header{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid #DADCE0}
-
-.google-header svg{color:#4285F4;flex-shrink:0}
-
-.google-business-info h3{font-size:18px;font-weight:600;color:#202124;margin:0;line-height:1.2}
-
-.google-category{font-size:12px;color:#5F6368;margin:4px 0 0}
-
-/* Rating Section */
-.google-rating-section{display:flex;align-items:center;gap:16px;margin-bottom:20px;padding:12px;background:#F8F9FA;border-radius:8px;transition:all 0.8s ease}
-
-.google-rating-main{display:flex;align-items:center;gap:8px}
-
-.google-stars{font-size:24px;letter-spacing:0.1em;transition:color 0.8s ease;color:#9CA3AF}
-
-.google-rating-number{font-family:var(--font-display);font-size:28px;font-weight:700;color:#5F6368;transition:color 0.8s ease}
-
-.google-review-count{font-size:12px;color:#5F6368;margin-left:auto}
-
-/* Before state */
-.reviews-phone-container.state-before .google-rating-section{background:#F3F3F3}
-.reviews-phone-container.state-before .google-stars{color:#9CA3AF}
-.reviews-phone-container.state-before .google-rating-number{color:#5F6368}
-
-/* After state */
-.reviews-phone-container.state-after .google-rating-section{background:#FFF8E1}
-.reviews-phone-container.state-after .google-stars{color:#F59E0B}
-.reviews-phone-container.state-after .google-rating-number{color:#F59E0B}
-
-/* Review Card */
-.google-review-card{background:#F8F9FA;border-radius:8px;padding:12px;margin-bottom:16px;border-left:3px solid #9CA3AF;transition:all 0.8s ease}
-
-.reviews-phone-container.state-before .google-review-card{border-left-color:#9CA3AF;opacity:0.9}
-.reviews-phone-container.state-after .google-review-card{border-left-color:#F59E0B;opacity:1}
-
-.review-card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
-
-.review-author-info{display:flex;align-items:center;gap:8px}
-
-.review-avatar{width:32px;height:32px;border-radius:50%;background:#E8E8E8;display:flex;align-items:center;justify-content:center;font-weight:600;color:#5F6368;font-size:14px;transition:all 0.8s ease}
-
-.reviews-phone-container.state-before .review-avatar{background:#D3D3D3;color:#5F6368}
-.reviews-phone-container.state-after .review-avatar{background:#FFE5B4;color:#F59E0B}
-
-.review-author-meta{display:flex;flex-direction:column}
-
-.review-author-meta strong{font-size:13px;font-weight:600;color:#202124}
-
-.review-author-meta span{font-size:11px;color:#5F6368}
-
-.review-stars{font-size:12px;letter-spacing:0.05em;transition:color 0.8s ease}
-
-.reviews-phone-container.state-before .review-stars{color:#9CA3AF}
-.reviews-phone-container.state-after .review-stars{color:#F59E0B}
-
-.review-text{font-size:13px;line-height:1.5;color:#3C4043;margin:0;transition:all 0.8s ease}
-
-.reviews-phone-container.state-before .review-text{color:#5F6368}
-.reviews-phone-container.state-after .review-text{color:#202124}
-
-/* Write Review Button */
-.google-write-review{background:#FFFFFF;border:1px solid #DADCE0;border-radius:8px;padding:10px 16px;font-size:13px;font-weight:500;color:#4285F4;cursor:pointer;transition:all 0.3s ease;margin-bottom:16px;width:100%}
-
-.google-write-review:hover{background:#F8F9FA;border-color:#4285F4}
-
-/* Platforms */
-.google-platforms{display:flex;gap:12px;justify-content:center}
-
-.platform-link{width:32px;height:32px;border-radius:50%;background:#F8F9FA;border:1px solid #DADCE0;display:flex;align-items:center;justify-content:center;color:#4285F4;text-decoration:none;transition:all 0.3s ease;opacity:0.6}
-
-.reviews-phone-container.state-after .platform-link{opacity:1}
-
-.platform-link:hover{background:#F0F0F0}
+.rating-gauge-container.state-after .gauge-review-count{color:rgba(0,212,255,0.7)}
 
 /* State Label */
-.review-state-label{position:absolute;bottom:-40px;left:50%;transform:translateX(-50%);padding:6px 14px;background:rgba(107,122,144,0.2);color:#6B7A90;border:1px solid rgba(107,122,144,0.3);border-radius:20px;font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;transition:all 0.5s ease;white-space:nowrap}
+.gauge-state-label{position:absolute;bottom:0;left:50%;transform:translateX(-50%);padding:6px 14px;background:rgba(107,122,144,0.2);color:#6B7A90;border:1px solid rgba(107,122,144,0.3);border-radius:20px;font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;transition:all 0.5s ease;white-space:nowrap}
 
-.reviews-phone-container.state-after .review-state-label{background:rgba(34,197,94,0.15);color:#22C55E;border:1px solid rgba(34,197,94,0.3)}
-
-/* New review notification */
-.review-notification{position:absolute;top:20px;right:0;background:#22C55E;color:var(--white);font-size:0.65rem;font-weight:700;padding:4px 10px;border-radius:12px;opacity:0;transform:scale(0);transition:all 0.4s var(--ease-bounce);z-index:20}
-
-.reviews-phone-container.state-after .review-notification{opacity:1;transform:scale(1)}
+.rating-gauge-container.state-after .gauge-state-label{background:rgba(34,197,94,0.15);color:#22C55E;border:1px solid rgba(34,197,94,0.3)}
 
 /* ============================================================
    7. ROI SECTION — Static $51K Breakdown
@@ -938,8 +841,16 @@ body{background-image:linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px
   .payment-logo-card{width:95px;height:60px}
   .payment-logo-card img{max-width:72px;max-height:42px}
   .invoice-demo{max-width:100%}
-  /* Reviews */
-  .reviews-demo{max-width:100%}
+  /* Reviews - Circular Gauge */
+  .rating-gauge-container{max-width:500px;padding-bottom:45px}
+  .platform-icon-card{width:50px;height:34px;transform:translate(-50%,-50%) rotate(var(--angle)) translateY(-200px) rotate(calc(-1 * var(--angle)))}
+  @keyframes platformFloat{0%,100%{transform:translate(-50%,-50%) rotate(var(--angle)) translateY(-200px) rotate(calc(-1 * var(--angle)))}50%{transform:translate(-50%,-50%) rotate(var(--angle)) translateY(-205px) rotate(calc(-1 * var(--angle)))}}
+  .platform-icon-card img{max-width:40px;max-height:24px}
+  .gauge-svg{width:280px;height:280px}
+  .gauge-star-icon{font-size:60px}
+  .gauge-rating{font-size:56px}
+  .gauge-subtitle{font-size:12px}
+  .gauge-review-count{font-size:11px}
 }
 
 @media(max-width:480px){
@@ -954,7 +865,6 @@ body{background-image:linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px
   .testimonial-card{min-width:280px;max-width:280px}
   .chat-widget{width:160px}
   .invoice-mock{max-width:100%}
-  .reviews-demo{max-width:100%}
   .plumbing-services{grid-template-columns:1fr}
   .text-bot-side-panel{max-width:240px}
   .voice-transcript{max-height:260px}

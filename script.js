@@ -703,100 +703,92 @@
   /* ----------------------------------------------------------
      13. REVIEWS BEFORE/AFTER TRANSFORMATION ANIMATION
      ---------------------------------------------------------- */
-  var reviewsDemo = document.getElementById('reviewsDemo');
+  var ratingGauge = document.getElementById('ratingGauge');
 
-  if (reviewsDemo && 'IntersectionObserver' in window) {
-    var reviewsObserver = new IntersectionObserver(function (entries) {
+  if (ratingGauge && 'IntersectionObserver' in window) {
+    var gaugeObserver = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
-          animateReviews(entry.target);
-          reviewsObserver.unobserve(entry.target);
+          animateGauge(entry.target);
+          gaugeObserver.unobserve(entry.target);
         }
       });
     }, { threshold: 0.3 });
 
-    reviewsObserver.observe(reviewsDemo);
+    gaugeObserver.observe(ratingGauge);
   }
 
-  function animateReviews(demoEl) {
-    var reviewsLabel = demoEl.querySelector('#reviewsLabel');
-    var reviewsStars = demoEl.querySelector('#reviewsStars');
-    var reviewsRating = demoEl.querySelector('#reviewsRating');
-    var reviewsCount = demoEl.querySelector('#reviewsCount');
-    var reviewsSampleStars = demoEl.querySelector('#reviewsSampleStars');
-    var reviewsSampleText = demoEl.querySelector('#reviewsSampleText');
-    var reviewsSampleAuthor = demoEl.querySelector('#reviewsSampleAuthor');
-    var reviewsSampleMeta = demoEl.querySelector('#reviewsSampleMeta');
+  function animateGauge(gaugeEl) {
+    var gaugeLabel = gaugeEl.querySelector('#gaugeLabel');
+    var gaugeRating = gaugeEl.querySelector('#gaugeRating');
+    var gaugeReviewCount = gaugeEl.querySelector('#gaugeReviewCount');
+    var gaugeStar = gaugeEl.querySelector('#gaugeStar');
+
+    // Ensure starting state
+    gaugeEl.classList.add('state-before');
+    gaugeEl.classList.remove('state-after');
 
     var stageDelay = 0;
 
-    // Hold on before state for 2s
-    stageDelay += 2000;
+    // Hold "before" state for 1.5s
+    stageDelay += 1500;
 
-    // Stage 1: Start transition to "after" state (3s)
     setTimeout(function () {
-      // Change CSS class to trigger color transitions
-      demoEl.classList.remove('state-before');
-      demoEl.classList.add('state-after');
+      // Transition to "after" state
+      gaugeEl.classList.remove('state-before');
+      gaugeEl.classList.add('state-after');
 
       // Update label
-      if (reviewsLabel) {
-        reviewsLabel.textContent = 'After';
+      if (gaugeLabel) {
+        gaugeLabel.textContent = 'After';
       }
 
-      // Update stars: 3 → 5
-      if (reviewsStars) {
-        reviewsStars.textContent = '★★★★★';
-      }
-
-      // Update rating counter (3.2 → 4.9)
-      if (reviewsRating) {
-        var ratingEl = reviewsRating;
-        var ratingStart = 3.2;
-        var ratingTarget = 4.9;
-        var ratingDuration = 1500;
+      // Animate rating counter: 2.6 → 4.8
+      if (gaugeRating) {
+        var ratingStart = 2.6;
+        var ratingTarget = 4.8;
+        var ratingDuration = 2000;
         var ratingStartTime = null;
 
         function stepRating(timestamp) {
           if (!ratingStartTime) ratingStartTime = timestamp;
           var progress = Math.min((timestamp - ratingStartTime) / ratingDuration, 1);
-          var easedProgress = 1 - Math.pow(1 - progress, 3);
+          var easedProgress = 1 - Math.pow(1 - progress, 3); // Ease-out cubic
           var current = ratingStart + (ratingTarget - ratingStart) * easedProgress;
-          ratingEl.textContent = current.toFixed(1);
+          gaugeRating.textContent = current.toFixed(1);
 
           if (progress < 1) {
             requestAnimationFrame(stepRating);
+          } else {
+            gaugeRating.textContent = ratingTarget.toFixed(1);
           }
         }
 
         requestAnimationFrame(stepRating);
       }
 
-      // Update review count counter (14 → 127)
-      if (reviewsCount) {
-        reviewsCount.setAttribute('data-count', '127');
-        reviewsCount.textContent = '14';
-        animateCounter(reviewsCount);
-      }
+      // Animate review count: 24 → 147
+      if (gaugeReviewCount) {
+        var countStart = 24;
+        var countTarget = 147;
+        var countDuration = 2000;
+        var countStartTime = null;
 
-      // Update sample review stars
-      if (reviewsSampleStars) {
-        reviewsSampleStars.textContent = '★★★★★';
-      }
+        function stepCount(timestamp) {
+          if (!countStartTime) countStartTime = timestamp;
+          var progress = Math.min((timestamp - countStartTime) / countDuration, 1);
+          var easedProgress = 1 - Math.pow(1 - progress, 3);
+          var current = Math.round(countStart + (countTarget - countStart) * easedProgress);
+          gaugeReviewCount.textContent = current + ' reviews';
 
-      // Update sample review text
-      if (reviewsSampleText) {
-        reviewsSampleText.textContent = '"Best plumber in town. Fast response, fair price, cleaned up after themselves. 10/10."';
-      }
+          if (progress < 1) {
+            requestAnimationFrame(stepCount);
+          } else {
+            gaugeReviewCount.textContent = countTarget + ' reviews';
+          }
+        }
 
-      // Update sample review author
-      if (reviewsSampleAuthor) {
-        reviewsSampleAuthor.textContent = 'Sarah M.';
-      }
-
-      // Update sample review meta
-      if (reviewsSampleMeta) {
-        reviewsSampleMeta.textContent = 'Google • 2 days ago';
+        requestAnimationFrame(stepCount);
       }
     }, stageDelay);
   }
