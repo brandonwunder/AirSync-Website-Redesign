@@ -1161,4 +1161,171 @@
     }
   }
 
+  /* ----------------------------------------------------------
+     17. SPOTLIGHT CURSOR GLOW ON CARDS (Stripe/Aceternity)
+     ---------------------------------------------------------- */
+  var spotlightCards = document.querySelectorAll('.spotlight-card');
+  spotlightCards.forEach(function(card) {
+    card.addEventListener('mousemove', function(e) {
+      var rect = card.getBoundingClientRect();
+      card.style.setProperty('--mouse-x', (e.clientX - rect.left) + 'px');
+      card.style.setProperty('--mouse-y', (e.clientY - rect.top) + 'px');
+    });
+  });
+
+  /* ----------------------------------------------------------
+     18. 3D PERSPECTIVE TILT ON HVAC STATS PANEL (Aceternity)
+     ---------------------------------------------------------- */
+  var tiltPanel = document.querySelector('.hvac-stats-panel');
+  if (tiltPanel && !prefersReducedMotion.matches) {
+    tiltPanel.addEventListener('mousemove', function(e) {
+      var rect = tiltPanel.getBoundingClientRect();
+      var x = e.clientX - rect.left;
+      var y = e.clientY - rect.top;
+      var centerX = rect.width / 2;
+      var centerY = rect.height / 2;
+      var rotateX = ((y - centerY) / centerY) * -3;
+      var rotateY = ((x - centerX) / centerX) * 3;
+      tiltPanel.style.transform = 'perspective(800px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg)';
+    });
+    tiltPanel.addEventListener('mouseleave', function() {
+      tiltPanel.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg)';
+    });
+  }
+
+  /* ----------------------------------------------------------
+     19. DIRECTIONAL SCROLL REVEALS
+     ---------------------------------------------------------- */
+  var directionalReveals = document.querySelectorAll('.reveal-left, .reveal-right, .reveal-scale, .reveal-blur');
+  if ('IntersectionObserver' in window) {
+    var dirRevealObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          dirRevealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    directionalReveals.forEach(function(el) { dirRevealObserver.observe(el); });
+  } else {
+    directionalReveals.forEach(function(el) { el.classList.add('revealed'); });
+  }
+
+  /* ----------------------------------------------------------
+     20. STAGGERED COUNTER CASCADE
+     ---------------------------------------------------------- */
+  // Override default counter observer to stagger HVAC and ROI counters
+  function staggerCountersIn(container) {
+    var counters = container.querySelectorAll('[data-count]');
+    counters.forEach(function(el, idx) {
+      setTimeout(function() {
+        animateCounter(el);
+      }, idx * 200);
+    });
+  }
+
+  // Re-observe ROI breakdown for staggered effect
+  var roiBreakdown = document.querySelector('.roi-breakdown');
+  if (roiBreakdown && 'IntersectionObserver' in window) {
+    var roiStaggerObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          staggerCountersIn(entry.target);
+          roiStaggerObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    roiStaggerObserver.observe(roiBreakdown);
+  }
+
+  /* ----------------------------------------------------------
+     21. MODAL FOCUS TRAP
+     ---------------------------------------------------------- */
+  if (ctaModal) {
+    ctaModal.addEventListener('keydown', function(e) {
+      if (e.key !== 'Tab') return;
+      var focusable = ctaModal.querySelectorAll('input, button, [tabindex]:not([tabindex="-1"]), a[href]');
+      if (focusable.length === 0) return;
+      var first = focusable[0];
+      var last = focusable[focusable.length - 1];
+      if (e.shiftKey) {
+        if (document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        }
+      } else {
+        if (document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    });
+  }
+
+  /* ----------------------------------------------------------
+     22. INLINE FORM VALIDATION WITH MICRO-FEEDBACK
+     ---------------------------------------------------------- */
+  if (ctaForm) {
+    var formInputs = ctaForm.querySelectorAll('input[required]');
+    formInputs.forEach(function(input) {
+      input.addEventListener('blur', function() {
+        validateField(input);
+      });
+      input.addEventListener('input', function() {
+        // Clear errors as user types
+        if (input.classList.contains('input-error')) {
+          input.classList.remove('input-error');
+          var errEl = input.parentElement.querySelector('.cta-field-error');
+          if (errEl) errEl.classList.remove('visible');
+        }
+        // Show success state
+        if (input.value.trim()) {
+          input.classList.add('input-success');
+        } else {
+          input.classList.remove('input-success');
+        }
+      });
+    });
+
+    function validateField(input) {
+      var value = input.value.trim();
+      var errEl = input.parentElement.querySelector('.cta-field-error');
+      if (!value) {
+        input.classList.add('input-error');
+        input.classList.remove('input-success');
+        if (errEl) errEl.classList.add('visible');
+      } else {
+        input.classList.remove('input-error');
+        input.classList.add('input-success');
+        if (errEl) errEl.classList.remove('visible');
+        // Email validation
+        if (input.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+          input.classList.add('input-error');
+          input.classList.remove('input-success');
+          if (errEl) {
+            errEl.textContent = 'Please enter a valid email address';
+            errEl.classList.add('visible');
+          }
+        }
+      }
+    }
+  }
+
+  /* ----------------------------------------------------------
+     23. LENIS SMOOTH SCROLL
+     ---------------------------------------------------------- */
+  if (typeof Lenis !== 'undefined' && !prefersReducedMotion.matches) {
+    var lenis = new Lenis({
+      duration: 1.2,
+      easing: function(t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
+      orientation: 'vertical',
+      smoothWheel: true
+    });
+    function lenisRaf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(lenisRaf);
+    }
+    requestAnimationFrame(lenisRaf);
+  }
+
 })();
