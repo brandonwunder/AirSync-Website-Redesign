@@ -603,7 +603,7 @@
 
     // Stage 7: Chat bubbles appear with natural pacing
     var chatBody = chatWidget.querySelector('.chat-widget-body');
-    var bubbleDelays = [0, 1200, 3200, 4200, 6000];
+    var bubbleDelays = [0, 1200, 3000, 4200, 6000, 7200, 8800, 10000, 11500, 12700, 14500];
     setTimeout(function () {
       chatBubbles.forEach(function (bubble, idx) {
         setTimeout(function () {
