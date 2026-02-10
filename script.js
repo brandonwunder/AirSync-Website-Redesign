@@ -931,4 +931,234 @@
   handleReducedMotion();
   prefersReducedMotion.addEventListener('change', handleReducedMotion);
 
+  // ============================================================
+  // 16. CTA MODAL — Open/Close, Form Validation, Mock Calendar
+  // ============================================================
+
+  var ctaModal = document.getElementById('ctaModal');
+  var ctaForm = document.getElementById('ctaForm');
+  var ctaUrlError = document.getElementById('ctaUrlError');
+  var ctaMockCalendar = document.getElementById('ctaMockCalendar');
+  var ctaSlotConfirmation = document.getElementById('ctaSlotConfirmation');
+  var previousFocus = null;
+
+  // --- Open / Close ---
+  function openModal() {
+    if (!ctaModal) return;
+    previousFocus = document.activeElement;
+    // Reset to form screen
+    ctaModal.classList.remove('confirmed');
+    if (ctaForm) ctaForm.reset();
+    if (ctaUrlError) ctaUrlError.classList.remove('visible');
+    // Clear input errors
+    var errInputs = ctaModal.querySelectorAll('.input-error');
+    for (var i = 0; i < errInputs.length; i++) errInputs[i].classList.remove('input-error');
+    // Clear calendar
+    if (ctaMockCalendar) ctaMockCalendar.innerHTML = '';
+    if (ctaSlotConfirmation) ctaSlotConfirmation.textContent = '';
+    // Show modal
+    ctaModal.classList.add('modal-open');
+    document.body.style.overflow = 'hidden';
+    // Close mobile menu if open
+    var mobileMenu = document.getElementById('mobileMenu');
+    var hamburger = document.getElementById('hamburger');
+    if (mobileMenu && mobileMenu.classList.contains('open')) {
+      mobileMenu.classList.remove('open');
+      if (hamburger) hamburger.classList.remove('open');
+    }
+    // Focus first input
+    setTimeout(function() {
+      var firstInput = ctaModal.querySelector('input');
+      if (firstInput) firstInput.focus();
+    }, 100);
+  }
+
+  function closeModal() {
+    if (!ctaModal) return;
+    ctaModal.classList.remove('modal-open');
+    document.body.style.overflow = '';
+    if (previousFocus) previousFocus.focus();
+  }
+
+  // Bind all CTA triggers
+  var ctaTriggers = document.querySelectorAll('.cta-open-modal');
+  for (var i = 0; i < ctaTriggers.length; i++) {
+    ctaTriggers[i].addEventListener('click', function(e) {
+      e.preventDefault();
+      openModal();
+    });
+  }
+
+  // Close button
+  var closeBtn = ctaModal ? ctaModal.querySelector('.cta-modal-close') : null;
+  if (closeBtn) closeBtn.addEventListener('click', closeModal);
+
+  // Close on confirm screen close button
+  var confirmClose = ctaModal ? ctaModal.querySelector('.cta-confirm-close') : null;
+  if (confirmClose) confirmClose.addEventListener('click', function(e) {
+    e.preventDefault();
+    closeModal();
+  });
+
+  // Overlay click
+  if (ctaModal) {
+    ctaModal.addEventListener('click', function(e) {
+      if (e.target === ctaModal) closeModal();
+    });
+  }
+
+  // Escape key
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && ctaModal && ctaModal.classList.contains('modal-open')) {
+      closeModal();
+    }
+  });
+
+  // --- Form Validation & Submit ---
+  if (ctaForm) {
+    ctaForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var valid = true;
+
+      // Clear previous errors
+      var allInputs = ctaForm.querySelectorAll('input');
+      for (var i = 0; i < allInputs.length; i++) allInputs[i].classList.remove('input-error');
+      if (ctaUrlError) ctaUrlError.classList.remove('visible');
+
+      // Check required fields
+      var name = ctaForm.querySelector('#ctaName');
+      var phone = ctaForm.querySelector('#ctaPhone');
+      var email = ctaForm.querySelector('#ctaEmail');
+      if (name && !name.value.trim()) { name.classList.add('input-error'); valid = false; }
+      if (phone && !phone.value.trim()) { phone.classList.add('input-error'); valid = false; }
+      if (email && !email.value.trim()) { email.classList.add('input-error'); valid = false; }
+
+      // Check at least one URL
+      var website = ctaForm.querySelector('#ctaWebsite');
+      var facebook = ctaForm.querySelector('#ctaFacebook');
+      var otherUrl = ctaForm.querySelector('#ctaOtherUrl');
+      var hasUrl = (website && website.value.trim()) || (facebook && facebook.value.trim()) || (otherUrl && otherUrl.value.trim());
+      if (!hasUrl) {
+        if (ctaUrlError) ctaUrlError.classList.add('visible');
+        valid = false;
+      }
+
+      if (!valid) return;
+
+      // Success — show confirmation
+      ctaModal.classList.add('confirmed');
+      buildMockCalendar();
+      // Scroll modal card to top
+      var card = ctaModal.querySelector('.cta-modal-card');
+      if (card) card.scrollTop = 0;
+    });
+  }
+
+  // --- Mock Calendar ---
+  function buildMockCalendar() {
+    if (!ctaMockCalendar) return;
+    ctaMockCalendar.innerHTML = '';
+    if (ctaSlotConfirmation) ctaSlotConfirmation.textContent = '';
+
+    var now = new Date();
+    var year = now.getFullYear();
+    var month = now.getMonth();
+    var today = now.getDate();
+    var monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+    // Header
+    var header = document.createElement('div');
+    header.className = 'cta-cal-header';
+    header.innerHTML = '<button type="button" disabled>&larr;</button><span>' + monthNames[month] + ' ' + year + '</span><button type="button" disabled>&rarr;</button>';
+    ctaMockCalendar.appendChild(header);
+
+    // Weekday labels
+    var weekdays = document.createElement('div');
+    weekdays.className = 'cta-cal-weekdays';
+    var dayLabels = ['S','M','T','W','T','F','S'];
+    for (var i = 0; i < 7; i++) {
+      var d = document.createElement('span');
+      d.textContent = dayLabels[i];
+      weekdays.appendChild(d);
+    }
+    ctaMockCalendar.appendChild(weekdays);
+
+    // Day grid
+    var daysContainer = document.createElement('div');
+    daysContainer.className = 'cta-cal-days';
+    var firstDay = new Date(year, month, 1).getDay();
+    var daysInMonth = new Date(year, month + 1, 0).getDate();
+
+    // Empty cells for offset
+    for (var i = 0; i < firstDay; i++) {
+      var empty = document.createElement('div');
+      empty.className = 'cta-cal-day';
+      daysContainer.appendChild(empty);
+    }
+
+    // Available days: next 5 business days from today
+    var availableDays = [];
+    var checkDate = new Date(year, month, today + 1);
+    while (availableDays.length < 5) {
+      var dow = checkDate.getDay();
+      if (dow !== 0 && dow !== 6 && checkDate.getMonth() === month) {
+        availableDays.push(checkDate.getDate());
+      }
+      checkDate.setDate(checkDate.getDate() + 1);
+      if (checkDate.getMonth() !== month && availableDays.length < 5) break;
+    }
+
+    // Slots container (below days)
+    var slotsContainer = document.createElement('div');
+    slotsContainer.className = 'cta-cal-slots';
+
+    for (var d = 1; d <= daysInMonth; d++) {
+      var dayEl = document.createElement('div');
+      dayEl.className = 'cta-cal-day';
+      dayEl.textContent = d;
+      if (d < today) {
+        dayEl.classList.add('past');
+      } else if (availableDays.indexOf(d) !== -1) {
+        dayEl.classList.add('available');
+        (function(dayNum) {
+          dayEl.addEventListener('click', function() {
+            // Deselect all
+            var allDays = daysContainer.querySelectorAll('.cta-cal-day');
+            for (var j = 0; j < allDays.length; j++) allDays[j].classList.remove('selected');
+            this.classList.add('selected');
+            if (ctaSlotConfirmation) ctaSlotConfirmation.textContent = '';
+            showTimeSlots(slotsContainer, dayNum);
+          });
+        })(d);
+      }
+      daysContainer.appendChild(dayEl);
+    }
+
+    ctaMockCalendar.appendChild(daysContainer);
+    ctaMockCalendar.appendChild(slotsContainer);
+  }
+
+  function showTimeSlots(container, dayNum) {
+    container.innerHTML = '';
+    var times = ['9:00 AM', '10:30 AM', '1:00 PM', '2:30 PM', '4:00 PM'];
+    for (var i = 0; i < times.length; i++) {
+      var slot = document.createElement('button');
+      slot.type = 'button';
+      slot.className = 'cta-cal-slot';
+      slot.textContent = times[i];
+      (function(timeText) {
+        slot.addEventListener('click', function() {
+          // Deselect all slots
+          var allSlots = container.querySelectorAll('.cta-cal-slot');
+          for (var j = 0; j < allSlots.length; j++) allSlots[j].classList.remove('selected');
+          this.classList.add('selected');
+          if (ctaSlotConfirmation) {
+            ctaSlotConfirmation.textContent = 'Selected ' + timeText + ' — we\'ll see you then!';
+          }
+        });
+      })(times[i]);
+      container.appendChild(slot);
+    }
+  }
+
 })();
