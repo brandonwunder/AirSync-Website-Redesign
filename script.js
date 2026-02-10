@@ -720,34 +720,26 @@
 
   function animateReviewsDashboard(demoEl) {
     var ratingNumber = demoEl.querySelector('.reviews-rating-number');
-    var improvementBadge = demoEl.querySelector('#reviewsImprovementBadge');
     var feedCards = demoEl.querySelectorAll('.review-card');
-    var recoveryCard = demoEl.querySelector('#reviewRecoveryCard');
-    var recoveryStars = demoEl.querySelector('#recoveryStars');
-    var recoveryText = demoEl.querySelector('#recoveryText');
-    var recoveryLabel = demoEl.querySelector('#recoveryLabel');
-
     var stageDelay = 0;
 
-    // Stage 1: Animate rating number (0.0 -> 4.9)
+    // Stage 1: Animate rating number (0.0 -> 5.0)
     setTimeout(function () {
-      animateDecimalCounter(ratingNumber, 4.9, 1500);
+      animateDecimalCounter(ratingNumber, 5.0, 1500);
       ratingNumber.classList.add('rv-visible');
     }, stageDelay);
-    stageDelay += 800;
+    stageDelay += 1200;
 
-    // Stage 2: Show improvement badge
-    setTimeout(function () {
-      improvementBadge.classList.add('rv-visible');
-    }, stageDelay);
-    stageDelay += 600;
-
-    // Stage 3: Start notification feed cycling
+    // Stage 2: Start notification feed cycling
     var currentCardIndex = 0;
-    var recoveryPlayed = false;
 
     setTimeout(function () {
       feedCards[0].classList.add('rc-active');
+
+      // If first card is a recovery card, trigger its animation
+      if (feedCards[0].classList.contains('review-card-recovery')) {
+        triggerRecoveryAnimation(feedCards[0]);
+      }
 
       setInterval(function () {
         var prevCard = feedCards[currentCardIndex];
@@ -756,16 +748,19 @@
 
         setTimeout(function () {
           prevCard.classList.remove('rc-exit-up');
+          // Reset recovery card to initial state for replay next cycle
+          if (prevCard.classList.contains('review-card-recovery')) {
+            resetRecoveryCard(prevCard);
+          }
         }, 500);
 
         currentCardIndex = (currentCardIndex + 1) % feedCards.length;
         var nextCard = feedCards[currentCardIndex];
         nextCard.classList.add('rc-active');
 
-        // Trigger recovery animation on card index 2
-        if (currentCardIndex === 2 && !recoveryPlayed) {
-          recoveryPlayed = true;
-          triggerRecoveryAnimation(recoveryCard, recoveryStars, recoveryText, recoveryLabel);
+        // Trigger recovery animation for any recovery card
+        if (nextCard.classList.contains('review-card-recovery')) {
+          triggerRecoveryAnimation(nextCard);
         }
       }, 3000);
     }, stageDelay);
@@ -786,27 +781,57 @@
     requestAnimationFrame(step);
   }
 
-  function triggerRecoveryAnimation(card, starsContainer, textEl, labelEl) {
+  function triggerRecoveryAnimation(card) {
+    var starsContainer = card.querySelector('.review-card-stars');
+    var textEl = card.querySelector('.review-card-text');
+    var labelEl = card.querySelector('.review-recovery-label');
+    var recoveredText = card.getAttribute('data-recovered-text');
+    var initialStars = parseInt(card.getAttribute('data-initial-stars'), 10);
+
     setTimeout(function () {
       card.classList.add('rc-recovered');
 
       var stars = starsContainer.querySelectorAll('.rc-star');
-      stars[2].classList.add('filled');
-      setTimeout(function () {
-        stars[3].classList.add('filled');
-      }, 200);
-      setTimeout(function () {
-        stars[4].classList.add('filled');
-      }, 400);
+      var delay = 0;
+      for (var i = initialStars; i < 5; i++) {
+        (function (idx) {
+          setTimeout(function () {
+            stars[idx].classList.add('filled');
+          }, delay);
+        })(i);
+        delay += 200;
+      }
 
       setTimeout(function () {
-        textEl.textContent = '"They came back and made it right. 5 stars!"';
-      }, 500);
+        textEl.textContent = '\u201C' + recoveredText + '\u201D';
+      }, delay + 100);
 
       setTimeout(function () {
         labelEl.classList.add('rv-visible');
-      }, 800);
+      }, delay + 400);
     }, 1500);
+  }
+
+  function resetRecoveryCard(card) {
+    var starsContainer = card.querySelector('.review-card-stars');
+    var textEl = card.querySelector('.review-card-text');
+    var labelEl = card.querySelector('.review-recovery-label');
+    var initialStars = parseInt(card.getAttribute('data-initial-stars'), 10);
+    var initialText = card.getAttribute('data-initial-text');
+
+    card.classList.remove('rc-recovered');
+
+    var stars = starsContainer.querySelectorAll('.rc-star');
+    for (var i = 0; i < 5; i++) {
+      if (i < initialStars) {
+        stars[i].classList.add('filled');
+      } else {
+        stars[i].classList.remove('filled');
+      }
+    }
+
+    textEl.textContent = '\u201C' + initialText + '\u201D';
+    labelEl.classList.remove('rv-visible');
   }
 
   /* ----------------------------------------------------------
@@ -896,9 +921,7 @@
       var reviewsEl = document.getElementById('reviewsDemo');
       if (reviewsEl) {
         var rn = reviewsEl.querySelector('.reviews-rating-number');
-        if (rn) { rn.textContent = '4.9'; rn.classList.add('rv-visible'); }
-        var ib = reviewsEl.querySelector('#reviewsImprovementBadge');
-        if (ib) ib.classList.add('rv-visible');
+        if (rn) { rn.textContent = '5.0'; rn.classList.add('rv-visible'); }
         var firstCard = reviewsEl.querySelector('.review-card[data-index="0"]');
         if (firstCard) firstCard.classList.add('rc-active');
       }

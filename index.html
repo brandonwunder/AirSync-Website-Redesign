@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=33">
+  <link rel="stylesheet" href="styles.css?v=34">
 </head>
 <body>
 
@@ -738,14 +738,11 @@
               <svg class="reviews-star filled" viewBox="0 0 20 20" width="18" height="18" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.37 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.54 1.118l-3.37-2.448a1 1 0 00-1.175 0l-3.37 2.448c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.063 9.384c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69l1.286-3.957z"/></svg>
             </div>
           </div>
-          <div class="reviews-improvement-badge" id="reviewsImprovementBadge">
-            <svg viewBox="0 0 20 20" fill="currentColor" width="14" height="14"><path fill-rule="evenodd" d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg>
-            <span>+0.7</span>
-          </div>
         </div>
 
         <!-- Notification Feed -->
         <div class="reviews-feed" id="reviewsFeed">
+          <!-- Card 0: Google (normal 5-star) -->
           <div class="review-card" data-index="0">
             <div class="review-card-header">
               <img src="assets/review-platforms/google.png" alt="Google" class="review-card-logo">
@@ -757,42 +754,133 @@
             </div>
             <p class="review-card-text">"Fast response, fixed our leak same day!"</p>
           </div>
-          <div class="review-card" data-index="1">
+          <!-- Card 1: Facebook (recovery 2-star -> 5-star) -->
+          <div class="review-card review-card-recovery" data-index="1" data-initial-stars="2" data-initial-text="Took too long to arrive." data-recovered-text="They came back and made it right. 5 stars!">
+            <div class="review-card-header">
+              <img src="assets/review-platforms/facebook.png" alt="Facebook" class="review-card-logo">
+              <span class="review-card-platform">Facebook</span>
+              <span class="review-card-time">15 min ago</span>
+            </div>
+            <div class="review-card-stars">
+              <span class="rc-star filled">&#9733;</span><span class="rc-star filled">&#9733;</span><span class="rc-star">&#9733;</span><span class="rc-star">&#9733;</span><span class="rc-star">&#9733;</span>
+            </div>
+            <p class="review-card-text">"Took too long to arrive."</p>
+            <div class="review-recovery-label">
+              <svg viewBox="0 0 20 20" fill="currentColor" width="14" height="14"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              <span>Review Updated!</span>
+            </div>
+          </div>
+          <!-- Card 2: Yelp (normal 5-star) -->
+          <div class="review-card" data-index="2">
             <div class="review-card-header">
               <img src="assets/review-platforms/yelp.png" alt="Yelp" class="review-card-logo">
               <span class="review-card-platform">Yelp</span>
-              <span class="review-card-time">15 min ago</span>
+              <span class="review-card-time">30 min ago</span>
             </div>
             <div class="review-card-stars">
               <span class="rc-star filled">&#9733;</span><span class="rc-star filled">&#9733;</span><span class="rc-star filled">&#9733;</span><span class="rc-star filled">&#9733;</span><span class="rc-star filled">&#9733;</span>
             </div>
             <p class="review-card-text">"Very professional. Highly recommend!"</p>
           </div>
-          <div class="review-card review-card-recovery" data-index="2" id="reviewRecoveryCard">
+          <!-- Card 3: BBB (recovery 1-star -> 5-star) -->
+          <div class="review-card review-card-recovery" data-index="3" data-initial-stars="1" data-initial-text="Left a mess in my kitchen." data-recovered-text="Crew came back, cleaned everything. Spotless!">
             <div class="review-card-header">
-              <img src="assets/review-platforms/facebook.png" alt="Facebook" class="review-card-logo">
-              <span class="review-card-platform">Facebook</span>
+              <img src="assets/review-platforms/bbb.webp" alt="BBB" class="review-card-logo">
+              <span class="review-card-platform">BBB</span>
               <span class="review-card-time">1 hr ago</span>
             </div>
-            <div class="review-card-stars" id="recoveryStars">
-              <span class="rc-star filled">&#9733;</span><span class="rc-star filled">&#9733;</span><span class="rc-star">&#9733;</span><span class="rc-star">&#9733;</span><span class="rc-star">&#9733;</span>
+            <div class="review-card-stars">
+              <span class="rc-star filled">&#9733;</span><span class="rc-star">&#9733;</span><span class="rc-star">&#9733;</span><span class="rc-star">&#9733;</span><span class="rc-star">&#9733;</span>
             </div>
-            <p class="review-card-text" id="recoveryText">"Took too long to arrive."</p>
-            <div class="review-recovery-label" id="recoveryLabel">
+            <p class="review-card-text">"Left a mess in my kitchen."</p>
+            <div class="review-recovery-label">
               <svg viewBox="0 0 20 20" fill="currentColor" width="14" height="14"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
               <span>Review Updated!</span>
             </div>
           </div>
-          <div class="review-card" data-index="3">
+          <!-- Card 4: HomeAdvisor (normal 5-star) -->
+          <div class="review-card" data-index="4">
+            <div class="review-card-header">
+              <img src="assets/review-platforms/homeadvisor.webp" alt="HomeAdvisor" class="review-card-logo">
+              <span class="review-card-platform">HomeAdvisor</span>
+              <span class="review-card-time">2 hrs ago</span>
+            </div>
+            <div class="review-card-stars">
+              <span class="rc-star filled">&#9733;</span><span class="rc-star filled">&#9733;</span><span class="rc-star filled">&#9733;</span><span class="rc-star filled">&#9733;</span><span class="rc-star filled">&#9733;</span>
+            </div>
+            <p class="review-card-text">"Fair pricing, no hidden charges."</p>
+          </div>
+          <!-- Card 5: Nextdoor (recovery 2-star -> 5-star) -->
+          <div class="review-card review-card-recovery" data-index="5" data-initial-stars="2" data-initial-text="Overcharged for a simple fix." data-recovered-text="Manager called, adjusted the bill. Very fair!">
             <div class="review-card-header">
               <img src="assets/review-platforms/nextdoor.png" alt="Nextdoor" class="review-card-logo">
               <span class="review-card-platform">Nextdoor</span>
               <span class="review-card-time">3 hrs ago</span>
             </div>
             <div class="review-card-stars">
+              <span class="rc-star filled">&#9733;</span><span class="rc-star filled">&#9733;</span><span class="rc-star">&#9733;</span><span class="rc-star">&#9733;</span><span class="rc-star">&#9733;</span>
+            </div>
+            <p class="review-card-text">"Overcharged for a simple fix."</p>
+            <div class="review-recovery-label">
+              <svg viewBox="0 0 20 20" fill="currentColor" width="14" height="14"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              <span>Review Updated!</span>
+            </div>
+          </div>
+          <!-- Card 6: Thumbtack (normal 5-star) -->
+          <div class="review-card" data-index="6">
+            <div class="review-card-header">
+              <img src="assets/review-platforms/thumbtack.webp" alt="Thumbtack" class="review-card-logo">
+              <span class="review-card-platform">Thumbtack</span>
+              <span class="review-card-time">4 hrs ago</span>
+            </div>
+            <div class="review-card-stars">
               <span class="rc-star filled">&#9733;</span><span class="rc-star filled">&#9733;</span><span class="rc-star filled">&#9733;</span><span class="rc-star filled">&#9733;</span><span class="rc-star filled">&#9733;</span>
             </div>
-            <p class="review-card-text">"Best plumber in the neighborhood."</p>
+            <p class="review-card-text">"Fixed our water heater in under an hour."</p>
+          </div>
+          <!-- Card 7: Trustpilot (recovery 1-star -> 5-star) -->
+          <div class="review-card review-card-recovery" data-index="7" data-initial-stars="1" data-initial-text="Missed the appointment window." data-recovered-text="Rescheduled same day, went above and beyond!">
+            <div class="review-card-header">
+              <img src="assets/review-platforms/trustpilot.jpg" alt="Trustpilot" class="review-card-logo">
+              <span class="review-card-platform">Trustpilot</span>
+              <span class="review-card-time">5 hrs ago</span>
+            </div>
+            <div class="review-card-stars">
+              <span class="rc-star filled">&#9733;</span><span class="rc-star">&#9733;</span><span class="rc-star">&#9733;</span><span class="rc-star">&#9733;</span><span class="rc-star">&#9733;</span>
+            </div>
+            <p class="review-card-text">"Missed the appointment window."</p>
+            <div class="review-recovery-label">
+              <svg viewBox="0 0 20 20" fill="currentColor" width="14" height="14"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              <span>Review Updated!</span>
+            </div>
+          </div>
+          <!-- Card 8: Angi (recovery 2-star -> 5-star) -->
+          <div class="review-card review-card-recovery" data-index="8" data-initial-stars="2" data-initial-text="Didn't fix the problem the first time." data-recovered-text="Came back next morning, fixed it for free!">
+            <div class="review-card-header">
+              <img src="assets/review-platforms/angies-list.png" alt="Angi" class="review-card-logo">
+              <span class="review-card-platform">Angi</span>
+              <span class="review-card-time">6 hrs ago</span>
+            </div>
+            <div class="review-card-stars">
+              <span class="rc-star filled">&#9733;</span><span class="rc-star filled">&#9733;</span><span class="rc-star">&#9733;</span><span class="rc-star">&#9733;</span><span class="rc-star">&#9733;</span>
+            </div>
+            <p class="review-card-text">"Didn't fix the problem the first time."</p>
+            <div class="review-recovery-label">
+              <svg viewBox="0 0 20 20" fill="currentColor" width="14" height="14"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              <span>Review Updated!</span>
+            </div>
+          </div>
+          <!-- Card 9: Houzz (normal 5-star) -->
+          <div class="review-card" data-index="9">
+            <div class="review-card-header">
+              <img src="assets/review-platforms/other.webp" alt="Houzz" class="review-card-logo">
+              <span class="review-card-platform">Houzz</span>
+              <span class="review-card-time">Yesterday</span>
+            </div>
+            <div class="review-card-stars">
+              <span class="rc-star filled">&#9733;</span><span class="rc-star filled">&#9733;</span><span class="rc-star filled">&#9733;</span><span class="rc-star filled">&#9733;</span><span class="rc-star filled">&#9733;</span>
+            </div>
+            <p class="review-card-text">"Beautiful bathroom remodel, exactly what we wanted."</p>
           </div>
         </div>
 
@@ -1062,6 +1150,6 @@
   </div>
 </footer>
 
-<script src="script.js?v=33"></script>
+<script src="script.js?v=34"></script>
 </body>
 </html>

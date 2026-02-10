@@ -621,16 +621,13 @@ h1,h2,h3,h4{font-family:var(--font-display);color:var(--text-primary);line-heigh
 .reviews-demo::before{content:'';position:absolute;inset:0;border-radius:var(--radius-lg);padding:1px;background:linear-gradient(135deg,rgba(0,212,255,0.2),rgba(139,92,246,0.2),rgba(0,212,255,0.1));-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0.5;pointer-events:none}
 
 /* --- Rating Header --- */
-.reviews-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;padding-bottom:1rem;border-bottom:1px solid rgba(255,255,255,0.08)}
+.reviews-header{display:flex;align-items:center;justify-content:flex-start;margin-bottom:1.25rem;padding-bottom:1rem;border-bottom:1px solid rgba(255,255,255,0.08)}
 .reviews-rating-block{display:flex;align-items:center;gap:0.75rem}
 .reviews-rating-number{font-family:var(--font-display);font-size:3rem;font-weight:700;background:linear-gradient(135deg,#00D4FF,#8B5CF6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;opacity:0;transition:opacity 0.5s ease}
 .reviews-rating-number.rv-visible{opacity:1}
 .reviews-stars-row{display:flex;gap:2px}
 .reviews-star{width:18px;height:18px;flex-shrink:0;color:#334155;transition:color 0.3s ease}
 .reviews-star.filled{color:#FBBF24}
-.reviews-improvement-badge{display:inline-flex;align-items:center;gap:4px;padding:6px 12px;border-radius:var(--radius-full);background:rgba(16,185,129,0.15);border:1px solid rgba(16,185,129,0.3);color:#10B981;font-family:var(--font-display);font-size:0.85rem;font-weight:700;opacity:0;transform:scale(0.8);transition:all 0.4s var(--ease-bounce)}
-.reviews-improvement-badge.rv-visible{opacity:1;transform:scale(1)}
-.reviews-improvement-badge svg{width:14px;height:14px}
 
 /* --- Notification Feed --- */
 .reviews-feed{position:relative;height:120px;overflow:hidden;margin-bottom:1.25rem}
@@ -893,7 +890,6 @@ body{background-image:linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px
   .invoice-status-bar,.invoice-deposited{opacity:1;transform:none}
   .reviews-demo{transition:none}
   .reviews-rating-number{opacity:1}
-  .reviews-improvement-badge{opacity:1;transform:scale(1)}
   .review-card{transition:none}
   .review-card[data-index="0"]{opacity:1;transform:none}
   .review-recovery-label{opacity:1;transform:scale(1)}
